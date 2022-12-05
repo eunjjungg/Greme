@@ -1,5 +1,6 @@
 ## PR TITLE : 여기에 작성해주세요
-관련 이슈 - 있다면 여기에 적어주세요. 없다면 삭제 후 생략. ex) 관련 issue : [#47](http://www.google.co.kr)
+관련 Issue : #n
+관련 PR : #n (없다면 이 줄 삭제)
 
 <br/>
 
