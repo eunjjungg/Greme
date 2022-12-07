@@ -39,7 +39,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     private fun testLogin() {
         NaverLoginManager(context = this).startNaverLogin {
             ConnectionObject.token = it
-            val result = viewModel.getLoginData()
+            viewModel.getNaverLoginData()
         }
     }
 }
