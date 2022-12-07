@@ -11,6 +11,8 @@ import retrofit2.create
 object ConnectionObject {
     private const val BASE_URL = "http://13.125.79.233:8081"
     var token: String = ""
+    //이후에 서버에서 내려주는 토큰 값으로 변경 필요
+    var email: String = ""
 
     private val gson: Gson = GsonBuilder()
         .setLenient()
