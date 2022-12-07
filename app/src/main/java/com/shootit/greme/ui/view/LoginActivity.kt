@@ -32,14 +32,22 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     override fun onCreateAction() {
         binding.btnLoginNaver.setOnClickListener {
-            testLogin()
+            testNaverLogin()
+        }
+
+        binding.btnLoginKakao.setOnClickListener {
+            testKakaoLogin()
         }
     }
 
-    private fun testLogin() {
+    private fun testNaverLogin() {
         NaverLoginManager(context = this).startNaverLogin {
             ConnectionObject.token = it
             viewModel.getNaverLoginData()
         }
+    }
+
+    private fun testKakaoLogin() {
+
     }
 }

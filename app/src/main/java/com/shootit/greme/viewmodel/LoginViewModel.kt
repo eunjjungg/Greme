@@ -15,6 +15,10 @@ class LoginViewModel(private val loginRepository: LoginRepository): ViewModel() 
         ConnectionObject.email = loginRepository.getLoginData().email
     }
 
+    fun getKakaoLoginData() = viewModelScope.launch {
+
+    }
+
     class LoginViewModelFactory(private val loginRepository: LoginRepository)
         : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
