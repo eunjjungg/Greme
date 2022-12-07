@@ -65,8 +65,8 @@ out/
 *.lock
 
 # Gradle files
-# .gradle
-# .gradle/
+ .gradle
+ .gradle/
 # build/
 
 # Signing files
