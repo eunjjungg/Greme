@@ -10,9 +10,7 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(private val loginRepository: LoginRepository): ViewModel() {
 
-    fun getLoginData() = viewModelScope.launch {
-        loginRepository.getLoginData()
-    }
+
 
 
     class MainViewModelFactory(private val loginRepository: LoginRepository)
