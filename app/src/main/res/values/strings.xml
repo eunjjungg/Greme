@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Greme</string>
+
+    <!--login-->
+    <string name="login_guide">로그인</string>
+    <string name="login_app_name">GREME</string>
+
 </resources>

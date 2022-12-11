@@ -7,4 +7,12 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--Greme project Custom Color-->
+    <color name="transparent">#00000000</color>
+
+    <!--Login-->
+    <color name="login_kakao">#F9E000</color>
+    <color name="login_naver">#1EC800</color>
+
 </resources>
