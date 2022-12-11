@@ -14,6 +14,8 @@ import com.shootit.greme.network.ConnectionObject
 import com.shootit.greme.network.KakaoLoginManager
 import com.shootit.greme.network.NaverLoginManager
 import com.shootit.greme.repository.LoginRepository
+import com.shootit.greme.util.EncryptedSpfImpl
+import com.shootit.greme.util.EncryptedSpfObject
 import com.shootit.greme.viewmodel.LoginViewModel
 import com.shootit.greme.viewmodel.MainViewModel
 import kotlinx.coroutines.launch
@@ -41,6 +43,11 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         binding.btnLoginKakao.setOnClickListener {
             testKakaoLogin()
         }
+
+        binding.btnSpf.setOnClickListener {
+            val tmp = EncryptedSpfImpl(EncryptedSpfObject.getEncryptedSpf(this)).getAccessToken()
+            Log.d("login ccheck token", tmp.toString())
+        }
     }
 
     private fun testNaverLogin() {
@@ -52,6 +59,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     private fun testKakaoLogin() {
         KakaoLoginManager(context = this).startKakaoLogin {
+            EncryptedSpfImpl(EncryptedSpfObject.getEncryptedSpf(this)).setAccessToken(
+                it
+            )
             ConnectionObject.token = it
             viewModel.getLoginData(KAKAO_LOGIN_DOMAIN)
         }

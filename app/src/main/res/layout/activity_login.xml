@@ -15,6 +15,15 @@
         tools:context=".ui.view.LoginActivity">
 
         <Button
+            android:id="@+id/btnSpf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/btnLoginNaver"
+            android:text="spfs store"/>
+
+        <Button
             android:id="@+id/btnLoginNaver"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
