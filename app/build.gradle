@@ -102,4 +102,7 @@ dependencies {
     //kakao login
     implementation "com.kakao.sdk:v2-user:$kakao_version"
 
+    //encrypted shared preferences
+    implementation "androidx.security:security-crypto:1.0.0"
+
 }
