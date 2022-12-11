@@ -17,7 +17,7 @@ class LoginRepository() {
 
     suspend fun getLoginData(domain: String): LoginData {
         val response = ConnectionObject.getRetrofitService.getEmail(domain)
-        return if (response.isSuccessful) LoginData(response.body()!!.email)
+        return if (response.isSuccessful) LoginData(response.body()!!.email?: "")
         else LoginData("")
     }
 }

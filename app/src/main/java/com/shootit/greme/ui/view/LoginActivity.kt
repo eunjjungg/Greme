@@ -11,6 +11,7 @@ import com.shootit.greme.base.BaseActivity
 import com.shootit.greme.databinding.ActivityLoginBinding
 import com.shootit.greme.databinding.ActivityMainBinding
 import com.shootit.greme.network.ConnectionObject
+import com.shootit.greme.network.KakaoLoginManager
 import com.shootit.greme.network.NaverLoginManager
 import com.shootit.greme.repository.LoginRepository
 import com.shootit.greme.viewmodel.LoginViewModel
@@ -24,6 +25,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
             this, LoginViewModel.LoginViewModelFactory(LoginRepository.getInstance(application)!!)
         ).get(LoginViewModel::class.java)
     }
+    val NAVER_LOGIN_DOMAIN = "naver"
+    val KAKAO_LOGIN_DOMAIN = "kakao"
 
     override fun initViewModel(viewModel: ViewModel) {
         binding.lifecycleOwner = this@LoginActivity
@@ -43,11 +46,14 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     private fun testNaverLogin() {
         NaverLoginManager(context = this).startNaverLogin {
             ConnectionObject.token = it
-            viewModel.getNaverLoginData()
+            viewModel.getLoginData(NAVER_LOGIN_DOMAIN)
         }
     }
 
     private fun testKakaoLogin() {
-
+        KakaoLoginManager(context = this).startKakaoLogin {
+            ConnectionObject.token = it
+            viewModel.getLoginData(KAKAO_LOGIN_DOMAIN)
+        }
     }
 }

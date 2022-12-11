@@ -10,13 +10,9 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(private val loginRepository: LoginRepository): ViewModel() {
 
-    fun getNaverLoginData() = viewModelScope.launch {
-        ConnectionObject.email = loginRepository.getLoginData("naver").email
-        Log.d("ccheck", ConnectionObject.email)
-    }
-
-    fun getKakaoLoginData() = viewModelScope.launch {
-
+    fun getLoginData(domain: String) = viewModelScope.launch {
+        Log.d("update login data", "login data to server")
+        ConnectionObject.email = loginRepository.getLoginData(domain = domain).email
     }
 
     class LoginViewModelFactory(private val loginRepository: LoginRepository)
