@@ -100,7 +100,6 @@ class KakaoLoginManager(val context: Context) {
         ) { token: OAuthToken?, error: Throwable? ->
             if (error != null) {
                 Log.d("kakao login web", error.stackTraceToString())
-                onKakaoWebLogin(updateSocialToken)
             } else if (token != null) {
                 isAgreementChecked()
                 updateSocialToken(token.accessToken)
