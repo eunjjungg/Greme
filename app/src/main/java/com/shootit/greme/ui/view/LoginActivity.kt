@@ -3,6 +3,7 @@ package com.shootit.greme.ui.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -36,34 +37,53 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
     }
 
     override fun onCreateAction() {
-        binding.btnLoginNaver.setOnClickListener {
-            testNaverLogin()
-        }
+        setBtnListener()
 
-        binding.btnLoginKakao.setOnClickListener {
-            testKakaoLogin()
-        }
-
-        binding.btnSpf.setOnClickListener {
+        //TODO 삭제해줘야 할 내용
+        binding.tvAppName.setOnClickListener {
             val tmp = EncryptedSpfImpl(EncryptedSpfObject.getEncryptedSpf(this)).getAccessToken()
             Log.d("login ccheck token", tmp.toString())
         }
     }
 
-    private fun testNaverLogin() {
-        NaverLoginManager(context = this).startNaverLogin {
-            ConnectionObject.token = it
-            viewModel.getLoginData(NAVER_LOGIN_DOMAIN)
+
+    private fun setBtnListener() {
+        val callback = object : LoginFinishInterface {
+            override fun openActivityCallback() {
+                Toast.makeText(
+                    this@LoginActivity, "로그인 완료", Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            override fun errorCallback() {
+                Toast.makeText(
+                    this@LoginActivity, "로그인하는데 문제가 발생했습니다. 다시 로그인해주세요.", Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+
+        binding.btnLoginNaver.setOnClickListener {
+            NaverLoginManager(context = this@LoginActivity).startNaverLogin {
+                ConnectionObject.token = it
+                viewModel.getLoginData(
+                    NAVER_LOGIN_DOMAIN,
+                    EncryptedSpfObject.getEncryptedSpf(this@LoginActivity),
+                    callback
+                )
+            }
+        }
+
+        binding.btnLoginKakao.setOnClickListener {
+            KakaoLoginManager(context = this@LoginActivity).startKakaoLogin {
+                ConnectionObject.token = it
+                viewModel.getLoginData(
+                    KAKAO_LOGIN_DOMAIN,
+                    EncryptedSpfObject.getEncryptedSpf(this@LoginActivity),
+                    callback
+                )
+            }
         }
     }
 
-    private fun testKakaoLogin() {
-        KakaoLoginManager(context = this).startKakaoLogin {
-            EncryptedSpfImpl(EncryptedSpfObject.getEncryptedSpf(this)).setAccessToken(
-                it
-            )
-            ConnectionObject.token = it
-            viewModel.getLoginData(KAKAO_LOGIN_DOMAIN)
-        }
-    }
+
 }
