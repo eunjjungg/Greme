@@ -1,8 +1,7 @@
 package com.shootit.greme.repository
 
 import android.app.Application
-import android.util.Log
-import com.shootit.greme.model.LoginData
+import com.shootit.greme.model.LoginCheckData
 import com.shootit.greme.network.ConnectionObject
 
 class LoginRepository() {
@@ -15,9 +14,9 @@ class LoginRepository() {
         }
     }
 
-    suspend fun getLoginData(domain: String): LoginData {
+    suspend fun getLoginData(domain: String): LoginCheckData {
         val response = ConnectionObject.getRetrofitService.getEmail(domain)
-        return if (response.isSuccessful) LoginData(response.body()!!.email?: "")
-        else LoginData("")
+        return if (response.isSuccessful) LoginCheckData(response.body()!!.email?: "")
+        else LoginCheckData("")
     }
 }
