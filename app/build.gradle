@@ -105,4 +105,7 @@ dependencies {
     //encrypted shared preferences
     implementation "androidx.security:security-crypto:1.0.0"
 
+    //fragment KTX
+    implementation "androidx.fragment:fragment-ktx:1.5.4"
+
 }
