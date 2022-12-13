@@ -3,11 +3,13 @@ package com.shootit.greme.ui.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.shootit.greme.R
 import com.shootit.greme.base.BaseActivity
 import com.shootit.greme.databinding.ActivitySignUpBinding
+import com.shootit.greme.ui.fragment.signup.SetIdFragment
 import com.shootit.greme.viewmodel.SignUpViewModel
 
 class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sign_up) {
@@ -26,7 +28,9 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
     }
 
     override fun onCreateAction() {
-        //TODO("Not yet implemented")
+        supportFragmentManager.commit {
+            replace(R.id.fragmentSignUp, SetIdFragment())
+        }
     }
 
 }

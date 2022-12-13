@@ -40,7 +40,6 @@
             style="?attr/textInputFilledStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:errorEnabled="true"
             android:hint="@string/signup_hint"
             app:layout_constraintStart_toStartOf="@+id/tvWelcome"
             app:layout_constraintEnd_toEndOf="@id/tvWelcome"
@@ -49,9 +48,6 @@
 
             app:boxBackgroundColor="@color/signup_et_color"
             app:boxStrokeColor="@color/signup_et_color"
-
-            app:boxStrokeErrorColor="@color/signup_et_error"
-            app:errorTextColor="@color/signup_et_error"
 
             app:helperTextTextColor="@color/signup_et_counter"
             >
@@ -67,15 +63,18 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            style="@style/Widget.Material3.Button.ElevatedButton"
-            android:layout_width="wrap_content"
+            style="?attr/textInputFilledStyle"
+            android:id="@+id/buttonNext"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/signup_margin_mid"
-            android:text="NEXT"
-            android:textColor="@color/black"
-            android:textSize="@dimen/signup_et_text"
             android:backgroundTint="@color/signup_button"
+            android:layout_marginTop="@dimen/signup_margin_mid"
+            android:backgroundTintMode="add"
+            android:text="NEXT"
+            android:textColor="@color/icon_on_dark"
+            android:textSize="@dimen/signup_et_text"
             app:layout_constraintEnd_toEndOf="@id/etId"
+            app:layout_constraintStart_toStartOf="@id/etId"
             app:layout_constraintTop_toBottomOf="@id/etId"/>
 
 
