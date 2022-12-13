@@ -26,7 +26,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
     }
 
     override fun onCreateAction() {
-        TODO("Not yet implemented")
+        //TODO("Not yet implemented")
     }
 
 }
