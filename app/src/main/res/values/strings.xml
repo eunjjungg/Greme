@@ -4,7 +4,19 @@
     <!--login-->
     <string name="login_guide">로그인</string>
     <string name="login_app_name">GREME</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!--SignUp-->
+    <string name="signup_welcome">오늘부터 그리미랑 함께해서 반가워요</string>
+    <string name="signup_guide">사용하시려는 ID를 적어주세요</string>
+    <string name="signup_duplicate">중복된 ID 입니다.</string>
+    <string name="signup_need_more">%d글자 이상이어야 합니다.</string>
+    <string name="signup_need_less">%d글자 이내여야 합니다.</string>
+    <string name="signup_hint">ID</string>
+    <string name="signup_button">다음으로 넘어가기</string>
+    <string name="signup_ok">👍 사용 가능한 아이디입니다.</string>
 
 </resources>
