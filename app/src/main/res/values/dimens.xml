@@ -9,6 +9,6 @@
     <dimen name="signup_welcome_text">18dp</dimen>
     <dimen name="signup_guide_text">14dp</dimen>
     <dimen name="signup_et_text">14dp</dimen>
-    <dimen name="signup_margin_large">72dp</dimen>
+    <dimen name="signup_margin_large">80dp</dimen>
     <dimen name="signup_margin_mid">24dp</dimen>
 </resources>

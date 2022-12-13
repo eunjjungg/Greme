@@ -10,6 +10,9 @@
 
     <!--Greme project Custom Color-->
     <color name="transparent">#00000000</color>
+    <color name="status_bar">#7D8B86</color>
+    <color name="icon_on_bright">#FF000000</color>
+    <color name="icon_on_dark">#FFFFFFFF</color>
 
     <!--Login-->
     <color name="login_kakao">#F9E000</color>
@@ -19,6 +22,6 @@
     <color name="signup_et_color">#EEF2FB</color>
     <color name="signup_et_error">#FF5656</color>
     <color name="signup_et_counter">#4F8EEC</color>
-    <color name="signup_button">#8DD455</color>
+    <color name="signup_button">#78B449</color>
 
 </resources>

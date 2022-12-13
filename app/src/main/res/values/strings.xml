@@ -13,10 +13,12 @@
     <string name="signup_welcome">오늘부터 그리미랑 함께해서 반가워요</string>
     <string name="signup_guide">사용하시려는 ID를 적어주세요</string>
     <string name="signup_duplicate">중복된 ID 입니다.</string>
-    <string name="signup_need_more">%d글자 이상이어야 합니다.</string>
-    <string name="signup_need_less">%d글자 이내여야 합니다.</string>
+    <string name="signup_length">아이디는 3글자 이상 15글자 이내여야 합니다.</string>
+    <string name="signup_char">아이디는 영어 대소문자, 숫자, _ 기호만 가능합니다.</string>
+    <string name="signup_need_no_blank">아이디에 공백은 불가능합니다.</string>
     <string name="signup_hint">ID</string>
     <string name="signup_button">다음으로 넘어가기</string>
     <string name="signup_ok">👍 사용 가능한 아이디입니다.</string>
+    <string name="signup_check_duplicate">중복 검사 중입니다...</string>
 
 </resources>
