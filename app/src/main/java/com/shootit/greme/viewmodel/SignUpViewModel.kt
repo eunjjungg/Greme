@@ -4,11 +4,20 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.shootit.greme.R
+import com.shootit.greme.ui.`interface`.InterestButtonClickInterface
+import com.shootit.greme.ui.view.InterestButton
 
 class SignUpViewModel(t: String): ViewModel() {
     val errorText = MutableLiveData<Int?>(null)
     val guideText = MutableLiveData<Int?>(null)
 
+    init {
+
+    }
+
+    fun interestSelected(title: String, isClicked: Boolean) {
+        Log.d("ccheck", "$title : $isClicked")
+    }
 
     fun isIdProper(id: String) {
         if( !id.isAlphaNumeric() ) {
@@ -52,6 +61,7 @@ class SignUpViewModel(t: String): ViewModel() {
         }
         return false
     }
+
 
 
 }
