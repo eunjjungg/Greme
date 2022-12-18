@@ -1,5 +1,6 @@
 package com.shootit.greme.ui.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -53,6 +54,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
                 Toast.makeText(
                     this@LoginActivity, "로그인 완료", Toast.LENGTH_SHORT
                 ).show()
+                startActivity(Intent(this@LoginActivity, SignUpActivity::class.java))
+                finish()
             }
 
             override fun errorCallback() {
