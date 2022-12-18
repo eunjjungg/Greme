@@ -13,6 +13,8 @@
     <color name="status_bar">#7D8B86</color>
     <color name="icon_on_bright">#FF000000</color>
     <color name="icon_on_dark">#FFFFFFFF</color>
+    <color name="icon_bg_unSelected">#EEEEEE</color>
+    <color name="text">#FF000000</color>
 
     <!--Login-->
     <color name="login_kakao">#F9E000</color>

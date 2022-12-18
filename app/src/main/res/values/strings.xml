@@ -23,5 +23,10 @@
     <string name="signup_interest_welcome">반가워요!</string>
     <string name="signup_interest_guide">회원님의 최근 관심사를 모두 골라주세요!</string>
     <string name="signup_interest_guide_small">해당 관심사에 따라 추천 게시물이 달라져요</string>
+    <string name="ic_energy">에너지</string>
+    <string name="ic_upCycle">업사이클링</string>
+    <string name="ic_ecoProduct">친환경 제품</string>
+    <string name="ic_vegan">(비건) 채식</string>
+    <string name="ic_cosmetic">(비건) 화장품</string>
 
 </resources>

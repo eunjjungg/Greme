@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="InterestButton">
+        <attr name="interest_icon" format="reference"/>
+        <attr name="interest_description" format="string"/>
+    </declare-styleable>
+
+</resources>
