@@ -1,11 +1,9 @@
 package com.shootit.greme.ui.fragment.signup
 
-import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.util.Log
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import com.google.android.material.textfield.TextInputLayout
 import com.shootit.greme.R
 import com.shootit.greme.base.BaseFragment
@@ -67,7 +65,7 @@ class SetIdFragment : BaseFragment<FragmentSetIdBinding>(R.layout.fragment_set_i
     private fun TextInputLayout.setProperMSG(guideMessage: String) {
         this.apply {
             ColorStateList.valueOf(
-                resources.getColor(R.color.signup_et_counter)
+                resources.getColor(R.color.signup_et_no_error)
             ).also {
                 boxStrokeErrorColor = it
                 setErrorTextColor(it)

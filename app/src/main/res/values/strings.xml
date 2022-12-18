@@ -28,5 +28,7 @@
     <string name="ic_ecoProduct">친환경 제품</string>
     <string name="ic_vegan">(비건) 채식</string>
     <string name="ic_cosmetic">(비건) 화장품</string>
+    <string name="button_more_info">추가 정보 입력하기!</string>
+    <string name="button_next">다음으로 넘어가기</string>
 
 </resources>
