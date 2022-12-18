@@ -17,8 +17,8 @@
             android:scaleType="center"
             android:backgroundTintMode="add"
             android:src="@drawable/ic_recycle"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
