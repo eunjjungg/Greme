@@ -21,7 +21,7 @@
     <!--Signup-->
     <color name="signup_et_color">#EEF2FB</color>
     <color name="signup_et_error">#FF5656</color>
-    <color name="signup_et_counter">#4F8EEC</color>
+    <color name="signup_et_no_error">#4F8EEC</color>
     <color name="signup_button">#78B449</color>
 
 </resources>

@@ -49,7 +49,7 @@
             app:boxBackgroundColor="@color/signup_et_color"
             app:boxStrokeColor="@color/signup_et_color"
 
-            app:helperTextTextColor="@color/signup_et_counter"
+            app:helperTextTextColor="@color/signup_et_no_error"
             >
 
             <com.google.android.material.textfield.TextInputEditText

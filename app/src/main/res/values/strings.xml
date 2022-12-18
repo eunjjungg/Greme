@@ -20,5 +20,8 @@
     <string name="signup_button">다음으로 넘어가기</string>
     <string name="signup_ok">👍 사용 가능한 아이디입니다.</string>
     <string name="signup_check_duplicate">중복 검사 중입니다...</string>
+    <string name="signup_interest_welcome">반가워요!</string>
+    <string name="signup_interest_guide">회원님의 최근 관심사를 모두 골라주세요!</string>
+    <string name="signup_interest_guide_small">해당 관심사에 따라 추천 게시물이 달라져요</string>
 
 </resources>
