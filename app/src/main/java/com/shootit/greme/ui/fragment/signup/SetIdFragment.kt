@@ -15,10 +15,11 @@ class SetIdFragment : BaseFragment<FragmentSetIdBinding>(R.layout.fragment_set_i
     override val viewModel by activityViewModels<SignUpViewModel>()
 
     override fun initView() {
+        binding.viewModel = viewModel
         binding.apply {
 
         }
-
+        println(viewModel.interestList.toString())
         tmp()
         binding.buttonNext.isEnabled = false
         setErrorOrGuideText()

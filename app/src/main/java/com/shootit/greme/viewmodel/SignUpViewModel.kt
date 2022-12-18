@@ -20,7 +20,13 @@ class SignUpViewModel(t: String): ViewModel() {
         COSMETIC("(비건) 화장품", 4)
     }
 
-    private val interestList = mutableListOf<Boolean>(false, false, false, false, false)
+    enum class SIGNUP_FRAGMENT(val index: Int) {
+        INTEREST(0), MORE_INFO(1), ID(2)
+    }
+
+    val interestList = mutableListOf<Boolean>(false, false, false, false, false)
+
+    val fragmentTransition = MutableLiveData<SIGNUP_FRAGMENT>(SIGNUP_FRAGMENT.INTEREST)
 
     fun interestSelected(title: String, isClicked: Boolean) {
         when(title) {
@@ -30,7 +36,15 @@ class SignUpViewModel(t: String): ViewModel() {
             INTEREST.VEGAN.text -> interestList[INTEREST.VEGAN.index] = isClicked
             INTEREST.COSMETIC.text -> interestList[INTEREST.COSMETIC.index] = isClicked
         }
-        Log.d("ccheck", interestList.toString())
+    }
+
+    fun transitionToID() {
+        fragmentTransition.value = SIGNUP_FRAGMENT.ID
+        Log.d("ccheck", fragmentTransition.value.toString())
+    }
+
+    fun transitionToMoreInfo() {
+        fragmentTransition.value = SIGNUP_FRAGMENT.MORE_INFO
     }
 
     fun isIdProper(id: String) {

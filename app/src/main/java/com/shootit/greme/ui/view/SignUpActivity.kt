@@ -1,9 +1,8 @@
 package com.shootit.greme.ui.view
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.fragment.app.commit
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.shootit.greme.R
@@ -32,6 +31,19 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
         supportFragmentManager.commit {
             replace(R.id.fragmentSignUp, SetInterestFragment())
         }
+        setObserver()
     }
 
+    private fun setObserver() {
+        viewModel.fragmentTransition.observe(this, Observer {
+            if(it.index == SignUpViewModel.SIGNUP_FRAGMENT.MORE_INFO.index) {}
+            else if(it.index == SignUpViewModel.SIGNUP_FRAGMENT.ID.index){
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fragmentSignUp, SetIdFragment())
+                    .addToBackStack(null)
+                    .commit()
+            }
+        })
+    }
 }

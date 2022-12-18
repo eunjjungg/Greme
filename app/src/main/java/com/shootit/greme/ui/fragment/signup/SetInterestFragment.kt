@@ -1,10 +1,5 @@
 package com.shootit.greme.ui.fragment.signup
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.shootit.greme.R
 import com.shootit.greme.base.BaseFragment
@@ -17,6 +12,7 @@ class SetInterestFragment : BaseFragment<FragmentSetInterestBinding>(R.layout.fr
     override val viewModel by activityViewModels<SignUpViewModel>()
 
     override fun initView() {
+        binding.viewModel = viewModel
         binding.apply {
             setInterestButtonListener()
         }
@@ -26,7 +22,7 @@ class SetInterestFragment : BaseFragment<FragmentSetInterestBinding>(R.layout.fr
     private fun FragmentSetInterestBinding.setInterestButtonListener() {
         val listener: InterestButtonClickInterface = object : InterestButtonClickInterface {
             override fun interestButtonOnClick(title: String, isClicked: Boolean) {
-                viewModel.interestSelected(title, isClicked)
+                viewModel?.interestSelected(title, isClicked)
             }
         }
 
