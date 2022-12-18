@@ -10,6 +10,7 @@ import com.shootit.greme.R
 import com.shootit.greme.base.BaseActivity
 import com.shootit.greme.databinding.ActivitySignUpBinding
 import com.shootit.greme.ui.fragment.signup.SetIdFragment
+import com.shootit.greme.ui.fragment.signup.SetInterestFragment
 import com.shootit.greme.viewmodel.SignUpViewModel
 
 class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sign_up) {
@@ -29,7 +30,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
 
     override fun onCreateAction() {
         supportFragmentManager.commit {
-            replace(R.id.fragmentSignUp, SetIdFragment())
+            replace(R.id.fragmentSignUp, SetInterestFragment())
         }
     }
 

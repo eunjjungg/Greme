@@ -10,16 +10,31 @@ import com.shootit.greme.ui.view.InterestButton
 class SignUpViewModel(t: String): ViewModel() {
     val errorText = MutableLiveData<Int?>(null)
     val guideText = MutableLiveData<Int?>(null)
+    var id: String = ""
 
-    init {
-
+    enum class INTEREST(val text: String, val index: Int) {
+        ENERGY("에너지", 0),
+        UP_CYCLING("업사이클링", 1),
+        ECO_PRODUCT("친환경 제품", 2),
+        VEGAN("(비건) 채식", 3),
+        COSMETIC("(비건) 화장품", 4)
     }
 
+    private val interestList = mutableListOf<Boolean>(false, false, false, false, false)
+
     fun interestSelected(title: String, isClicked: Boolean) {
-        Log.d("ccheck", "$title : $isClicked")
+        when(title) {
+            INTEREST.ENERGY.text -> interestList[INTEREST.ENERGY.index] = isClicked
+            INTEREST.UP_CYCLING.text -> interestList[INTEREST.UP_CYCLING.index] = isClicked
+            INTEREST.ECO_PRODUCT.text -> interestList[INTEREST.ECO_PRODUCT.index] = isClicked
+            INTEREST.VEGAN.text -> interestList[INTEREST.VEGAN.index] = isClicked
+            INTEREST.COSMETIC.text -> interestList[INTEREST.COSMETIC.index] = isClicked
+        }
+        Log.d("ccheck", interestList.toString())
     }
 
     fun isIdProper(id: String) {
+        this.id = id
         if( !id.isAlphaNumeric() ) {
             guideText.value = null
             errorText.value = R.string.signup_char
