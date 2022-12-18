@@ -13,6 +13,7 @@ class SetInterestFragment : BaseFragment<FragmentSetInterestBinding>(R.layout.fr
 
     override fun initView() {
         binding.viewModel = viewModel
+        binding.initInterestButton(viewModel)
         binding.apply {
             setInterestButtonListener()
         }
@@ -32,4 +33,13 @@ class SetInterestFragment : BaseFragment<FragmentSetInterestBinding>(R.layout.fr
         btnVeganFood.setButtonListener(listener)
         btnVeganCosmetic.setButtonListener(listener)
     }
+
+    private fun FragmentSetInterestBinding.initInterestButton(viewModel: SignUpViewModel) {
+        btnEnergy.initButton(viewModel.interestList[SignUpViewModel.INTEREST.ENERGY.index])
+        btnUpCycling.initButton(viewModel.interestList[SignUpViewModel.INTEREST.UP_CYCLING.index])
+        btnEcoProduct.initButton(viewModel.interestList[SignUpViewModel.INTEREST.ECO_PRODUCT.index])
+        btnVeganFood.initButton(viewModel.interestList[SignUpViewModel.INTEREST.VEGAN.index])
+        btnVeganCosmetic.initButton(viewModel.interestList[SignUpViewModel.INTEREST.COSMETIC.index])
+    }
+
 }

@@ -50,6 +50,14 @@ class InterestButton : ConstraintLayout {
         }
     }
 
+    fun initButton(isSelected: Boolean) {
+        interestIsSelected = isSelected
+        when (interestIsSelected) {
+            true -> binding.iconBg.background.setTint(ContextCompat.getColor(context, R.color.icon_bg_selected))
+            else -> binding.iconBg.background.setTint(ContextCompat.getColor(context, R.color.icon_bg_unSelected))
+        }
+    }
+
     fun setButtonListener(listener: InterestButtonClickInterface) {
         this.listener = listener
     }
