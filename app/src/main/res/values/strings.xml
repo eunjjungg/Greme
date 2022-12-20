@@ -1,3 +1,34 @@
 <resources>
     <string name="app_name">Greme</string>
+
+    <!--login-->
+    <string name="login_guide">로그인</string>
+    <string name="login_app_name">GREME</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!--SignUp-->
+    <string name="signup_welcome">오늘부터 그리미랑 함께해서 반가워요</string>
+    <string name="signup_guide">사용하시려는 ID를 적어주세요</string>
+    <string name="signup_duplicate">중복된 ID 입니다.</string>
+    <string name="signup_length">아이디는 3글자 이상 15글자 이내여야 합니다.</string>
+    <string name="signup_char">아이디는 영어 대소문자, 숫자, _ 기호만 가능합니다.</string>
+    <string name="signup_need_no_blank">아이디에 공백은 불가능합니다.</string>
+    <string name="signup_hint">ID</string>
+    <string name="signup_button">다음으로 넘어가기</string>
+    <string name="signup_ok">👍 사용 가능한 아이디입니다.</string>
+    <string name="signup_check_duplicate">중복 검사 중입니다...</string>
+    <string name="signup_interest_welcome">반가워요!</string>
+    <string name="signup_interest_guide">회원님의 최근 관심사를 모두 골라주세요!</string>
+    <string name="signup_interest_guide_small">해당 관심사에 따라 추천 게시물이 달라져요</string>
+    <string name="ic_energy">에너지</string>
+    <string name="ic_upCycle">업사이클링</string>
+    <string name="ic_ecoProduct">친환경 제품</string>
+    <string name="ic_vegan">(비건) 채식</string>
+    <string name="ic_cosmetic">(비건) 화장품</string>
+    <string name="button_more_info">추가 정보 입력하기!</string>
+    <string name="button_next">다음으로 넘어가기</string>
+
 </resources>

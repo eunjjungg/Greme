@@ -7,18 +7,30 @@ plugins {
     id 'kotlin-parcelize'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 android {
     namespace 'com.shootit.greme'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.shootit.greme"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // local.properties 항목
+        buildConfigField "String", "NAVER_CLIENT_ID", properties["NAVER_CLIENT_ID"]
+        buildConfigField "String", "NAVER_CLIENT_SECRET", properties["NAVER_CLIENT_SECRET"]
+        buildConfigField "String", "KAKAO_NATIVE_APP_KEY", properties["KAKAO_NATIVE_APP_KEY"]
+
+        //manifest
+        manifestPlaceholders["KAKAO_NATIVE_APP_KEY"] =
+                properties.getProperty("KAKAO_NATIVE_APP_KEY")
     }
 
     buildTypes {
@@ -43,6 +55,12 @@ android {
     }
 }
 
+ext {
+    retrofit_version = '2.9.0'
+    naver_version = '5.3.0'
+    kakao_version = '2.11.2'
+}
+
 dependencies {
 
     implementation 'androidx.core:core-ktx:1.7.0'
@@ -62,10 +80,32 @@ dependencies {
     //coroutine-viewmodelScope
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
 
-    implementation 'androidx.activity:activity-ktx:1.6.1'
+    //implementation 'androidx.activity:activity-ktx:1.6.1'
     implementation 'androidx.fragment:fragment-ktx:1.5.4'
 
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+
+    //retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    //OkHttp Interceptor
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.8.0'
+    implementation "com.squareup.okhttp3:okhttp-urlconnection:4.9.1"
+
+    //naver login
+    implementation "com.navercorp.nid:oauth-jdk8:$naver_version"
+
+    //kakao login
+    implementation "com.kakao.sdk:v2-user:$kakao_version"
+
+    //encrypted shared preferences
+    implementation "androidx.security:security-crypto:1.0.0"
+
+    // ViewModel KTX
+    implementation "androidx.fragment:fragment-ktx:1.5.5"
+    implementation "androidx.activity:activity-ktx:1.6.1"
 }

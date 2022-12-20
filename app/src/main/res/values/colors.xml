@@ -7,4 +7,27 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--Greme project Custom Color-->
+    <color name="transparent">#00000000</color>
+    <color name="greme_main">#D9E5CF</color>
+    <color name="status_bar">#7D8B86</color>
+    <color name="icon_on_bright">#FF000000</color>
+    <color name="icon_on_dark">#FFFFFFFF</color>
+    <color name="icon_bg_unSelected">#EEEEEE</color>
+    <color name="icon_bg_selected">#DDECCA</color>
+    <color name="text">#FF000000</color>
+
+    <!--Login-->
+    <color name="login_kakao">#F9E000</color>
+    <color name="login_naver">#1EC800</color>
+
+    <!--Signup-->
+    <color name="signup_et_color">#EEF2FB</color>
+    <color name="signup_et_error">#FF5656</color>
+    <color name="signup_et_no_error">#4F8EEC</color>
+    <color name="signup_button">#78B449</color>
+    <color name="signup_next">#78B449</color>
+    <color name="signup_more_info">#D9E6CF</color>
+
 </resources>
