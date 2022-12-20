@@ -20,14 +20,19 @@ class SetIdFragment : BaseFragment<FragmentSetIdBinding>(R.layout.fragment_set_i
 
         }
         println(viewModel.interestList.toString())
-        tmp()
-        binding.buttonNext.isEnabled = false
+        setEditText()
         setErrorOrGuideText()
+        setButtonListener()
     }
 
-    private fun tmp() {
+    private fun setButtonListener() {
+        binding.btnNext.setOnClickListener {
+            viewModel.fragmentTransition.value = SignUpViewModel.SIGNUP_FRAGMENT.INTEREST
+        }
+    }
+
+    private fun setEditText() {
         binding.etId.editText?.doOnTextChanged { text, start, before, count ->
-            Log.d("ccheck", "input: <${text.toString()}>")
             viewModel.isIdProper(text.toString())
         }
     }
@@ -77,8 +82,5 @@ class SetIdFragment : BaseFragment<FragmentSetIdBinding>(R.layout.fragment_set_i
         }
     }
 
-    private fun FragmentSetIdBinding.setButtonEnable(isEnable: Boolean) {
-        this.buttonNext.isEnabled = isEnable
-    }
 
 }

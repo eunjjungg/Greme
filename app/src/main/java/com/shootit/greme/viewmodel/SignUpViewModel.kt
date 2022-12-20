@@ -26,7 +26,7 @@ class SignUpViewModel(t: String): ViewModel() {
 
     val interestList = mutableListOf<Boolean>(false, false, false, false, false)
 
-    val fragmentTransition = MutableLiveData<SIGNUP_FRAGMENT>(SIGNUP_FRAGMENT.INTEREST)
+    val fragmentTransition = MutableLiveData<SIGNUP_FRAGMENT>(SIGNUP_FRAGMENT.ID)
 
     fun interestSelected(title: String, isClicked: Boolean) {
         when(title) {
@@ -40,11 +40,14 @@ class SignUpViewModel(t: String): ViewModel() {
 
     fun transitionToID() {
         fragmentTransition.value = SIGNUP_FRAGMENT.ID
-        Log.d("ccheck", fragmentTransition.value.toString())
     }
 
     fun transitionToMoreInfo() {
         fragmentTransition.value = SIGNUP_FRAGMENT.MORE_INFO
+    }
+
+    fun transitionToInterest() {
+        fragmentTransition.value = SIGNUP_FRAGMENT.INTEREST
     }
 
     fun isIdProper(id: String) {

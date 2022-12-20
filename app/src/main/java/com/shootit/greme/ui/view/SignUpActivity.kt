@@ -29,18 +29,27 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
 
     override fun onCreateAction() {
         supportFragmentManager.commit {
-            replace(R.id.fragmentSignUp, SetInterestFragment())
+            replace(R.id.fragmentSignUp, SetIdFragment())
         }
         setObserver()
     }
 
     private fun setObserver() {
         viewModel.fragmentTransition.observe(this, Observer {
-            if(it.index == SignUpViewModel.SIGNUP_FRAGMENT.MORE_INFO.index) {}
+            if(it.index == SignUpViewModel.SIGNUP_FRAGMENT.MORE_INFO.index) {
+
+            }
             else if(it.index == SignUpViewModel.SIGNUP_FRAGMENT.ID.index){
                 supportFragmentManager
                     .beginTransaction()
                     .replace(R.id.fragmentSignUp, SetIdFragment())
+                    .addToBackStack(null)
+                    .commit()
+            }
+            else if(it.index == SignUpViewModel.SIGNUP_FRAGMENT.INTEREST.index) {
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fragmentSignUp, SetInterestFragment())
                     .addToBackStack(null)
                     .commit()
             }

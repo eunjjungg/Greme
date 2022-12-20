@@ -64,7 +64,7 @@
 
         <Button
             style="?attr/textInputFilledStyle"
-            android:id="@+id/buttonNext"
+            android:id="@+id/btnNext"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/signup_button"
