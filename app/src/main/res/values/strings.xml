@@ -5,9 +5,15 @@
     <string name="login_guide">로그인</string>
     <string name="login_app_name">GREME</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <!-- BottomNavigation -->
+    <string name="home">Home</string>
+    <string name="diary">Diary</string>
+    <string name="search">Search</string>
+    <string name="setting">Setting</string>
+    <string name="homepage">홈</string>
+    <string name="diarypage">다이어리</string>
+    <string name="searchpage">검색</string>
+    <string name="settingpage">환경설정</string>
 
     <!--SignUp-->
     <string name="signup_welcome">오늘부터 그리미랑 함께해서 반가워요</string>
