@@ -23,12 +23,35 @@
     <string name="signup_interest_welcome">%s 님!\n반가워요!</string>
     <string name="signup_interest_guide">회원님의 최근 관심사를 모두 골라주세요!</string>
     <string name="signup_interest_guide_small">해당 관심사에 따라 추천 게시물이 달라져요</string>
+    <string name="button_more_info">추가 정보 입력하기!</string>
+    <string name="button_next">다음으로 넘어가기</string>
+    <string name="signup_info_user">%s 님은</string>
+    <string name="signup_info_guide_region1">주로 활동하는 지역을 선택해주세요!</string>
+    <string name="signup_info_guide_region2">해당 지역에 따라 추천 게시물이 달라져요</string>
+    <string name="signup_info_guide_purpose1">활동 목적을 선택해주세요!</string>
+    <string name="signup_info_guide_purpose2">활동 목적에 따라 추천 게시물이 달라져요</string>
+    <string name="signup_info_purpose1">환경에 관심을 갖기 위해서</string>
+    <string name="signup_info_purpose2">사람들과 같이 활동하기 위해서</string>
+    <string name="signup_info_purpose3">좋은 제품을 추천받고 싶어서</string>
+    <string name="signup_finish_title">%s님!\n이제 회원가입이 완료되었어요!</string>
+    <string name="signup_finish_guide1">그리미에서는</string>
+    <string name="signup_finish_guide2">다이어리처럼 나의 eco 삶을 기록할 수 있고</string>
+    <string name="signup_finish_guide3">챌린지를 활용해 목표를 달성하고</string>
+    <string name="signup_finish_guide4">이를 쉽게 공유할 수 있습니다!</string>
+    <string name="signup_finish_guide5">프로필 사진이나</string>
+    <string name="signup_finish_guide6">소개 문구 등을 바꾸길 원하시면</string>
+    <string name="signup_finish_guide7">환경설정에서 가능합니다!</string>
+
+    <!--interest-->
     <string name="ic_energy">에너지</string>
     <string name="ic_upCycle">업사이클링</string>
     <string name="ic_ecoProduct">친환경 제품</string>
     <string name="ic_vegan">(비건) 채식</string>
     <string name="ic_cosmetic">(비건) 화장품</string>
-    <string name="button_more_info">추가 정보 입력하기!</string>
-    <string name="button_next">다음으로 넘어가기</string>
+
+    <!--additional info-->
+    <string name="info_gender_male">남성</string>
+    <string name="info_gender_female">여성</string>
+    <string name="info_gender_whatever">무엇이든</string>
 
 </resources>
