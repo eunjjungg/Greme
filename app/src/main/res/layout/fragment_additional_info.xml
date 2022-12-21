@@ -12,7 +12,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding= "@dimen/margin24"
@@ -27,7 +28,7 @@
                 android:paddingHorizontal="@dimen/margin24"
                 android:backgroundTintMode="add"
                 android:backgroundTint="@color/signup_more_info"
-                android:text="@string/signup_info_user"
+                android:text="@{vm.id + `님은`}"
                 android:textSize="@dimen/text18"
                 android:layout_marginTop="@dimen/margin32"
                 app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +44,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvId">
 
                 <com.shootit.greme.ui.view.InterestButton
-                    android:id="@+id/btnEnergy"
+                    android:id="@+id/btnMale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingEnd="@dimen/margin24"
@@ -52,7 +53,7 @@
                     />
 
                 <com.shootit.greme.ui.view.InterestButton
-                    android:id="@+id/btnUpCycling"
+                    android:id="@+id/btnFemale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingEnd="@dimen/margin24"
@@ -61,7 +62,7 @@
                     />
 
                 <com.shootit.greme.ui.view.InterestButton
-                    android:id="@+id/btnEcoProduct"
+                    android:id="@+id/btnWhatever"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:interest_icon="@drawable/ic_gender"
@@ -89,24 +90,62 @@
                 android:layout_marginTop="4dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvRegion1" />
-
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:layout_marginTop="@dimen/margin8"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvRegion2">
+                android:padding="@dimen/margin8"
+                android:hint="시/도 선택">
 
-                <Spinner
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                <AutoCompleteTextView
+                    android:id="@+id/dropdownRegion"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/margin8"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:textSize="@dimen/text12"
+                    tools:text="시/도를 선택해주세요" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            </LinearLayout>
+            <TextView
+                android:id="@+id/tvPurpose1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/signup_info_guide_purpose1"
+                android:layout_marginTop="@dimen/margin40"
+                android:textSize="@dimen/text14" />
 
+            <TextView
+                android:id="@+id/tvPurpose2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/signup_info_guide_purpose2"
+                android:textColor="@color/signup_et_no_error"
+                android:textSize="@dimen/text12"
+                android:layout_marginTop="4dp"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin8"
+                android:padding="@dimen/margin8"
+                android:hint="활동 목적">
+
+                <AutoCompleteTextView
+                    android:id="@+id/dropdownPurpose"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/margin8"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:textSize="@dimen/text12"
+                    tools:text="활동 목적을 선택해주세요" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
     </ScrollView>
 
 </layout>

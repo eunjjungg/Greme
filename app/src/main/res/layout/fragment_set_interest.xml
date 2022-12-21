@@ -33,9 +33,8 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="@dimen/margin60"
             android:textSize="@dimen/text14"
-            app:layout_constraintTop_toBottomOf="@+id/tvWelcome"
-            android:textColor="@color/text"/>
-
+            app:layout_constraintTop_toBottomOf="@+id/tvWelcome"/>
+        
         <TextView
             android:id="@+id/tvGuide2"
             android:layout_width="wrap_content"

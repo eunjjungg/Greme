@@ -30,9 +30,6 @@
     <string name="signup_info_guide_region2">해당 지역에 따라 추천 게시물이 달라져요</string>
     <string name="signup_info_guide_purpose1">활동 목적을 선택해주세요!</string>
     <string name="signup_info_guide_purpose2">활동 목적에 따라 추천 게시물이 달라져요</string>
-    <string name="signup_info_purpose1">환경에 관심을 갖기 위해서</string>
-    <string name="signup_info_purpose2">사람들과 같이 활동하기 위해서</string>
-    <string name="signup_info_purpose3">좋은 제품을 추천받고 싶어서</string>
     <string name="signup_finish_title">%s님!\n이제 회원가입이 완료되었어요!</string>
     <string name="signup_finish_guide1">그리미에서는</string>
     <string name="signup_finish_guide2">다이어리처럼 나의 eco 삶을 기록할 수 있고</string>
@@ -53,15 +50,22 @@
     <string name="info_gender_male">남성</string>
     <string name="info_gender_female">여성</string>
     <string name="info_gender_whatever">무엇이든</string>
-    
-    
-    
-    
-    
+
+
+
+
+    <!--purpose-->
+    <string-array name="signup_purpose">
+        <item>선택 안함</item>
+        <item>환경에 관심을 갖기 위해서</item>
+        <item>사람들과 같이 활동하기 위해서</item>
+        <item>좋은 제품을 추천받고 싶어서</item>
+    </string-array>
     
     
     <!--region-->
     <string-array name="regionLarge">
+        <item>선택 안함</item>
         <item>서울특별시</item>
         <item>부산광역시</item>
         <item>대구광역시</item>
