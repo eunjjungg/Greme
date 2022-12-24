@@ -11,6 +11,9 @@ class SignUpViewModel(t: String): ViewModel() {
     val errorText = MutableLiveData<Int?>(null)
     val guideText = MutableLiveData<Int?>(null)
     var id: String = ""
+    var gender: String = ""
+    var region: String = ""
+    var purpose: String = ""
 
     enum class INTEREST(val text: String, val index: Int) {
         ENERGY("에너지", 0),
