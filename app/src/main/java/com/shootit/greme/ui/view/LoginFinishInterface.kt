@@ -2,5 +2,5 @@ package com.shootit.greme.ui.view
 
 interface LoginFinishInterface {
     fun errorCallback()
-    fun openActivityCallback()
+    fun openActivityCallback(isExistingUser: Boolean)
 }

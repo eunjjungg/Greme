@@ -9,5 +9,5 @@ interface ConnectionInterface {
 
     // login (header에 token 삽입)
     @GET("/oauth2/login")
-    suspend fun getEmail(@Query("domain") domain: String): Response<LoginCheckData>
+    suspend fun getLoginData(@Query("domain") domain: String): Response<LoginCheckData>
 }

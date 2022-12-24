@@ -16,13 +16,28 @@ class LoginViewModel(private val loginRepository: LoginRepository): ViewModel() 
     fun getLoginData(domain: String, spf: SharedPreferences, callback: LoginFinishInterface) = viewModelScope.launch {
         Log.d("update login data", "login data to server")
 
-        loginRepository.getLoginData(domain = domain).email.also {
-            ConnectionObject.email = it
-            EncryptedSpfImpl(spf).setAccessToken(it)
+        var isExistingUser: Boolean = false
+
+        loginRepository.getLoginData(domain = domain).also {
+            Log.d("ccheck", it.toString())
+            ConnectionObject.email = it.email
+            ConnectionObject.token = it.accessToken
+            isExistingUser = it.isExistingUser
+            EncryptedSpfImpl(spf).apply {
+                setUserEmail(ConnectionObject.email)
+                setAccessToken(ConnectionObject.token)
+            }
         }
 
+        /*loginRepository.getLoginData(domain = domain).email.also {
+            ConnectionObject.email = it
+            EncryptedSpfImpl(spf).apply {
+                setUserEmail(it)
+            }
+        }*/
+
         if(EncryptedSpfImpl(spf).getAccessToken() != "") {
-            callback.openActivityCallback()
+            callback.openActivityCallback(isExistingUser = isExistingUser)
         } else {
             callback.errorCallback()
         }
