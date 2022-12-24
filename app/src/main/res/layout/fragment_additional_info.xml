@@ -145,6 +145,14 @@
                     tools:text="활동 목적을 선택해주세요" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <Button
+                android:id="@+id/btnNext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_next"
+                android:layout_marginHorizontal="@dimen/margin40"
+                android:backgroundTint="@color/signup_next"
+                android:layout_marginTop="@dimen/margin40" />
         </LinearLayout>
     </ScrollView>
 

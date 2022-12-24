@@ -20,6 +20,7 @@ class AdditionalInfoFragment :
         binding.apply { }
         initDropDown()
         initGenderButton()
+        initNextButton()
     }
 
     private fun initDropDown() {
@@ -38,10 +39,12 @@ class AdditionalInfoFragment :
 
     private fun setDropDownListener() {
         binding.dropdownPurpose.setOnItemClickListener { adapterView, view, position, rowId ->
+            viewModel.purpose = adapterView.getItemAtPosition(position).toString()
             Log.d("tag", "position: $position, rowId:$rowId, string: ${adapterView.getItemAtPosition(position)}")
         }
 
         binding.dropdownRegion.setOnItemClickListener { adapterView, view, position, rowId ->
+            viewModel.region = adapterView.getItemAtPosition(position).toString()
             Log.d("tag", "position: $position, rowId:$rowId, string: ${adapterView.getItemAtPosition(position)}")
         }
     }
@@ -75,6 +78,12 @@ class AdditionalInfoFragment :
 
         genderButtons.forEach {
             it.setButtonListener(listener)
+        }
+    }
+
+    private fun initNextButton() {
+        binding.btnNext.setOnClickListener {
+
         }
     }
 
