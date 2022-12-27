@@ -108,4 +108,11 @@ dependencies {
     // ViewModel KTX
     implementation "androidx.fragment:fragment-ktx:1.5.5"
     implementation "androidx.activity:activity-ktx:1.6.1"
+
+    // circle profile
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    // Glide
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 }
