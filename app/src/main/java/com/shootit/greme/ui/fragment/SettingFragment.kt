@@ -6,18 +6,39 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.shootit.greme.R
+import com.shootit.greme.databinding.FragmentSettingBinding
+import com.shootit.greme.model.ChallengeData
+import com.shootit.greme.ui.adapter.ParticipatedChallengeAdapter
 
 class SettingFragment : Fragment(R.layout.fragment_setting) {
+    // 전역 변수로 바인딩 객체 선언
+    private var mBinding: FragmentSettingBinding? = null
+    // 매번 null 체크를 할 필요없이 편의성을 위해 바인딩 변수 재선언
+    private val binding get() = mBinding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    lateinit var participatedChallengeAdapter: ParticipatedChallengeAdapter
+    val datas = mutableListOf<ChallengeData>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_setting, container, false)
+        // 바인딩
+        mBinding = FragmentSettingBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+        initRecycler()
+        return root
+    }
+    private fun initRecycler(){
+        participatedChallengeAdapter = ParticipatedChallengeAdapter(requireContext())
+        binding.rvChallenge.adapter = participatedChallengeAdapter
+
+        datas.apply{
+            add(ChallengeData(title = "가까운_거리는_걸어다니기", content = "도보로 15분 이내의 거리는 걸어다니기", img = R.drawable.ic_profile, participant = "9", day = "D-8"))
+            add(ChallengeData(title = "텀블러_이용하기", content = "카페가서 텀블러 이용하기", img = R.drawable.ic_profile, participant = "25", day = "D-10"))
+            add(ChallengeData(title = "따뜻하게_입고_다니기", content = "난방 대신 따뜻한 옷을 입어요", img = R.drawable.ic_profile, participant = "12", day = "D-17"))
+            participatedChallengeAdapter.datas=datas
+            participatedChallengeAdapter.notifyDataSetChanged()
+        }
     }
 }

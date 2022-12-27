@@ -37,4 +37,16 @@
     <string name="button_more_info">추가 정보 입력하기!</string>
     <string name="button_next">다음으로 넘어가기</string>
 
+    <!-- Setting -->
+    <string name="test_id">TEST_ID</string>
+    <string name="profile_modify">프로필 수정</string>
+    <string name="participated_challenge">이번달 참여한 챌린지</string>
+    <string name="hashtag">#</string>
+    <string name="challenge_title">가까운 거리는 걸어다니기</string>
+    <string name="challenge_content">도보로 15분 이내의 거리는 걸어다니기</string>
+    <string name="Dday">D-10</string>
+    <string name="challenge_participant">25</string>
+    <string name="logout">로그아웃</string>
+    <string name="secession">회원 탈퇴</string>
+
 </resources>
