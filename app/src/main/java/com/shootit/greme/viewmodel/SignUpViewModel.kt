@@ -1,13 +1,14 @@
 package com.shootit.greme.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.shootit.greme.R
-import com.shootit.greme.ui.`interface`.InterestButtonClickInterface
-import com.shootit.greme.ui.view.InterestButton
+import com.shootit.greme.repository.SignUpRepository
+import kotlinx.coroutines.launch
 
-class SignUpViewModel(t: String): ViewModel() {
+class SignUpViewModel(private val signUpRepository: SignUpRepository) : ViewModel() {
     val errorText = MutableLiveData<Int?>(null)
     val guideText = MutableLiveData<Int?>(null)
     var id: String = ""
@@ -32,7 +33,7 @@ class SignUpViewModel(t: String): ViewModel() {
     val fragmentTransition = MutableLiveData<SIGNUP_FRAGMENT>(SIGNUP_FRAGMENT.ID)
 
     fun interestSelected(title: String, isClicked: Boolean) {
-        when(title) {
+        when (title) {
             INTEREST.ENERGY.text -> interestList[INTEREST.ENERGY.index] = isClicked
             INTEREST.UP_CYCLING.text -> interestList[INTEREST.UP_CYCLING.index] = isClicked
             INTEREST.ECO_PRODUCT.text -> interestList[INTEREST.ECO_PRODUCT.index] = isClicked
@@ -55,18 +56,22 @@ class SignUpViewModel(t: String): ViewModel() {
 
     fun isIdProper(id: String) {
         this.id = id
-        if( !id.isAlphaNumeric() ) {
+        if (!id.isAlphaNumeric()) {
             guideText.value = null
             errorText.value = R.string.signup_char
-        } else if( !id.isLengthProper() ) {
+        } else if (!id.isLengthProper()) {
             guideText.value = null
             errorText.value = R.string.signup_length
-        } else if ( !id.isBlankNotIncluded() ) {
+        } else if (!id.isBlankNotIncluded()) {
             guideText.value = null
             errorText.value = R.string.signup_need_no_blank
         } else {
             errorText.value = null
             guideText.value = R.string.signup_check_duplicate
+        }
+
+        viewModelScope.launch {
+
         }
     }
 
@@ -82,7 +87,7 @@ class SignUpViewModel(t: String): ViewModel() {
     }
 
     private fun String.isLengthProper(): Boolean {
-        if( this.length !in 3..15 ) {
+        if (this.length !in 3..15) {
             return false
         }
         return true
@@ -90,7 +95,7 @@ class SignUpViewModel(t: String): ViewModel() {
 
     private fun String.isBlankNotIncluded(): Boolean {
         this.forEach {
-            if ( it != ' ' ) {
+            if (it != ' ') {
                 return true
             }
         }
@@ -98,5 +103,11 @@ class SignUpViewModel(t: String): ViewModel() {
     }
 
 
+    class SignUpViewModelFactory(private val signUpRepository: SignUpRepository) :
+        ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T {
+            return SignUpViewModel(signUpRepository) as T
+        }
+    }
 
 }
