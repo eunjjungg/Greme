@@ -14,11 +14,17 @@
         <!-- Customize your theme here. -->
 
         <item name="android:textColor">@color/black</item>
-
-
-
+        <item name="android:alertDialogTheme">@style/AppTheme.AlertDialogTheme</item>
 
     </style>
-
-
+    <style name="AppTheme.AlertDialogTheme" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="buttonBarNegativeButtonStyle">@style/AppTheme.AlertDialogTheme.Negative</item>
+        <item name="buttonBarPositiveButtonStyle">@style/AppTheme.AlertDialogTheme.Positive</item>
+    </style>
+    <style name="AppTheme.AlertDialogTheme.Negative" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/signup_et_no_error</item>
+    </style>
+    <style name="AppTheme.AlertDialogTheme.Positive" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">@color/signup_et_error</item>
+    </style>
 </resources>
