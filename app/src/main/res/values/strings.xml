@@ -6,14 +6,14 @@
     <string name="login_app_name">GREME</string>
 
     <!-- BottomNavigation -->
-    <string name="home">Home</string>
-    <string name="diary">Diary</string>
-    <string name="search">Search</string>
-    <string name="setting">Setting</string>
-    <string name="homepage">홈</string>
-    <string name="diarypage">다이어리</string>
-    <string name="searchpage">검색</string>
-    <string name="settingpage">환경설정</string>
+    <string name="bottomnavigation_home">Home</string>
+    <string name="bottomnavigation_diary">Diary</string>
+    <string name="bottomnavigation_search">Search</string>
+    <string name="bottomnavigation_setting">Setting</string>
+    <string name="bottomnavigation_homepage">홈</string>
+    <string name="bottomnavigation_diarypage">다이어리</string>
+    <string name="bottomnavigation_searchpage">검색</string>
+    <string name="bottomnavigation_settingpage">환경설정</string>
 
     <!--SignUp-->
     <string name="signup_welcome">오늘부터 그리미랑 함께해서 반가워요</string>
@@ -38,15 +38,15 @@
     <string name="button_next">다음으로 넘어가기</string>
 
     <!-- Setting -->
-    <string name="test_id">TEST_ID</string>
-    <string name="profile_modify">프로필 수정</string>
-    <string name="participated_challenge">이번달 참여한 챌린지</string>
-    <string name="hashtag">#</string>
-    <string name="challenge_title">가까운 거리는 걸어다니기</string>
-    <string name="challenge_content">도보로 15분 이내의 거리는 걸어다니기</string>
-    <string name="Dday">D-10</string>
-    <string name="challenge_participant">25</string>
-    <string name="logout">로그아웃</string>
-    <string name="secession">회원 탈퇴</string>
+    <string name="setting_test_id">TEST_ID</string>
+    <string name="setting_profile_modify">프로필 수정</string>
+    <string name="setting_participated_challenge">이번달 참여한 챌린지</string>
+    <string name="setting_hashtag">#</string>
+    <string name="setting_challenge_title">가까운 거리는 걸어다니기</string>
+    <string name="setting_challenge_content">도보로 15분 이내의 거리는 걸어다니기</string>
+    <string name="setting_Dday">D-10</string>
+    <string name="setting_challenge_participant">25</string>
+    <string name="setting_logout">로그아웃</string>
+    <string name="setting_secession">회원 탈퇴</string>
 
 </resources>
