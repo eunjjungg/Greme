@@ -39,6 +39,13 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
         mBinding = FragmentSettingBinding.inflate(inflater, container, false)
         val root: View = binding.root
         initRecycler()
+        binding.btnProfileModify.setOnClickListener {
+            val profileeditFragment = ProfileEditFragment()
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.nav_fl, profileeditFragment)
+                .commitNow()
+        }
         binding.btnLogout.setOnClickListener {
             val builder = AlertDialog.Builder(requireContext(),R.style.AppTheme_AlertDialogTheme)
             builder.setTitle("로그아웃")
