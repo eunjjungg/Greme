@@ -16,13 +16,11 @@ class SetIdFragment : BaseFragment<FragmentSetIdBinding>(R.layout.fragment_set_i
 
     override fun initView() {
         binding.viewModel = viewModel
-        binding.apply {
-
-        }
         println(viewModel.interestList.toString())
         setEditText()
         setErrorOrGuideText()
         setButtonListener()
+        setButtonNextEnabled(false)
     }
 
     private fun setButtonListener() {
@@ -49,9 +47,30 @@ class SetIdFragment : BaseFragment<FragmentSetIdBinding>(R.layout.fragment_set_i
         viewModel.guideText.observe(this) {
             viewModel.guideText.value?.let {
                 binding.etId.setProperMSG(getString(it))
+                if(it == R.string.signup_ok) {
+                    setButtonNextEnabled(true)
+                } else {
+                    setButtonNextEnabled(false)
+                }
+            }
+            if(viewModel.guideText.value == null) {
+                setButtonNextEnabled(false)
             }
         }
 
+    }
+
+    private fun setButtonNextEnabled(isEnable: Boolean) {
+        binding.btnNext.isEnabled = isEnable
+        if (isEnable) {
+            binding.btnNext.backgroundTintList = ColorStateList.valueOf(
+                resources.getColor(R.color.signup_button)
+            )
+        } else {
+            binding.btnNext.backgroundTintList = ColorStateList.valueOf(
+                resources.getColor(R.color.status_bar)
+            )
+        }
     }
 
     private fun TextInputLayout.setErrorMSG(errorMessage: String) {

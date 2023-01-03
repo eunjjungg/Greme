@@ -1,5 +1,7 @@
 package com.shootit.greme.viewmodel
 
+import android.os.CountDownTimer
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -7,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.shootit.greme.R
 import com.shootit.greme.repository.SignUpRepository
 import kotlinx.coroutines.launch
+import java.util.*
 
 class SignUpViewModel(private val signUpRepository: SignUpRepository) : ViewModel() {
     val errorText = MutableLiveData<Int?>(null)
@@ -15,6 +18,9 @@ class SignUpViewModel(private val signUpRepository: SignUpRepository) : ViewMode
     var gender: String = ""
     var region: String = ""
     var purpose: String = ""
+
+    private var timer: CountDownTimer? = null
+    private val CHECK_NICKNAME_TIME_INTERVAL = 1000L
 
     enum class INTEREST(val text: String, val index: Int) {
         ENERGY("에너지", 0),
@@ -70,8 +76,31 @@ class SignUpViewModel(private val signUpRepository: SignUpRepository) : ViewMode
             guideText.value = R.string.signup_check_duplicate
         }
 
+        if(guideText.value != null) {
+            timer?.let {
+                timer!!.cancel()
+            }
+            timer = object : CountDownTimer(CHECK_NICKNAME_TIME_INTERVAL, 500) {
+                override fun onTick(millisUntilFinished: Long) {
+                }
+
+                override fun onFinish() {
+                    checkUserNameDuplicated(id)
+                }
+            }.start()
+
+        }
+    }
+
+    private fun checkUserNameDuplicated(id: String) {
         viewModelScope.launch {
-            signUpRepository.checkUserNameDuplicated(id)
+            if(signUpRepository.checkUserNameDuplicated(id)) {
+                guideText.value = R.string.signup_ok
+                errorText.value = null
+            } else {
+                guideText.value = null
+                errorText.value = R.string.signup_duplicate
+            }
         }
     }
 
