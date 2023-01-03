@@ -29,14 +29,7 @@ class LoginViewModel(private val loginRepository: LoginRepository): ViewModel() 
             }
         }
 
-        /*loginRepository.getLoginData(domain = domain).email.also {
-            ConnectionObject.email = it
-            EncryptedSpfImpl(spf).apply {
-                setUserEmail(it)
-            }
-        }*/
-
-        if(EncryptedSpfImpl(spf).getAccessToken() != "") {
+        if(EncryptedSpfImpl(spf).getUserEmail() != "") {
             callback.openActivityCallback(isExistingUser = isExistingUser)
         } else {
             callback.errorCallback()

@@ -71,7 +71,7 @@ class SignUpViewModel(private val signUpRepository: SignUpRepository) : ViewMode
         }
 
         viewModelScope.launch {
-
+            signUpRepository.checkUserNameDuplicated(id)
         }
     }
 

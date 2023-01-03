@@ -18,8 +18,12 @@ class SignUpRepository {
     suspend fun checkUserNameDuplicated(userName: String): Boolean {
         val response = ConnectionObject
             .getSignUpRetrofitService.checkUserNameDuplicated(userName)
-        return if (response.isSuccessful) true
+        return if (response.isSuccessful) {
+            Log.d("ccheck", response.code().toString())
+            true
+        }
         else {
+            Log.d("ccheck error", response.code().toString())
             Log.d("name error", response.errorBody().toString())
             false
         }

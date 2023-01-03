@@ -84,6 +84,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         binding.btnLoginKakao.setOnClickListener {
             KakaoLoginManager(context = this@LoginActivity).startKakaoLogin {
                 ConnectionObject.token = it
+                Log.d("ccheck tokent", it)
                 viewModel.getLoginData(
                     KAKAO_LOGIN_DOMAIN,
                     EncryptedSpfObject.getEncryptedSpf(this@LoginActivity),
