@@ -1,5 +1,6 @@
 package com.shootit.greme.viewmodel
 
+import android.content.SharedPreferences
 import android.os.CountDownTimer
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -7,15 +8,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.shootit.greme.R
+import com.shootit.greme.model.GENDER
+import com.shootit.greme.model.SignUpAccountData
+import com.shootit.greme.model.UserAdditionalInfo
+import com.shootit.greme.model.UserInterestData
+import com.shootit.greme.network.ConnectionObject
 import com.shootit.greme.repository.SignUpRepository
+import com.shootit.greme.util.EncryptedSpfImpl
 import kotlinx.coroutines.launch
 import java.util.*
+import kotlin.math.sign
 
 class SignUpViewModel(private val signUpRepository: SignUpRepository) : ViewModel() {
     val errorText = MutableLiveData<Int?>(null)
     val guideText = MutableLiveData<Int?>(null)
     var id: String = ""
-    var gender: String = ""
+    var gender: GENDER? = null
     var region: String = ""
     var purpose: String = ""
 
@@ -31,7 +39,7 @@ class SignUpViewModel(private val signUpRepository: SignUpRepository) : ViewMode
     }
 
     enum class SIGNUP_FRAGMENT(val index: Int) {
-        INTEREST(0), MORE_INFO(1), ID(2)
+        INTEREST(0), MORE_INFO(1), ID(2), FINISH(3)
     }
 
     val interestList = mutableListOf<Boolean>(false, false, false, false, false)
@@ -60,6 +68,10 @@ class SignUpViewModel(private val signUpRepository: SignUpRepository) : ViewMode
         fragmentTransition.value = SIGNUP_FRAGMENT.INTEREST
     }
 
+    fun finishSignUp() {
+        fragmentTransition.value = SIGNUP_FRAGMENT.FINISH
+    }
+
     fun isIdProper(id: String) {
         this.id = id
         if (!id.isAlphaNumeric()) {
@@ -76,7 +88,7 @@ class SignUpViewModel(private val signUpRepository: SignUpRepository) : ViewMode
             guideText.value = R.string.signup_check_duplicate
         }
 
-        if(guideText.value != null) {
+        if (guideText.value != null) {
             timer?.let {
                 timer!!.cancel()
             }
@@ -94,7 +106,7 @@ class SignUpViewModel(private val signUpRepository: SignUpRepository) : ViewMode
 
     private fun checkUserNameDuplicated(id: String) {
         viewModelScope.launch {
-            if(signUpRepository.checkUserNameDuplicated(id)) {
+            if (signUpRepository.checkUserNameDuplicated(id)) {
                 guideText.value = R.string.signup_ok
                 errorText.value = null
             } else {
@@ -131,6 +143,47 @@ class SignUpViewModel(private val signUpRepository: SignUpRepository) : ViewMode
         return false
     }
 
+    fun makeAccount(spf: SharedPreferences, completion: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            var token = signUpRepository.makeAccount(SignUpAccountData(EncryptedSpfImpl(spf).getUserEmail()!!, id))
+            var result = false
+            token?.let {
+                ConnectionObject.token = token
+                EncryptedSpfImpl(spf).setAccessToken(it)
+                result = true
+            }
+            completion(result)
+        }
+    }
+
+    fun setInterest(completion: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            var interestData = mutableListOf<Int>()
+            interestList.forEachIndexed { index, boolean ->
+                if(boolean) {
+                    interestData.add(index)
+                }
+            }
+            if(interestData.isNotEmpty()) {
+                val result = signUpRepository.setInterest(UserInterestData(interestData))
+                completion(result)
+            }
+        }
+    }
+
+    fun setAdditionalInfo(completion: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            val genderData: GENDER = gender ?: GENDER.Whatever
+            val result = signUpRepository.setAdditionalInfo(
+                UserAdditionalInfo(
+                    genderData.index,
+                    region,
+                    purpose
+                )
+            )
+            completion(result)
+        }
+    }
 
     class SignUpViewModelFactory(private val signUpRepository: SignUpRepository) :
         ViewModelProvider.Factory {

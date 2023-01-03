@@ -2,6 +2,7 @@ package com.shootit.greme.ui.fragment.signup
 
 import android.util.Log
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import com.shootit.greme.R
 import com.shootit.greme.base.BaseFragment
@@ -67,11 +68,36 @@ class AdditionalInfoFragment :
                 }
                 if(isClicked) {
                     when (title) {
-                        GENDER.Male.text -> { initButton(listOf(binding.btnFemale, binding.btnWhatever)) }
-                        GENDER.Female.text -> { initButton(listOf(binding.btnMale, binding.btnWhatever)) }
-                        else -> { initButton(listOf(binding.btnMale, binding.btnFemale)) }
+                        GENDER.Male.text -> {
+                            initButton(listOf(binding.btnFemale, binding.btnWhatever))
+                            viewModel.gender = GENDER.Male
+                        }
+                        GENDER.Female.text -> {
+                            initButton(listOf(binding.btnMale, binding.btnWhatever))
+                            viewModel.gender = GENDER.Female
+                        }
+                        else -> {
+                            initButton(listOf(binding.btnMale, binding.btnFemale))
+                            viewModel.gender = GENDER.Whatever
+                        }
                     }
-                    viewModel.gender = title
+                }
+                else {
+                    val setNull: (GENDER) -> Unit = {
+                        if(viewModel.gender == it)
+                            viewModel.gender = null
+                    }
+                    when (title) {
+                        GENDER.Male.text -> {
+                            setNull(GENDER.Male)
+                        }
+                        GENDER.Female.text -> {
+                            setNull(GENDER.Female)
+                        }
+                        else -> {
+                            setNull(GENDER.Whatever)
+                        }
+                    }
                 }
             }
         }
@@ -83,8 +109,25 @@ class AdditionalInfoFragment :
 
     private fun initNextButton() {
         binding.btnNext.setOnClickListener {
-
+            if (viewModel.gender != null && viewModel.purpose.isNotBlank() && viewModel.region.isNotBlank()) {
+                viewModel.setInterest { result: Boolean ->
+                    if(!result) {
+                        Toast.makeText(binding.root.context, "사용자 등록에 실패했습니다.\n잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                    } else {
+                        viewModel.setAdditionalInfo { result: Boolean ->
+                            if(!result) {
+                                Toast.makeText(binding.root.context, "사용자 등록에 실패했습니다.\n잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                            } else {
+                                viewModel.finishSignUp()
+                            }
+                        }
+                    }
+                }
+            } else {
+                Toast.makeText(binding.root.context, "모든 항목을 다 선택해주세요.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
+
 
 }

@@ -54,7 +54,7 @@
 
     <!--purpose-->
     <string-array name="signup_purpose">
-        <item>선택 안함</item>
+        <item>선택 안 함</item>
         <item>환경에 관심을 갖기 위해서</item>
         <item>사람들과 같이 활동하기 위해서</item>
         <item>좋은 제품을 추천받고 싶어서</item>
@@ -63,7 +63,7 @@
 
     <!--region-->
     <string-array name="regionLarge">
-        <item>선택 안함</item>
+        <item>선택 안 함</item>
         <item>서울특별시</item>
         <item>부산광역시</item>
         <item>대구광역시</item>
