@@ -3,6 +3,9 @@ package com.shootit.greme.repository
 import android.app.Application
 import android.util.Log
 import com.shootit.greme.model.LoginCheckData
+import com.shootit.greme.model.SignUpAccountData
+import com.shootit.greme.model.UserAdditionalInfo
+import com.shootit.greme.model.UserInterestData
 import com.shootit.greme.network.ConnectionObject
 
 class SignUpRepository {
@@ -27,5 +30,30 @@ class SignUpRepository {
             Log.d("name error", response.errorBody().toString())
             false
         }
+    }
+
+    suspend fun makeAccount(signUpData: SignUpAccountData): String? {
+        val response = ConnectionObject
+            .getSignUpRetrofitService.makeAccount(signUpData)
+
+        return if (response.isSuccessful) {
+            response.headers().toString()
+        } else {
+            null
+        }
+    }
+
+    suspend fun setInterest(userInterestData: UserInterestData): Boolean {
+        val response = ConnectionObject
+            .getSignUpRetrofitService.setInterest(userInterestData)
+
+        return response.isSuccessful
+    }
+
+    suspend fun setAdditionalInfo(userAdditionalInfo: UserAdditionalInfo): Boolean {
+        val response = ConnectionObject
+            .getSignUpRetrofitService.setAdditionalInfo(userAdditionalInfo)
+
+        return response.isSuccessful
     }
 }

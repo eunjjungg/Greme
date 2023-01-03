@@ -1,8 +1,17 @@
 package com.shootit.greme.model
 
+import com.google.gson.annotations.SerializedName
+
 data class SignUpData(
     val id: String,
     val recentInterest: RecentInterest
+)
+
+data class SignUpAccountData(
+    @SerializedName("email")
+    val email: String,
+    @SerializedName("username")
+    val username: String
 )
 
 enum class RecentInterest(meaning: String) {

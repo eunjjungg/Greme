@@ -52,8 +52,6 @@
     <string name="info_gender_whatever">무엇이든</string>
 
 
-
-
     <!--purpose-->
     <string-array name="signup_purpose">
         <item>선택 안함</item>
@@ -61,8 +59,8 @@
         <item>사람들과 같이 활동하기 위해서</item>
         <item>좋은 제품을 추천받고 싶어서</item>
     </string-array>
-    
-    
+
+
     <!--region-->
     <string-array name="regionLarge">
         <item>선택 안함</item>
@@ -84,34 +82,6 @@
         <item>경상남도</item>
         <item>제주특별자치도</item>
     </string-array>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 </resources>
