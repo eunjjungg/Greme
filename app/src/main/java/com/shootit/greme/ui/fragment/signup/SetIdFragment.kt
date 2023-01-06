@@ -2,12 +2,14 @@ package com.shootit.greme.ui.fragment.signup
 
 import android.content.res.ColorStateList
 import android.util.Log
+import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.textfield.TextInputLayout
 import com.shootit.greme.R
 import com.shootit.greme.base.BaseFragment
 import com.shootit.greme.databinding.FragmentSetIdBinding
+import com.shootit.greme.util.EncryptedSpfObject
 import com.shootit.greme.viewmodel.SignUpViewModel
 import com.google.android.material.R as googleR
 
@@ -16,18 +18,27 @@ class SetIdFragment : BaseFragment<FragmentSetIdBinding>(R.layout.fragment_set_i
 
     override fun initView() {
         binding.viewModel = viewModel
-        binding.apply {
-
-        }
         println(viewModel.interestList.toString())
-        tmp()
-        binding.buttonNext.isEnabled = false
+        setEditText()
         setErrorOrGuideText()
+        setButtonListener()
+        setButtonNextEnabled(false)
     }
 
-    private fun tmp() {
+    private fun setButtonListener() {
+        binding.btnNext.setOnClickListener {
+            viewModel.makeAccount(EncryptedSpfObject.getEncryptedSpf(binding.root.context)) { result: Boolean ->
+                if(result) {
+                    viewModel.fragmentTransition.value = SignUpViewModel.SIGNUP_FRAGMENT.INTEREST
+                } else {
+                    Toast.makeText(binding.root.context, "사용자 등록에 실패했습니다.\n잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun setEditText() {
         binding.etId.editText?.doOnTextChanged { text, start, before, count ->
-            Log.d("ccheck", "input: <${text.toString()}>")
             viewModel.isIdProper(text.toString())
         }
     }
@@ -44,9 +55,30 @@ class SetIdFragment : BaseFragment<FragmentSetIdBinding>(R.layout.fragment_set_i
         viewModel.guideText.observe(this) {
             viewModel.guideText.value?.let {
                 binding.etId.setProperMSG(getString(it))
+                if(it == R.string.signup_ok) {
+                    setButtonNextEnabled(true)
+                } else {
+                    setButtonNextEnabled(false)
+                }
+            }
+            if(viewModel.guideText.value == null) {
+                setButtonNextEnabled(false)
             }
         }
 
+    }
+
+    private fun setButtonNextEnabled(isEnable: Boolean) {
+        binding.btnNext.isEnabled = isEnable
+        if (isEnable) {
+            binding.btnNext.backgroundTintList = ColorStateList.valueOf(
+                resources.getColor(R.color.signup_button)
+            )
+        } else {
+            binding.btnNext.backgroundTintList = ColorStateList.valueOf(
+                resources.getColor(R.color.status_bar)
+            )
+        }
     }
 
     private fun TextInputLayout.setErrorMSG(errorMessage: String) {
@@ -77,8 +109,5 @@ class SetIdFragment : BaseFragment<FragmentSetIdBinding>(R.layout.fragment_set_i
         }
     }
 
-    private fun FragmentSetIdBinding.setButtonEnable(isEnable: Boolean) {
-        this.buttonNext.isEnabled = isEnable
-    }
 
 }
