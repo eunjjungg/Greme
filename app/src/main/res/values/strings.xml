@@ -49,4 +49,20 @@
     <string name="logout">로그아웃</string>
     <string name="secession">회원 탈퇴</string>
 
+    <!-- Diary -->
+    <string name="diary_month">January</string>
+    <string name="diary_year">2023</string>
+    <string name="diary_day">TUE</string>
+    <string name="diary_date">3</string>
+
+    <!-- Calendar Array -->
+    <string-array name="calendar_day">
+        <item>일</item>
+        <item>월</item>
+        <item>화</item>
+        <item>수</item>
+        <item>목</item>
+        <item>금</item>
+        <item>토</item>
+    </string-array>
 </resources>

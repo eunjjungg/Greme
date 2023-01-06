@@ -30,4 +30,8 @@
     <color name="signup_next">#78B449</color>
     <color name="signup_more_info">#D9E6CF</color>
 
+    <!--Diary-->
+    <color name="diary_calendarbox">#6E8DD455</color>
+    <color name="diary_day">#258F00</color>
+
 </resources>
