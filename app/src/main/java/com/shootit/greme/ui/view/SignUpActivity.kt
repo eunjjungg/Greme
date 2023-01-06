@@ -1,5 +1,6 @@
 package com.shootit.greme.ui.view
 
+import android.content.Intent
 import androidx.activity.viewModels
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
@@ -54,6 +55,12 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
                     .beginTransaction()
                     .replace(R.id.fragmentSignUp, SetInterestFragment())
                     .commit()
+            }
+            else if (it.index == SignUpViewModel.SIGNUP_FRAGMENT.FINISH.index) {
+                Intent(this@SignUpActivity, WelcomeActivity::class.java).apply {
+                    startActivity(this)
+                }
+                finish()
             }
         })
     }

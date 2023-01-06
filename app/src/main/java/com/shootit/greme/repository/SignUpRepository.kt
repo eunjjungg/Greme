@@ -37,8 +37,9 @@ class SignUpRepository {
             .getSignUpRetrofitService.makeAccount(signUpData)
 
         return if (response.isSuccessful) {
-            response.headers().toString()
+            response.headers().get("accessToken")
         } else {
+            Log.d("make account error", response.errorBody().toString())
             null
         }
     }
@@ -47,12 +48,20 @@ class SignUpRepository {
         val response = ConnectionObject
             .getSignUpRetrofitService.setInterest(userInterestData)
 
+        if(!response.isSuccessful) {
+            Log.d("set account interest", response.errorBody().toString())
+        }
+
         return response.isSuccessful
     }
 
     suspend fun setAdditionalInfo(userAdditionalInfo: UserAdditionalInfo): Boolean {
         val response = ConnectionObject
             .getSignUpRetrofitService.setAdditionalInfo(userAdditionalInfo)
+
+        if(!response.isSuccessful) {
+            Log.d("set additional info", response.errorBody().toString())
+        }
 
         return response.isSuccessful
     }

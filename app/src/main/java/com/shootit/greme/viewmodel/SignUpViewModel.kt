@@ -2,12 +2,14 @@ package com.shootit.greme.viewmodel
 
 import android.content.SharedPreferences
 import android.os.CountDownTimer
+import android.util.Base64
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.shootit.greme.R
+import com.shootit.greme.base.BaseActivity
 import com.shootit.greme.model.GENDER
 import com.shootit.greme.model.SignUpAccountData
 import com.shootit.greme.model.UserAdditionalInfo
@@ -16,7 +18,6 @@ import com.shootit.greme.network.ConnectionObject
 import com.shootit.greme.repository.SignUpRepository
 import com.shootit.greme.util.EncryptedSpfImpl
 import kotlinx.coroutines.launch
-import java.util.*
 import kotlin.math.sign
 
 class SignUpViewModel(private val signUpRepository: SignUpRepository) : ViewModel() {
@@ -146,6 +147,8 @@ class SignUpViewModel(private val signUpRepository: SignUpRepository) : ViewMode
     fun makeAccount(spf: SharedPreferences, completion: (Boolean) -> Unit) {
         viewModelScope.launch {
             var token = signUpRepository.makeAccount(SignUpAccountData(EncryptedSpfImpl(spf).getUserEmail()!!, id))
+            Log.d("ccheck", token.toString())
+            Base64.encodeToString(token?.toByteArray(), Base64.DEFAULT)
             var result = false
             token?.let {
                 ConnectionObject.token = token

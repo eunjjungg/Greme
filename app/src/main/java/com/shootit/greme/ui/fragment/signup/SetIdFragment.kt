@@ -2,12 +2,14 @@ package com.shootit.greme.ui.fragment.signup
 
 import android.content.res.ColorStateList
 import android.util.Log
+import android.widget.Toast
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.textfield.TextInputLayout
 import com.shootit.greme.R
 import com.shootit.greme.base.BaseFragment
 import com.shootit.greme.databinding.FragmentSetIdBinding
+import com.shootit.greme.util.EncryptedSpfObject
 import com.shootit.greme.viewmodel.SignUpViewModel
 import com.google.android.material.R as googleR
 
@@ -25,7 +27,13 @@ class SetIdFragment : BaseFragment<FragmentSetIdBinding>(R.layout.fragment_set_i
 
     private fun setButtonListener() {
         binding.btnNext.setOnClickListener {
-            viewModel.fragmentTransition.value = SignUpViewModel.SIGNUP_FRAGMENT.INTEREST
+            viewModel.makeAccount(EncryptedSpfObject.getEncryptedSpf(binding.root.context)) { result: Boolean ->
+                if(result) {
+                    viewModel.fragmentTransition.value = SignUpViewModel.SIGNUP_FRAGMENT.INTEREST
+                } else {
+                    Toast.makeText(binding.root.context, "사용자 등록에 실패했습니다.\n잠시 후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 
