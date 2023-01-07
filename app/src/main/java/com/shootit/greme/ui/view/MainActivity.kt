@@ -1,6 +1,7 @@
 package com.shootit.greme.ui.view
 
 import android.widget.FrameLayout
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -18,10 +19,8 @@ import com.shootit.greme.ui.fragment.SettingFragment
 import com.shootit.greme.viewmodel.MainViewModel
 
 class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
-    override val viewModel by lazy {
-        ViewModelProvider(
-            this, MainViewModel.MainViewModelFactory(LoginRepository.getInstance(application)!!)
-        ).get(MainViewModel::class.java)
+    override val viewModel by viewModels<MainViewModel> {
+        MainViewModel.MainViewModelFactory("tmp")
     }
 
     override fun initViewModel(viewModel: ViewModel) {
@@ -42,9 +41,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
         // 하단바 아이콘 원래 색깔로 보여주기 위함
         bn.itemIconTintList = null
         bn.setOnItemSelectedListener{
+            viewModel.setCurrentPageById(id = it.itemId)
             when(it.itemId) {
                 R.id.menu_home -> {
-
                     loadFragment(HomeFragment())
                     true
                 }

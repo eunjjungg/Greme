@@ -17,6 +17,7 @@
     <color name="icon_bg_unSelected">#EEEEEE</color>
     <color name="icon_bg_selected">#DDECCA</color>
     <color name="text">#FF000000</color>
+    <color name="text_on_opposite">#FFFFFF</color>
 
     <!--Login-->
     <color name="login_kakao">#F9E000</color>

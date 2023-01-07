@@ -50,11 +50,15 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     private fun setBtnListener() {
         val callback = object : LoginFinishInterface {
-            override fun openActivityCallback() {
+            override fun openActivityCallback(isExistingUser: Boolean) {
                 Toast.makeText(
                     this@LoginActivity, "로그인 완료", Toast.LENGTH_SHORT
                 ).show()
-                startActivity(Intent(this@LoginActivity, SignUpActivity::class.java))
+                if (isExistingUser) {
+                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+                } else {
+                    startActivity(Intent(this@LoginActivity, SignUpActivity::class.java))
+                }
                 finish()
             }
 
@@ -68,6 +72,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         binding.btnLoginNaver.setOnClickListener {
             NaverLoginManager(context = this@LoginActivity).startNaverLogin {
                 ConnectionObject.token = it
+                Log.d("ccheck", ConnectionObject.token)
                 viewModel.getLoginData(
                     NAVER_LOGIN_DOMAIN,
                     EncryptedSpfObject.getEncryptedSpf(this@LoginActivity),
@@ -79,6 +84,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
         binding.btnLoginKakao.setOnClickListener {
             KakaoLoginManager(context = this@LoginActivity).startKakaoLogin {
                 ConnectionObject.token = it
+                Log.d("ccheck tokent", it)
                 viewModel.getLoginData(
                     KAKAO_LOGIN_DOMAIN,
                     EncryptedSpfObject.getEncryptedSpf(this@LoginActivity),
