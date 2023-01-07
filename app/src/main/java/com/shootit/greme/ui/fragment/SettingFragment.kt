@@ -3,6 +3,7 @@ package com.shootit.greme.ui.fragment
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -47,13 +48,40 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
                 .commitNow()
         }
         binding.btnLogout.setOnClickListener {
-            val builder = AlertDialog.Builder(requireContext(),R.style.AppTheme_AlertDialogTheme)
+            val builder = AlertDialog.Builder(requireContext())
             builder.setTitle("로그아웃")
                 .setMessage("로그아웃하시겠습니까?")
                 .setPositiveButton("확인",positiveButtonClick)
                 .setNegativeButton("취소", negativeButtonClick)
 
-            builder.show()
+            val alertDialog = builder.create()
+            alertDialog.show()
+            val button1 = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE)
+            with(button1){
+                setTextColor(Color.RED)
+            }
+            val button2 = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE)
+            with(button2){
+                setTextColor(Color.BLUE)
+            }
+        }
+        binding.btnSecession.setOnClickListener {
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("정말 탈퇴하시겠습니까?")
+                .setMessage("서비스에 등록된 모든 데이터가 삭제됩니다.")
+                .setPositiveButton("확인",positiveButtonClick)
+                .setNegativeButton("취소", negativeButtonClick)
+
+            val alertDialog = builder.create()
+            alertDialog.show()
+            val button1 = alertDialog.getButton(DialogInterface.BUTTON_POSITIVE)
+            with(button1){
+                setTextColor(Color.RED)
+            }
+            val button2 = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE)
+            with(button2){
+                setTextColor(Color.BLUE)
+            }
         }
         return root
     }
