@@ -1,4 +1,4 @@
-package com.shootit.greme.ui.view
+package com.shootit.greme.ui.custom
 
 import android.content.Context
 import android.util.AttributeSet

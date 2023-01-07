@@ -9,7 +9,7 @@ import com.shootit.greme.base.BaseFragment
 import com.shootit.greme.databinding.FragmentAdditionalInfoBinding
 import com.shootit.greme.model.GENDER
 import com.shootit.greme.ui.`interface`.InterestButtonClickInterface
-import com.shootit.greme.ui.view.InterestButton
+import com.shootit.greme.ui.custom.InterestButton
 import com.shootit.greme.viewmodel.SignUpViewModel
 
 class AdditionalInfoFragment :
