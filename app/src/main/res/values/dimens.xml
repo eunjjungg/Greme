@@ -11,6 +11,7 @@
     <dimen name="text18">18dp</dimen>
     <dimen name="text14">14dp</dimen>
     <dimen name="text12">12dp</dimen>
+    <dimen name="text10">10dp</dimen>
 
     <!--login-->
     <dimen name="margin_big">48dp</dimen>

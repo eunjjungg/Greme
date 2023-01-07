@@ -31,4 +31,6 @@
     <color name="signup_next">#78B449</color>
     <color name="signup_more_info">#D9E6CF</color>
 
+    <color name="challenge_summary_main">#248B00</color>
+    <color name="challenge_summary_bg">#E3EEDA</color>
 </resources>
