@@ -25,7 +25,7 @@ class ChallengeButton : ConstraintLayout {
     private fun init(context: Context, attrs: AttributeSet){
         binding
         setAttrs(context, attrs)
-        setClickListener(context)
+        setClickListener()
 
 
     }
@@ -36,20 +36,22 @@ class ChallengeButton : ConstraintLayout {
             val icon = typedArray.getResourceId(R.styleable.InterestButton_interest_icon, R.drawable.ic_challenge_main)
             binding.icon.setImageDrawable(AppCompatResources.getDrawable(context, icon))
             binding.description.text = typedArray.getString(R.styleable.InterestButton_interest_description)
+
+            typedArray.recycle()
         } catch (exception: Exception) {
             exception.printStackTrace()
         }
     }
 
-    private fun setClickListener(context: Context) {
+    private fun setClickListener() {
         binding.menu.setOnClickListener {
-            listener?.let {
-                it.challengeMenuOnClick(binding.description.text.toString())
+            if (this::listener.isInitialized) {
+                listener.challengeMenuOnClick(binding.description.text.toString())
             }
         }
     }
 
-    fun setButtonListener(listener: ChallengeMenuButtonClickInterface) {
+    fun setCustomListener(listener: ChallengeMenuButtonClickInterface) {
         this.listener = listener
     }
 
