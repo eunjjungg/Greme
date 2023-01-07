@@ -47,32 +47,29 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var week_day: Array<String> = resources.getStringArray(R.array.calendar_day)
+        // var week_day: Array<String> = resources.getStringArray(R.array.calendar_day)
 
         calendarAdapter = CalendarAdapter(calendarList)
 
         calendarList.apply {
-            val dateFormat = ofPattern("d").withLocale(Locale.forLanguageTag("ko"))
 
             // 오늘 요일 출력
             val forDay = LocalDate.now().dayOfWeek
-            Log.d("힝", forDay.toString())
+            var weekday = ""
+            if(forDay.toString() == "SATURDAY"){
+                weekday = "SAT"
+            }
             val now = LocalDate.now().format(ofPattern("d"))
-            Log.d("힝", (now.toInt()-3).toString())
             binding.tvMonth.text = LocalDate.now().month.toString()
             binding.tvYear.text = LocalDate.now().year.toString()
 
-
-            // var preSunday: LocalDate = LocalDate.now().with(previous(DayOfWeek.SUNDAY))
-
             for (i in 0..6) {
-                Log.d("날짜만", week_day[i])
+                // Log.d("날짜만", week_day[i])
 
                 calendarList.apply {
                     // 오늘을 기준으로 +-3일 값들 출력
                     // todo : week_day 값만 변경하자!!!
-                    add(CalendarData((now.toInt()+i.toLong()-3).toString(),week_day[i]))
-                    // add(CalendarData(preSunday.plusDays(i.toLong()).format(dateFormat),week_day[i]))
+                    add(CalendarData((now.toInt()+i.toLong()-3).toString(),weekday))
                 }
                 // Log.d("저번 주 일요일 기준으로 시작!", preSunday.plusDays(i.toLong()).format(dateFormat))
             }
@@ -84,20 +81,4 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
         super.onDestroyView()
         mBinding = null
     }
-    /*
-    // list(날짜, 요일)를 만들고, adapter를 등록하는 메소드
-    private fun setListView() {
-        // 현재 달의 마지막 날짜
-        val lastDayOfMonth = LocalDate.now().with(lastDayOfMonth())
-        lastDayOfMonth.format(ofPattern("dd"))
-
-        for(i: Int in 1..lastDayOfMonth.dayOfMonth) {
-            val date = LocalDate.of(LocalDate.now().year, LocalDate.now().month, i)
-            val dayOfWeek: DayOfWeek = date.dayOfWeek
-            dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.US)
-
-            itemList.add(CalendarData(dayOfWeek.toString().substring(0, 3), i.toString()))
-        }
-        calendarList.adapter = listAdapter
-    }*/
 }
