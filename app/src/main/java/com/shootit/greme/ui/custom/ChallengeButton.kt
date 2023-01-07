@@ -42,7 +42,7 @@ class ChallengeButton : ConstraintLayout {
     }
 
     private fun setClickListener(context: Context) {
-        binding.icon.setOnClickListener {
+        binding.menu.setOnClickListener {
             listener?.let {
                 it.challengeMenuOnClick(binding.description.text.toString())
             }
