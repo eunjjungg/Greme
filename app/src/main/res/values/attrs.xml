@@ -6,5 +6,8 @@
         <attr name="interest_description" format="string"/>
     </declare-styleable>
 
-
+    <declare-styleable name="ChallengeButton">
+        <attr name="menu_icon" format="reference"/>
+        <attr name="menu_description" format="string"/>
+    </declare-styleable>
 </resources>
