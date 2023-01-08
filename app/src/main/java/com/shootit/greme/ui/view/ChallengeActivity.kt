@@ -26,10 +26,11 @@ class ChallengeActivity : BaseActivity<ActivityChallengeBinding>(R.layout.activi
     override fun onCreateAction() {
         val tmp = mutableListOf<ChallengeRecyclerType>(
             TopBar(2),
-            Guide("Guide"),
-            OnGoingChallenge("ongoing", "ongoing desc", 3, 3),
-            Guide("Guide"),
-            AvailableChallenge("avail", "avail desc", 10, 10),
+            Guide("참여중인 챌린지"),
+            OnGoingChallenge("#가까운_거리는_걸어다니기", "도보로 15분 이내의 거리는 걸어다니기", 3, 23),
+            OnGoingChallenge("#텀블러_이용하기", "카페가서 텀블러 이용하기", 12, 25),
+            Guide("참여 가능 챌린지"),
+            AvailableChallenge("#따뜻하게_입고_다니기", "난방 대신 따뜻한 옷을 입어요", 10, 13),
 
             )
 
