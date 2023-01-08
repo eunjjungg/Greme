@@ -14,7 +14,7 @@
         <!-- Customize your theme here. -->
 
         <item name="android:textColor">@color/text</item>
-
+        <item name="fontFamily">@font/pretendard_extralight_200</item>
 
 
         <item name="android:alertDialogTheme">@style/AppTheme.AlertDialogTheme</item>
@@ -29,5 +29,9 @@
     </style>
     <style name="AppTheme.AlertDialogTheme.Positive" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
         <item name="android:textColor">@color/signup_et_error</item>
+    </style>
+
+    <style name="BoldText" parent="Theme.Greme">
+        <item name="fontFamily">@font/pretendard_medium_500</item>
     </style>
 </resources>
