@@ -3,9 +3,11 @@ package com.shootit.greme.ui.adapter
 import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.graphics.PorterDuff
+import android.graphics.Typeface
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.shootit.greme.R
@@ -87,6 +89,8 @@ class ChallengeActivityAdapter(private val resources: Resources)
                 TYPE_TOPBAR
             }
         }
+
+
     }
 
     inner class DefaultTopViewHolder(private val binding: LayoutChallengeDefaultTopBinding) :
@@ -99,22 +103,32 @@ class ChallengeActivityAdapter(private val resources: Resources)
     inner class DefaultGuideViewHolder(private val binding: LayoutChallengeDefaultGuideBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Guide) {
-            Log.d("ccheck", item.text)
+            binding.tv.text = item.text
         }
     }
 
     inner class OnGoingViewHolder(private val binding: LayoutChallengeListBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: OnGoingChallenge) {
-            Log.d("ccheck", item.title)
             binding.outerView.background = ResourcesCompat.getDrawable(resources, R.drawable.drawble_challenge_list_ongoing, null)
+            binding.apply {
+                tvTitle.text = item.title
+                tvDesc.text = item.desc
+                tvDay.text = "D - ${item.day}"
+                tvPeopleAmount.text = item.peopleAmount.toString()
+            }
         }
     }
 
     inner class AvailableViewHolder(private val binding: LayoutChallengeListBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: AvailableChallenge) {
-            Log.d("ccheck", item.title)
+            binding.apply {
+                tvTitle.text = item.title
+                tvDesc.text = item.desc
+                tvDay.text = "D - ${item.day}"
+                tvPeopleAmount.text = item.peopleAmount.toString()
+            }
 
         }
     }
