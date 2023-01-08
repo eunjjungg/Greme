@@ -1,5 +1,6 @@
 package com.shootit.greme.ui.adapter
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.graphics.PorterDuff
@@ -15,6 +16,7 @@ import com.shootit.greme.databinding.LayoutChallengeDefaultGuideBinding
 import com.shootit.greme.databinding.LayoutChallengeDefaultTopBinding
 import com.shootit.greme.databinding.LayoutChallengeListBinding
 import com.shootit.greme.model.*
+import com.shootit.greme.ui.view.ChallengeInfoActivity
 
 class ChallengeActivityAdapter(private val resources: Resources)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -116,6 +118,14 @@ class ChallengeActivityAdapter(private val resources: Resources)
                 tvDesc.text = item.desc
                 tvDay.text = "D - ${item.day}"
                 tvPeopleAmount.text = item.peopleAmount.toString()
+                outerView.setOnClickListener {
+                    Intent(binding.root.context, ChallengeInfoActivity::class.java).also {
+                        it.putExtra("ChallengeInfo", ChallengeInfoParcelData(
+                            item.title, item.desc, item.day, item.peopleAmount
+                        ))
+                        binding.root.context.startActivity(it)
+                    }
+                }
             }
         }
     }
@@ -128,6 +138,14 @@ class ChallengeActivityAdapter(private val resources: Resources)
                 tvDesc.text = item.desc
                 tvDay.text = "D - ${item.day}"
                 tvPeopleAmount.text = item.peopleAmount.toString()
+                outerView.setOnClickListener {
+                    Intent(binding.root.context, ChallengeInfoActivity::class.java).also {
+                        it.putExtra("ChallengeInfo", ChallengeInfoParcelData(
+                            item.title, item.desc, item.day, item.peopleAmount
+                        ))
+                        binding.root.context.startActivity(it)
+                    }
+                }
             }
 
         }
