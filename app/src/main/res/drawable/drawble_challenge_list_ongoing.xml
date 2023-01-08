@@ -6,18 +6,18 @@
         <shape  android:shape="rectangle">
 
             <solid android:color="#CFCFCF" />
-            <corners android:radius="30dp" />
+            <corners android:radius="20dp" />
 
         </shape>
     </item>
 
     <!-- White Top color -->
-    <item android:bottom="20px" android:right="20px">
+    <item android:bottom="10px" android:right="10px">
 
         <shape  android:shape="rectangle">
 
-            <solid android:color="@color/challenge_summary_bg" />
-            <corners android:radius="30dp" />
+            <solid android:color="@color/challenge_ongoing_bg" />
+            <corners android:radius="20dp" />
 
 
         </shape>

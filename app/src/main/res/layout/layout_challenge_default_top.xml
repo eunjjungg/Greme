@@ -6,7 +6,6 @@
     </data>
 
     <LinearLayout
-        android:padding="@dimen/margin24"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -14,13 +13,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:lineSpacingExtra="4dp"
             android:text="@string/challenge_guide"
-            android:textSize="@dimen/text12"/>
+            android:textSize="@dimen/text14"/>
 
         <ImageView
-            android:layout_marginTop="@dimen/margin24"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:src="@drawable/ic_challenge_earth"/>
+            android:layout_height="150dp"
+            android:layout_marginTop="@dimen/margin12"
+            android:src="@drawable/ic_challenge_earth4"/>
     </LinearLayout>
 </layout>
