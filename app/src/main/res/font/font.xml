@@ -4,9 +4,7 @@
     <font android:fontStyle="normal"
         android:font="@font/pretendard_extralight_200"/>
     <font android:fontStyle="normal"
-        android:font="@font/pretendard_light_300"/>
-    <font android:fontStyle="normal"
         android:font="@font/pretendard_regular_400"/>
     <font android:fontStyle="normal"
-        android:font="@font/pretendard_medium_500"/>
+        android:font="@font/dosis_otf_only_engnum"/>
 </font-family>
