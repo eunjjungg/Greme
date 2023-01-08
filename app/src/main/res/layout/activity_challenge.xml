@@ -28,18 +28,28 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_challenge_basic"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvLogo"/>
+
         <TextView
             android:id="@+id/tvPageName"
+            style="@style/BoldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="챌린지"
-            style="@style/BoldText"
             android:textColor="@color/black"
-            android:textSize="13sp"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvLogo"/>
+            android:textSize="13dp"
+            android:layout_marginStart="@dimen/margin8"
+            app:layout_constraintBottom_toBottomOf="@+id/icon"
+            app:layout_constraintStart_toEndOf="@+id/icon"
+            app:layout_constraintTop_toTopOf="@+id/icon" />
 
         <View
             android:id="@+id/view"

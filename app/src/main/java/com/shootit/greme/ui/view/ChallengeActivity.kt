@@ -3,6 +3,7 @@ package com.shootit.greme.ui.view
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.LayoutManager
@@ -24,6 +25,8 @@ class ChallengeActivity : BaseActivity<ActivityChallengeBinding>(R.layout.activi
     }
 
     override fun onCreateAction() {
+        ViewCompat.setTransitionName(binding.icon, "icon")
+
         val tmp = mutableListOf<ChallengeRecyclerType>(
             TopBar(2),
             Guide("참여중인 챌린지"),

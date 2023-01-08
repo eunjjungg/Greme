@@ -1,14 +1,11 @@
 package com.shootit.greme.ui.fragment
 
+import android.app.Activity
 import android.content.Intent
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.os.Build
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
+import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
 import com.shootit.greme.R
 import com.shootit.greme.base.BaseFragment
 import com.shootit.greme.databinding.FragmentHomeBinding
@@ -16,6 +13,7 @@ import com.shootit.greme.ui.`interface`.ChallengeMenuButtonClickInterface
 import com.shootit.greme.ui.custom.ChallengeSummary
 import com.shootit.greme.ui.view.ChallengeActivity
 import com.shootit.greme.viewmodel.ChallengeHomeViewModel
+
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     override val viewModel by viewModels<ChallengeHomeViewModel> {
@@ -30,7 +28,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private fun FragmentHomeBinding.initSummaryButtons() {
         btnSummaryTop.setContent(ChallengeSummary.ChallengeSummaryDescType.Review.also { it.content = "#투명페트병_생수_이용하기" })
         btnSummaryBottom.setContent(ChallengeSummary.ChallengeSummaryDescType.Main.also { it.content = "#가까운_거리는_걸어다니기" })
-
     }
 
     private fun FragmentHomeBinding.initMenuButtons() {
@@ -54,7 +51,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         when (title.findChallengeMenuByText()) {
             ChallengeMenu.MyChallengeMenu -> {
                 Intent(binding.root.context, ChallengeActivity::class.java).also {
-                    startActivity(it)
+                    val pair: androidx.core.util.Pair<View, String> = androidx.core.util.Pair(binding.btnMain.getMenuIconView() as View, "icon")
+                    val optionPair = ActivityOptionsCompat.makeSceneTransitionAnimation(this@HomeFragment.activity as Activity, pair)
+                    startActivity(it, optionPair.toBundle())
                 }
             }
             ChallengeMenu.DiaryMenu -> {

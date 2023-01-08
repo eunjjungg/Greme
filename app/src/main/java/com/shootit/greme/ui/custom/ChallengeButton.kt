@@ -3,6 +3,8 @@ package com.shootit.greme.ui.custom
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.shootit.greme.R
@@ -53,6 +55,14 @@ class ChallengeButton : ConstraintLayout {
 
     fun setCustomListener(listener: ChallengeMenuButtonClickInterface) {
         this.listener = listener
+    }
+
+    fun getMenuIconView(): ImageView {
+        return binding.icon
+    }
+
+    fun getMenuDescView(): TextView {
+        return binding.description
     }
 
 }
