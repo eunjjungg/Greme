@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.res.ResourcesCompat
 import com.shootit.greme.R
 import com.shootit.greme.databinding.LayoutChallengeSummaryBinding
 import com.shootit.greme.ui.`interface`.ChallengeSummaryClickInterface
@@ -14,10 +15,10 @@ class ChallengeSummary : ConstraintLayout {
         init(context, attrs)
     }
 
-    enum class ChallengeSummaryDescType(val text: String) {
-        Review("인기 챌린지 후기 보러가기"),
-        Main("이번 주 대표 챌린지는"),
-        My("내가 참여한 챌린지 보러가기")
+    enum class ChallengeSummaryDescType(val desc: String, var content: String) {
+        Review("인기 챌린지 후기 보러가기", "#"),
+        Main("이번 주 대표 챌린지는", "#"),
+        My("내가 참여한 챌린지 보러가기", "#")
     }
 
     private val binding: LayoutChallengeSummaryBinding = LayoutChallengeSummaryBinding.inflate(
@@ -60,11 +61,18 @@ class ChallengeSummary : ConstraintLayout {
         this.listener = listener
     }
 
-    fun setDesc(type: ChallengeSummaryDescType) {
-        binding.tvDesc.text = type.text
+    fun setContent(type: ChallengeSummaryDescType) {
+        setProperIconByType(type)
+        binding.tvDesc.text = type.desc
+        binding.tvName.text = type.content
     }
 
-    fun setName(name: String) {
-        binding.tvName.text = name
+    private fun setProperIconByType(type: ChallengeSummaryDescType) {
+        val icon = when(type) {
+            ChallengeSummaryDescType.Review -> R.drawable.ic_challenge_my
+            ChallengeSummaryDescType.My -> R.drawable.ic_challenge_my
+            ChallengeSummaryDescType.Main -> R.drawable.ic_challenge_main
+        }
+        binding.icon.setImageDrawable(ResourcesCompat.getDrawable(resources, icon, null))
     }
 }
