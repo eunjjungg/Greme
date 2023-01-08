@@ -58,7 +58,7 @@
     <string name="info_gender_whatever">무엇이든</string>
 
     <!--challenge-->
-    <string name="challenge_guide">이번주 %d번의 실천을 했어요\n오늘 하루도 eco - life를 즐겨봐요!</string>
+    <string name="challenge_guide">지금 바로 챌린지에 참여할 수 있어요!\n“다이어리”에서 나의 챌린지를 기록할 수 있어요</string>
     <string name="challenge_ongoing"><b>참여중인 챌린지</b></string>
     <string name="challenge_available"><b>참여 가능 챌린지</b></string>
 

@@ -35,5 +35,6 @@
     <color name="challenge_summary_main">#248B00</color>
     <color name="challenge_summary_bg">#E3EEDA</color>
     <color name="challenge_day_gray">#D9D9D9</color>
+    <color name="challenge_ongoing_bg">#F8F8F8</color>
 
 </resources>
