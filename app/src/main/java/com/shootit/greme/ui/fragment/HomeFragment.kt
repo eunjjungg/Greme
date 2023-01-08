@@ -1,5 +1,6 @@
 package com.shootit.greme.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,6 +12,8 @@ import androidx.lifecycle.ViewModel
 import com.shootit.greme.R
 import com.shootit.greme.base.BaseFragment
 import com.shootit.greme.databinding.FragmentHomeBinding
+import com.shootit.greme.ui.`interface`.ChallengeMenuButtonClickInterface
+import com.shootit.greme.ui.view.ChallengeActivity
 import com.shootit.greme.viewmodel.ChallengeHomeViewModel
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
@@ -19,7 +22,26 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     }
 
     override fun initView() {
+        binding.btnMain.setCustomListener(object : ChallengeMenuButtonClickInterface {
+            override fun challengeMenuOnClick(title: String) {
+                onMenuClick(title)
+            }
+        }
 
+        )
     }
 
+
+    private fun onMenuClick(title: String) {
+        when (title) {
+            "챌린지" -> {
+                Intent(binding.root.context, ChallengeActivity::class.java).also {
+                    startActivity(it)
+                }
+            }
+            else -> {
+
+            }
+        }
+    }
 }
