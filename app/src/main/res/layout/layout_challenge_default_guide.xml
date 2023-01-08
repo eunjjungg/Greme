@@ -13,10 +13,11 @@
 
         <TextView
             android:id="@+id/tv"
+            style="@style/BoldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/challenge_ongoing"
-            android:textSize="@dimen/text12"/>
+            android:textSize="@dimen/text14"/>
 
     </LinearLayout>
 </layout>

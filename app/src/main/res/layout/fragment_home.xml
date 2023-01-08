@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="일상 속의 작은 미라클 챌린지"
-                android:textSize="@dimen/text12"
+                android:textSize="@dimen/text14"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/imgBackground" />
 
@@ -82,7 +82,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        app:menu_icon="@drawable/ic_challenge_my"
+                        app:menu_icon="@drawable/ic_challenge_diary"
                         app:menu_description="챌린지 도전"/>
 
                     <com.shootit.greme.ui.custom.ChallengeButton
@@ -103,12 +103,14 @@
                     android:layout_height="50dp"/>
 
                 <com.shootit.greme.ui.custom.ChallengeSummary
+                    android:id="@+id/btnSummaryTop"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:summary_description="description"
                     app:summary_name="#Challenge_Name"/>
 
                 <com.shootit.greme.ui.custom.ChallengeSummary
+                    android:id="@+id/btnSummaryBottom"
                     android:layout_marginTop="@dimen/margin24"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

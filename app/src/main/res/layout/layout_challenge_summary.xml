@@ -39,7 +39,7 @@
                 android:id="@+id/tvDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text12"
+                android:textSize="@dimen/text10"
                 android:text="인기 챌린지 후기 보러가기"/>
 
             <TextView
@@ -47,7 +47,7 @@
                 android:layout_marginTop="@dimen/margin8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/text18"
+                android:textSize="@dimen/text12"
                 android:textColor="@color/challenge_summary_main"
                 android:text="# 투명페트병_생수_이용하기"/>
         </LinearLayout>

@@ -32,6 +32,11 @@
     </style>
 
     <style name="BoldText" parent="Theme.Greme">
-        <item name="fontFamily">@font/pretendard_medium_500</item>
+        <item name="fontFamily">@font/pretendard_regular_400</item>
+    </style>
+
+    <style name="AppTitleText" parent="Theme.Greme">
+        <item name="fontFamily">@font/dosis_otf_only_engnum</item>
+        <item name="android:textSize">@dimen/text18</item>
     </style>
 </resources>
