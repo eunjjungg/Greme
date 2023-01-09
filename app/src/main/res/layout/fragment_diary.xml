@@ -117,8 +117,8 @@
 
         <ImageView
             android:id="@+id/ivMain"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="160dp"
+            android:layout_height="100dp"
             android:src="@drawable/ic_plus"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

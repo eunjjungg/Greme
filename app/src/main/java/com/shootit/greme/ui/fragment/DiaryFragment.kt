@@ -1,6 +1,13 @@
 package com.shootit.greme.ui.fragment
 
+import android.Manifest
+import android.app.Activity.RESULT_OK
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.fragment.app.Fragment
@@ -10,8 +17,14 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.app.ActivityCompat.requestPermissions
+import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.GridLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.shootit.greme.R
 import com.shootit.greme.databinding.FragmentDiaryBinding
 import com.shootit.greme.model.CalendarData
@@ -20,6 +33,7 @@ import com.jakewharton.threetenabp.AndroidThreeTen
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter.ofPattern
 import org.w3c.dom.Text
+import java.io.File
 import java.util.*
 
 class DiaryFragment : Fragment(R.layout.fragment_diary) {
@@ -27,9 +41,41 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
     private var mBinding: FragmentDiaryBinding? = null
     // 매번 null 체크를 할 필요없이 편의성을 위해 바인딩 변수 재선언
     private val binding get() = mBinding!!
+    var imageFile : File? = null
 
     lateinit var calendarAdapter: CalendarAdapter
     private var calendarList = ArrayList<CalendarData>()
+
+    companion object {
+        const val REVIEW_MIN_LENGTH = 10
+        // 갤러리 권한 요청
+        const val REQ_GALLERY = 1
+        // API 호출시 Parameter Key 값
+        const val PARAM_KEY_IMAGE = "image"
+        const val PARAM_KEY_PRODUCT_ID = "product_id"
+        const val PARAM_KEY_REVIEW = "review_content"
+        const val PARAM_KEY_RATING = "rating"
+    }
+    // 이미지를 결과값으로 받는 변수
+    private val imageResult = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()){
+            result ->
+        if (result.resultCode == RESULT_OK){
+            // 이미지를 받으면 ImageView에 적용
+            val imageUri = result.data?.data
+            imageUri?.let{
+                // 서버 업로드를 위해 파일 형태로 변환
+                imageFile = File(getRealPathFromURI(it))
+
+                // 이미지를 불러온다
+                Glide.with(this)
+                    .load(imageUri)
+                    .fitCenter()
+                    .apply(RequestOptions().override(500,500))
+                    .into(binding.ivMain)
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -95,6 +141,9 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
         }
         binding.rvCalendar.adapter = calendarAdapter
         binding.rvCalendar.layoutManager = GridLayoutManager(context, 7)
+        binding.ivMain.setOnClickListener {
+            selectGallery()
+        }
     }
     private fun setupSpinner() {
         val challenge = resources.getStringArray(R.array.spinner_challenge)
@@ -116,6 +165,41 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
             override fun onNothingSelected(p0: AdapterView<*>?) {
 
             }
+        }
+    }
+    // 이미지 실제 경로 반환
+    fun getRealPathFromURI(uri: Uri): String {
+        val buildName = Build.MANUFACTURER
+        if(buildName.equals("Xiaomi")){
+            return uri.path!!
+        }
+        var columnIndex = 0
+        val proj = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor = requireActivity().contentResolver.query(uri, proj, null,null,null)
+        if(cursor!!.moveToFirst()){
+            columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        }
+        val result = cursor.getString(columnIndex)
+        cursor.close()
+        return result
+    }
+    // 갤러리를 부르는 메서드
+    private fun selectGallery(){
+        val writePermission = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        val readPermission = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+
+        // 권한 확인
+        if(writePermission == PackageManager.PERMISSION_DENIED || readPermission == PackageManager.PERMISSION_DENIED){
+            // 권한 요청
+            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), REQ_GALLERY)
+        }else{
+            // 권한이 있는 경우 갤러리 실행
+            val intent = Intent(Intent.ACTION_PICK)
+            // intent의 data와 type을 동시에 설정하는 메서드
+            intent.setDataAndType(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*"
+            )
+            imageResult.launch(intent)
         }
     }
     override fun onDestroyView() {
