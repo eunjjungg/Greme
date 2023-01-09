@@ -9,6 +9,8 @@ class ChallengeInfo(
     var isRegistered: Boolean
 ) : ChallengeInfoType()
 
-class ChallengeInfoGuide() : ChallengeInfoType()
-
-class ChallengeInfoImg(urlString: String) : ChallengeInfoType()
+class ChallengeInfoImg(
+    var firstImgUrl : String,
+    var secondImgUrl : String?,
+    var thirdImgUrl : String?
+) : ChallengeInfoType()
