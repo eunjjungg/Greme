@@ -29,7 +29,7 @@ class ChallengeInfoActivity :
         Log.d("ccheck", transportedData.toString())
         val adapter = ChallengeInfoRecyclerAdapter(resources)
         transportedData?.let {
-            adapter.challengeInfo = ChallengeInfo(transportedData.title, transportedData.desc, transportedData.day)
+            adapter.challengeInfo = ChallengeInfo(transportedData.title, transportedData.desc, transportedData.day, transportedData.isRegistered)
         }
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)

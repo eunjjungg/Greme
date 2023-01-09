@@ -121,7 +121,7 @@ class ChallengeActivityAdapter(private val resources: Resources)
                 outerView.setOnClickListener {
                     Intent(binding.root.context, ChallengeInfoActivity::class.java).also {
                         it.putExtra("ChallengeInfo", ChallengeInfoParcelData(
-                            item.title, item.desc, item.day, item.peopleAmount
+                            item.title, item.desc, item.day, item.peopleAmount, true
                         ))
                         binding.root.context.startActivity(it)
                     }
@@ -141,7 +141,7 @@ class ChallengeActivityAdapter(private val resources: Resources)
                 outerView.setOnClickListener {
                     Intent(binding.root.context, ChallengeInfoActivity::class.java).also {
                         it.putExtra("ChallengeInfo", ChallengeInfoParcelData(
-                            item.title, item.desc, item.day, item.peopleAmount
+                            item.title, item.desc, item.day, item.peopleAmount, false
                         ))
                         binding.root.context.startActivity(it)
                     }

@@ -15,7 +15,7 @@ import com.shootit.greme.model.*
 class ChallengeInfoRecyclerAdapter(private val resources: Resources)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var imgDataList: MutableList<ChallengeInfoImg> = mutableListOf()
-    var challengeInfo: ChallengeInfo = ChallengeInfo("null", "null", 0)
+    var challengeInfo: ChallengeInfo = ChallengeInfo("null", "null", 0, false)
     private val challengeInfoGuide = ChallengeInfoGuide()
 
     private val TYPE_INFO = 0
@@ -73,7 +73,9 @@ class ChallengeInfoRecyclerAdapter(private val resources: Resources)
     private inner class DefaultChallengeInfoViewHolder(private val binding: LayoutChallengeListBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ChallengeInfo) {
             binding.apply {
-                outerView.background = ResourcesCompat.getDrawable(resources, R.drawable.drawble_challenge_list_ongoing, null)
+                if(item.isRegistered){
+                    outerView.background = ResourcesCompat.getDrawable(resources, R.drawable.drawble_challenge_list_ongoing, null)
+                }
                 viewPeople.visibility = View.GONE
                 tvDesc.text = item.desc
                 tvTitle.text = item.title

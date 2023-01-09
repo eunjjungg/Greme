@@ -5,7 +5,8 @@ sealed class ChallengeInfoType()
 class ChallengeInfo(
     val title: String,
     val desc: String,
-    val day: Int
+    val day: Int,
+    var isRegistered: Boolean
 ) : ChallengeInfoType()
 
 class ChallengeInfoGuide() : ChallengeInfoType()

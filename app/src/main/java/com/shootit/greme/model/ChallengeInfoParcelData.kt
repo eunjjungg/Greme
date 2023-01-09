@@ -8,5 +8,6 @@ class ChallengeInfoParcelData(
     val title: String,
     val desc: String,
     val day: Int,
-    val peopleAmount: Int
+    val peopleAmount: Int,
+    var isRegistered: Boolean
 ): Parcelable
