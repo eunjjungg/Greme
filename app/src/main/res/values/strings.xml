@@ -108,15 +108,17 @@
     <string name="diary_year">2023</string>
     <string name="diary_day">TUE</string>
     <string name="diary_date">3</string>
+    <string name="diary_disclosure_title">공개 여부</string>
+    <string name="diary_disclosure_content">공개 시, 챌린지에 나의 다이어리가 공개됩니다.</string>
+    <string name="diary_save">저장하기</string>
+    <string name="diary_today">오늘의 일기!</string>
+    <string name="diary_edit">수정하기</string>
+    <string name="diary_delete">삭제하기</string>
 
-    <!-- Calendar Array -->
-    <string-array name="calendar_day">
-        <item>일</item>
-        <item>월</item>
-        <item>화</item>
-        <item>수</item>
-        <item>목</item>
-        <item>금</item>
-        <item>토</item>
+    <!-- Spinner Challenge Array -->
+    <string-array name="spinner_challenge">
+        <item># 텀블러 사용하기</item>
+        <item># 가까운 거리는 걸어다니기</item>
+        <item># 따뜻하게 입고 다니기</item>
     </string-array>
 </resources>
