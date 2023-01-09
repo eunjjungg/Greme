@@ -9,6 +9,7 @@ import com.shootit.greme.R
 import com.shootit.greme.base.BaseActivity
 import com.shootit.greme.databinding.ActivityChallengeInfoBinding
 import com.shootit.greme.model.ChallengeInfo
+import com.shootit.greme.model.ChallengeInfoImg
 import com.shootit.greme.model.ChallengeInfoParcelData
 import com.shootit.greme.ui.adapter.ChallengeInfoRecyclerAdapter
 import com.shootit.greme.viewmodel.ChallengeInfoViewModel
@@ -32,6 +33,14 @@ class ChallengeInfoActivity :
         transportedData?.let {
             adapter.challengeInfo = ChallengeInfo(transportedData.title, transportedData.desc, transportedData.day, transportedData.isRegistered)
         }
+
+        val imgData : MutableList<ChallengeInfoImg> = mutableListOf(
+            ChallengeInfoImg("123","123","123"),
+            ChallengeInfoImg("123","123","123"),
+            ChallengeInfoImg("123","123",null),
+
+        )
+        adapter.imgDataList = imgData
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
