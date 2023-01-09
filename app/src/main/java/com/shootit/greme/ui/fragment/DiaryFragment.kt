@@ -114,8 +114,6 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // var week_day: Array<String> = resources.getStringArray(R.array.calendar_day)
-
         calendarAdapter = CalendarAdapter(calendarList)
 
         calendarList.apply {
@@ -141,13 +139,13 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
         }
         binding.rvCalendar.adapter = calendarAdapter
         binding.rvCalendar.layoutManager = GridLayoutManager(context, 7)
+
         binding.ivMain.setOnClickListener {
             selectGallery()
         }
     }
     private fun setupSpinner() {
-        val challenge = resources.getStringArray(R.array.spinner_challenge)
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, challenge)
+        val adapter = ArrayAdapter.createFromResource(requireContext(), R.array.spinner_challenge,R.layout.color_spinner_layout)
         adapter.setDropDownViewResource(R.layout.spinner_style)
         binding.spinnerDiary.adapter = adapter
     }

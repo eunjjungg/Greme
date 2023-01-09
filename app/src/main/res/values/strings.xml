@@ -114,6 +114,7 @@
     <string name="diary_today">오늘의 일기!</string>
     <string name="diary_edit">수정하기</string>
     <string name="diary_delete">삭제하기</string>
+    <string name="diary_challenge_plus">챌린지 추가하기</string>
 
     <!-- Spinner Challenge Array -->
     <string-array name="spinner_challenge">
