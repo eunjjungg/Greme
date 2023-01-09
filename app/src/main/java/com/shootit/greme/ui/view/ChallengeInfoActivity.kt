@@ -2,6 +2,7 @@ package com.shootit.greme.ui.view
 
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shootit.greme.R

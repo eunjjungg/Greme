@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.shootit.greme.R
 import com.shootit.greme.databinding.ActivityChallengeInfoBinding
@@ -73,6 +74,7 @@ class ChallengeInfoRecyclerAdapter(private val resources: Resources)
     private inner class DefaultChallengeInfoViewHolder(private val binding: LayoutChallengeListBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ChallengeInfo) {
             binding.apply {
+                ViewCompat.setTransitionName(binding.outerView, "infoView")
                 if(item.isRegistered){
                     outerView.background = ResourcesCompat.getDrawable(resources, R.drawable.drawble_challenge_list_ongoing, null)
                 }

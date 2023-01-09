@@ -1,5 +1,6 @@
 package com.shootit.greme.ui.adapter
 
+import android.app.Activity
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.content.res.Resources
@@ -7,8 +8,10 @@ import android.graphics.PorterDuff
 import android.graphics.Typeface
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.shootit.greme.R
@@ -120,10 +123,12 @@ class ChallengeActivityAdapter(private val resources: Resources)
                 tvPeopleAmount.text = item.peopleAmount.toString()
                 outerView.setOnClickListener {
                     Intent(binding.root.context, ChallengeInfoActivity::class.java).also {
+                        val pair: androidx.core.util.Pair<View, String> = androidx.core.util.Pair(binding.outerView as View, "infoView")
+                        val optionPair = ActivityOptionsCompat.makeSceneTransitionAnimation(binding.root.context as Activity, pair)
                         it.putExtra("ChallengeInfo", ChallengeInfoParcelData(
                             item.title, item.desc, item.day, item.peopleAmount, true
                         ))
-                        binding.root.context.startActivity(it)
+                        binding.root.context.startActivity(it, optionPair.toBundle())
                     }
                 }
             }
@@ -140,10 +145,12 @@ class ChallengeActivityAdapter(private val resources: Resources)
                 tvPeopleAmount.text = item.peopleAmount.toString()
                 outerView.setOnClickListener {
                     Intent(binding.root.context, ChallengeInfoActivity::class.java).also {
+                        val pair: androidx.core.util.Pair<View, String> = androidx.core.util.Pair(binding.outerView as View, "infoView")
+                        val optionPair = ActivityOptionsCompat.makeSceneTransitionAnimation(binding.root.context as Activity, pair)
                         it.putExtra("ChallengeInfo", ChallengeInfoParcelData(
                             item.title, item.desc, item.day, item.peopleAmount, false
                         ))
-                        binding.root.context.startActivity(it)
+                        binding.root.context.startActivity(it, optionPair.toBundle())
                     }
                 }
             }
