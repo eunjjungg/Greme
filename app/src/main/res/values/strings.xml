@@ -116,10 +116,14 @@
     <string name="diary_delete">삭제하기</string>
     <string name="diary_challenge_plus">챌린지 추가하기</string>
 
+    <!-- DiaryImg -->
+    <string name="diaryimg_month">2022.10</string>
+
     <!-- Spinner Challenge Array -->
     <string-array name="spinner_challenge">
         <item># 텀블러 사용하기</item>
         <item># 가까운 거리는 걸어다니기</item>
         <item># 따뜻하게 입고 다니기</item>
     </string-array>
+
 </resources>
