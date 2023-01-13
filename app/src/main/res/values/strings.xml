@@ -127,6 +127,8 @@
 
     <!-- Search -->
     <string name="search_describe">찾고 싶은 검색어를 입력해 주세요!</string>
+    <string name="search_result">검색 결과</string>
+    <string name="search_testID">yejinchoco</string>
 
 
     <!-- Spinner Challenge Array -->
