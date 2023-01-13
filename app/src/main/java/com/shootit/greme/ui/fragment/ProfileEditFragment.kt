@@ -16,6 +16,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.shootit.greme.R
 import com.shootit.greme.databinding.FragmentProfileEditBinding
 import java.io.File
 
@@ -71,6 +72,14 @@ class ProfileEditFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.btnProfilePlus.setOnClickListener {
             selectGallery()
+        }
+        binding.ivBack.setOnClickListener {
+            val settingFragment = SettingFragment()
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.nav_fl, settingFragment)
+                .addToBackStack(null)
+                .commit()
         }
     }
     // 이미지 실제 경로 반환
