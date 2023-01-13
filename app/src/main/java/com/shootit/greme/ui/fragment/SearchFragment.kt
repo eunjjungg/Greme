@@ -42,6 +42,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 return false
             }
 
+            // 검색창에 작성후 submitbutton을 누르면 검색어에 해당하는 다이어리 recyclerview 보여줌
             override fun onQueryTextSubmit(query: String?): Boolean {
                 rvSearch.layoutManager = GridLayoutManager(context, 3)
                 addDataToList()
