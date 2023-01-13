@@ -125,6 +125,9 @@
     <string name="diarydetail_content">오늘은 홍대에 있는 비건 식당에 방문해서 식사를 했다. 정말 맛있었고 또 먹으러 가고 싶다.</string>
     <string name="diarydetail_date">2022/11/18</string>
 
+    <!-- Search -->
+    <string name="search_describe">찾고 싶은 검색어를 입력해 주세요!</string>
+
 
     <!-- Spinner Challenge Array -->
     <string-array name="spinner_challenge">
