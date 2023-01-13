@@ -30,6 +30,7 @@ class DiaryImgCalendarFragment : Fragment() {
     }
     val datas = arrayListOf<DiaryImgData>(
         DiaryImgData("2022.11", arrayListOf(R.drawable.ex_img, R.drawable.ex_img2, R.drawable.ex_img, R.drawable.ex_img2,R.drawable.ex_img, R.drawable.ex_img2)),
-        DiaryImgData("2022.10", arrayListOf(R.drawable.ex_img, R.drawable.ex_img2, R.drawable.ex_img, R.drawable.ex_img2,R.drawable.ex_img, R.drawable.ex_img2))
+        DiaryImgData("2022.10", arrayListOf(R.drawable.ex_img, R.drawable.ex_img2, R.drawable.ex_img, R.drawable.ex_img2,R.drawable.ex_img, R.drawable.ex_img2)),
+        DiaryImgData("2022.09", arrayListOf(R.drawable.ex_img, R.drawable.ex_img2, R.drawable.ex_img, R.drawable.ex_img2,R.drawable.ex_img, R.drawable.ex_img2))
     )
 }

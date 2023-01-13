@@ -118,6 +118,13 @@
 
     <!-- DiaryImg -->
     <string name="diaryimg_month">2022.10</string>
+    <!-- DiaryDetail -->
+    <string name="diarydetail_title">자세히 보기</string>
+    <string name="diarydetail_hashtag">#텀블러 #다회용기 #비건식</string>
+    <string name="diarydetail_challenge">#텀블러 사용하기</string>
+    <string name="diarydetail_content">오늘은 홍대에 있는 비건 식당에 방문해서 식사를 했다. 정말 맛있었고 또 먹으러 가고 싶다.</string>
+    <string name="diarydetail_date">2022/11/18</string>
+
 
     <!-- Spinner Challenge Array -->
     <string-array name="spinner_challenge">
