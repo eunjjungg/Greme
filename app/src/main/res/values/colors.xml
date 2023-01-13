@@ -39,5 +39,6 @@
     <color name="diary_disclosurebox">#666DB9FF</color>
     <color name="diary_disclosurebox_content">#B8B8B8</color>
     <color name="diary_save">#8DD455</color>
+    <color name="diary_date">#7B7B7B</color>
 
 </resources>

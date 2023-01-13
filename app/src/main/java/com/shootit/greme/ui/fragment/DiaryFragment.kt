@@ -106,6 +106,13 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
             binding.btnSave.visibility = View.GONE
             binding.clEdit.visibility = View.VISIBLE
         }
+        binding.ivCalendar.setOnClickListener {
+            val diaryImgCalendarFragment = DiaryImgCalendarFragment()
+            requireActivity().supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.nav_fl, diaryImgCalendarFragment)
+                .commitNow()
+        }
         setupSpinner()
         setupSpinnerHandler()
         return root
