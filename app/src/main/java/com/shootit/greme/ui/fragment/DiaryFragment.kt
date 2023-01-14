@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.requestPermissions
@@ -30,9 +32,21 @@ import com.shootit.greme.databinding.FragmentDiaryBinding
 import com.shootit.greme.model.CalendarData
 import com.shootit.greme.ui.adapter.CalendarAdapter
 import com.jakewharton.threetenabp.AndroidThreeTen
+import com.shootit.greme.model.DiaryWriteData
+import com.shootit.greme.model.ResponseDiaryWriteData
+import com.shootit.greme.model.WriteData
+import com.shootit.greme.network.ConnectionObject
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter.ofPattern
 import org.w3c.dom.Text
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
 import java.util.*
 
@@ -41,7 +55,7 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
     private var mBinding: FragmentDiaryBinding? = null
     // 매번 null 체크를 할 필요없이 편의성을 위해 바인딩 변수 재선언
     private val binding get() = mBinding!!
-    var imageFile : File? = null
+    lateinit var imageFile : File
 
     lateinit var calendarAdapter: CalendarAdapter
     private var calendarList = ArrayList<CalendarData>()
@@ -106,6 +120,23 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
             binding.btnSave.visibility = View.GONE
             binding.clEdit.visibility = View.VISIBLE
         }
+        /*
+        binding.btnDelete.setOnClickListener {
+            Log.d("TestLog", "Diary")
+            // 서버로 보낼 로그인 데이터 생성
+            val diaryWriteData = DiaryWriteData(WriteData(binding.etContent.text.toString(), binding.etHashtag.text.toString(), null, binding.cbDisclosure.isChecked),multipartFile = body)
+            Log.d("datavalue", "data값=> "+ diaryWriteData)
+            // 현재 사용자의 정보를 받아올 것을 명시// 서버 통신은I/O 작업이므로 비동기적으로 받아올Callback 내부 코드는 나중에 데이터를 받아오고 실행
+            val call: Call<ResponseDiaryWriteData> = ConnectionObject.getDiaryWriteRetrofitService.diaryWrite(diaryWriteData)
+            call.enqueue(object : Callback<ResponseDiaryWriteData>{override fun onResponse(call: Call<ResponseDiaryWriteData>,response: Response<ResponseDiaryWriteData>) {
+            // 네트워크 통신에 성공한 경우
+                if(response.isSuccessful){
+                    Log.d("NetworkTest", "success")
+                }
+                val data = response.body().toString()
+                    Log.d("responsevalue", "response값=> "+ diaryWriteData)}else{// 이곳은 에러 발생할 경우 실행됨Log.d("NetworkTest", "fail")}}override fun onFailure(call: Call<ResponseDiaryWriteData>, t: Throwable) {Log.d("NetworkTest", "error!")}})
+            }
+        }*/
         binding.ivCalendar.setOnClickListener {
             val diaryImgCalendarFragment = DiaryImgCalendarFragment()
             requireActivity().supportFragmentManager
@@ -129,7 +160,7 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
             val forDay = LocalDate.now().dayOfWeek
             var weekday = ""
             if(forDay.toString() == "SUNDAY"){
-                weekday = "SUN"
+                weekday = "S"
             }
             val now = LocalDate.now().format(ofPattern("d"))
             binding.tvMonth.text = LocalDate.now().month.toString()
@@ -149,6 +180,39 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
 
         binding.ivMain.setOnClickListener {
             selectGallery()
+        }
+        // DiaryWrite 서버 연결 부분
+        binding.btnSave.setOnClickListener {
+            Log.d("TestLog", "Diary")
+            // 서버로 보내기 위해 RequestBody객체로 변환
+            val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), imageFile)
+            val body = MultipartBody.Part.createFormData("file", imageFile.name, requestFile)
+            // 서버로 보낼 로그인 데이터 생성
+            val diaryWriteData = DiaryWriteData(
+                WriteData(binding.etContent.text.toString(), binding.etHashtag.text.toString(), 1, binding.cbDisclosure.isChecked),multipartFile = body)
+            Log.d("datavalue", "data값=> "+ diaryWriteData)
+            // 현재 사용자의 정보를 받아올 것을 명시
+            // 서버 통신은 I/O 작업이므로 비동기적으로 받아올 Callback 내부 코드는 나중에 데이터를 받아오고 실행
+            val call: Call<ResponseDiaryWriteData> = ConnectionObject.getDiaryWriteRetrofitService.diaryWrite(diaryWriteData)
+            call.enqueue(object : Callback<ResponseDiaryWriteData> {
+                override fun onResponse(
+                    call: Call<ResponseDiaryWriteData>, response: Response<ResponseDiaryWriteData>
+                ) {
+                    // 네트워크 통신에 성공한 경우
+                    if (response.isSuccessful) {
+                        Log.d("NetworkTest", "success")
+                        val data = response.body().toString()
+                        Log.d("responsevalue", "response값=> " + diaryWriteData)
+                    }
+                    else
+                    { // 이곳은 에러 발생할 경우 실행됨
+                        Log.d("NetworkTest", "fail")
+                    }
+                }
+                override fun onFailure(call: Call<ResponseDiaryWriteData>, t: Throwable) {
+                    Log.d("NetworkTest", "error!")
+                }
+            })
         }
     }
     private fun setupSpinner() {
