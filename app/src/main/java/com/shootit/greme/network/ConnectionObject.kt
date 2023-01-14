@@ -47,4 +47,8 @@ object ConnectionObject {
     val getSignUpRetrofitService: SignUpInterface by lazy {
         getRetrofit.create(SignUpInterface::class.java)
     }
+
+    val getChallengeRetrofitService: ChallengeInterface by lazy {
+        getRetrofit.create(ChallengeInterface::class.java)
+    }
 }
