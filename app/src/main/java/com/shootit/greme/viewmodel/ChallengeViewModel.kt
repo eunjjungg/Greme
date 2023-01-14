@@ -22,7 +22,7 @@ class ChallengeViewModel(private val challengeRepository: ChallengeRepository): 
         }
     }
 
-    fun convertServerDataToRecyclerTypeData(rawData: ChallengeActivityModel) {
+    private fun convertServerDataToRecyclerTypeData(rawData: ChallengeActivityModel) {
         val convertedData = mutableListOf<ChallengeRecyclerType>(
             TopBar(rawData.count),
             Guide("참여중인 챌린지"),
@@ -47,7 +47,7 @@ class ChallengeViewModel(private val challengeRepository: ChallengeRepository): 
             desc = this.info,
             day = this.deadline.serverTimeToDDay(),
             peopleAmount = this.num,
-            id = 0
+            id = this.id
         )
     }
 
@@ -57,7 +57,7 @@ class ChallengeViewModel(private val challengeRepository: ChallengeRepository): 
             desc = this.info,
             day = this.deadline.serverTimeToDDay(),
             peopleAmount = this.num,
-            id = 0
+            id = this.id
         )
     }
 

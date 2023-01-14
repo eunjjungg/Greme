@@ -126,7 +126,7 @@ class ChallengeActivityAdapter(private val resources: Resources)
                         val pair: androidx.core.util.Pair<View, String> = androidx.core.util.Pair(binding.outerView as View, "infoView")
                         val optionPair = ActivityOptionsCompat.makeSceneTransitionAnimation(binding.root.context as Activity, pair)
                         it.putExtra("ChallengeInfo", ChallengeInfoParcelData(
-                            item.title, item.desc, item.day, item.peopleAmount, true
+                            item.title, item.desc, item.day, item.peopleAmount, true, item.id
                         ))
                         binding.root.context.startActivity(it, optionPair.toBundle())
                     }
@@ -148,7 +148,7 @@ class ChallengeActivityAdapter(private val resources: Resources)
                         val pair: androidx.core.util.Pair<View, String> = androidx.core.util.Pair(binding.outerView as View, "infoView")
                         val optionPair = ActivityOptionsCompat.makeSceneTransitionAnimation(binding.root.context as Activity, pair)
                         it.putExtra("ChallengeInfo", ChallengeInfoParcelData(
-                            item.title, item.desc, item.day, item.peopleAmount, false
+                            item.title, item.desc, item.day, item.peopleAmount, false, item.id
                         ))
                         binding.root.context.startActivity(it, optionPair.toBundle())
                     }
