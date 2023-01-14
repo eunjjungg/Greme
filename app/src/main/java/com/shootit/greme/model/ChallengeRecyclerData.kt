@@ -15,14 +15,16 @@ class OnGoingChallenge(
     val title: String,
     val desc: String,
     val day: Int,
-    val peopleAmount: Int
+    val peopleAmount: Int,
+    val id: Int
 ) : ChallengeRecyclerType()
 
 class AvailableChallenge(
     val title: String,
     val desc: String,
     val day: Int,
-    val peopleAmount: Int
+    val peopleAmount: Int,
+    val id: Int
 ) : ChallengeRecyclerType()
 
 class Guide(
