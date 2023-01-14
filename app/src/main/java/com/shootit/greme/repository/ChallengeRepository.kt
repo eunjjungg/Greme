@@ -2,6 +2,8 @@ package com.shootit.greme.repository
 
 import android.util.Log
 import com.shootit.greme.model.ChallengeActivityModel
+import com.shootit.greme.model.ChallengeInfoImg
+import com.shootit.greme.model.ChallengeInfoModel
 import com.shootit.greme.network.ConnectionObject
 import retrofit2.http.Path
 
@@ -40,8 +42,15 @@ class ChallengeRepository {
 
 
     // 챌린지 클릭 시 챌린지 정보 & 참여 목록 조회
-    suspend fun getChallengeInfo(challengeId: Int) {
-
+    suspend fun getChallengeInfo(challengeId: Int): ChallengeInfoModel? {
+        val response = ConnectionObject
+            .getChallengeRetrofitService.getChallengeInfo(challengeId)
+        return if (response.isSuccessful) {
+            response.body() as ChallengeInfoModel
+        } else {
+            Log.d("challenge server err", response.errorBody()?.string().toString())
+            null
+        }
     }
 
 

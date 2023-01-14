@@ -1,6 +1,7 @@
 package com.shootit.greme.network
 
 import com.shootit.greme.model.ChallengeActivityModel
+import com.shootit.greme.model.ChallengeInfoModel
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.PATCH
@@ -22,7 +23,7 @@ interface ChallengeInterface {
 
     // 챌린지 클릭 시 챌린지 정보 & 참여 목록 조회
     @GET("/challenge/{challengeId}")
-    suspend fun getChallengeInfo(@Path("challengeId") challengeId: Int)
+    suspend fun getChallengeInfo(@Path("challengeId") challengeId: Int): Response<ChallengeInfoModel>
 
     // 홈 화면 챌린지 목록
     // TODO 백엔드 미구현 이슈

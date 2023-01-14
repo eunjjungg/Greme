@@ -20,6 +20,22 @@ data class ChallengeActivityModel(
     val count: Int
 )
 
+data class ChallengeInfoModel(
+    @SerializedName("status")
+    val status: Boolean,
+    @SerializedName("getChallengeLists")
+    val getChallengeLists: List<ChallengeParticipation>,
+    @SerializedName("summaryRes")
+    val summaryRes: ChallengeDetail
+)
+
+data class ChallengeParticipation(
+    @SerializedName("id")
+    val id: Int,
+    @SerializedName("image")
+    val image: String
+)
+
 data class ChallengeDetail(
     @SerializedName("num")
     val num: Int,
@@ -28,5 +44,7 @@ data class ChallengeDetail(
     @SerializedName("title")
     val title: String,
     @SerializedName("info")
-    val info: String
+    val info: String,
+    @SerializedName("id")
+    val id: Int
 )
