@@ -1,23 +1,26 @@
 package com.shootit.greme.ui.adapter
 
+import android.R as AR
 import android.content.res.Resources
+import android.graphics.drawable.PictureDrawable
+import android.net.Uri
 import android.util.Log
-import android.util.Size
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
-import android.widget.LinearLayout
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.internal.ViewUtils.addOnGlobalLayoutListener
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.StreamEncoder
+import com.caverock.androidsvg.SVG
 import com.shootit.greme.R
 import com.shootit.greme.databinding.LayoutChallengeDefaultGuideBinding
 import com.shootit.greme.databinding.LayoutChallengeGridImageBinding
 import com.shootit.greme.databinding.LayoutChallengeListBinding
 import com.shootit.greme.model.*
+import java.io.InputStream
 
 
 class ChallengeInfoRecyclerAdapter(private val resources: Resources)
@@ -116,9 +119,20 @@ class ChallengeInfoRecyclerAdapter(private val resources: Resources)
                     }
                 })
 
+            Log.d("ccheck", "glide check")
+            Glide.with(itemView)
+                .load(Uri.parse("https://exchange-data-s3-bucket.s3.ap-northeast-2.amazonaws.com/profile/image.png"))
+                //.load(Uri.parse("https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F230F184857C8F8D50E"))
+                .placeholder(resources.getDrawable(com.shootit.greme.R.drawable.ic_challenge_earth2))
+                .error(resources.getDrawable(com.shootit.greme.R.drawable.ic_recycle))
+                .override(binding.imgView1.width, binding.imgView1.height)
+                .into(binding.imgView1)
+
+
 
             if(challengeInfoImg.secondImgUrl == null){
-                binding.imgView2.setImageDrawable(ResourcesCompat.getDrawable(resources,R.drawable.drawable_challenge_summary, null))
+                binding.imgView2.setImageDrawable(ResourcesCompat.getDrawable(resources,
+                    com.shootit.greme.R.drawable.drawable_challenge_summary, null))
             }
             if(challengeInfoImg.thirdImgUrl == null) {
                 binding.imgView3.setImageDrawable(ResourcesCompat.getDrawable(resources,R.drawable.drawable_challenge_summary, null))

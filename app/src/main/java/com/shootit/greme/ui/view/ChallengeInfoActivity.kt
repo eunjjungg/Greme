@@ -35,9 +35,9 @@ class ChallengeInfoActivity :
         }
 
         val imgData : MutableList<ChallengeInfoImg> = mutableListOf(
-            ChallengeInfoImg("123","123","123"),
-            ChallengeInfoImg("123","123","123"),
-            ChallengeInfoImg("123","123",null),
+            //ChallengeInfoImg("123","123","123"),
+            //ChallengeInfoImg("123","123","123"),
+            ChallengeInfoImg("123",null,null),
 
         )
         adapter.imgDataList = imgData
