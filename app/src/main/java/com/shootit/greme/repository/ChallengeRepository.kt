@@ -1,5 +1,8 @@
 package com.shootit.greme.repository
 
+import android.util.Log
+import com.shootit.greme.model.ChallengeActivityModel
+import com.shootit.greme.network.ConnectionObject
 import retrofit2.http.Path
 
 class ChallengeRepository {
@@ -14,8 +17,15 @@ class ChallengeRepository {
     }
 
     // 챌린지 메인 화면
-    suspend fun getMyChallengeList() {
-
+    suspend fun getMyChallengeList(): ChallengeActivityModel? {
+        val response = ConnectionObject
+            .getChallengeRetrofitService.getMyChallengeList()
+        return if (response.isSuccessful) {
+            response.body() as ChallengeActivityModel
+        } else {
+            Log.d("challenge server err", response.errorBody()?.string().toString())
+            null
+        }
     }
 
     // 챌린지 등록

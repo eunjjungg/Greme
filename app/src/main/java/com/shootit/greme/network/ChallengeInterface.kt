@@ -1,5 +1,6 @@
 package com.shootit.greme.network
 
+import com.shootit.greme.model.ChallengeActivityModel
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.PATCH
@@ -9,7 +10,7 @@ import retrofit2.http.Path
 interface ChallengeInterface {
     // 챌린지 메인 화면
     @GET("/challenge/")
-    suspend fun getMyChallengeList()
+    suspend fun getMyChallengeList(): Response<ChallengeActivityModel>
 
     // 챌린지 등록
     @POST("/challenge/{challengeId}")
