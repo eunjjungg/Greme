@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import android.widget.ImageView
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -102,6 +103,7 @@ class ChallengeInfoRecyclerAdapter(private val resources: Resources)
             val innerLayoutList = listOf(binding.imgView1, binding.imgView2, binding.imgView3)
             val innerParamsList = listOf(binding.imgView1.layoutParams, binding.imgView2.layoutParams, binding.imgView3.layoutParams)
 
+            // setting size with square
             outerLayout.viewTreeObserver.addOnGlobalLayoutListener(
                 object : OnGlobalLayoutListener {
                     override fun onGlobalLayout() {
@@ -119,24 +121,26 @@ class ChallengeInfoRecyclerAdapter(private val resources: Resources)
                     }
                 })
 
-            Log.d("ccheck", "glide check")
+            // set image in each imageView
+            val item = listOf<String?>(challengeInfoImg.firstImgUrl, challengeInfoImg.secondImgUrl, challengeInfoImg.thirdImgUrl)
+            item.forEachIndexed { index, urlString ->
+                val imageView = innerLayoutList[index]
+                if (urlString == null) {
+                    imageView.setImageDrawable(ResourcesCompat.getDrawable(resources,
+                        com.shootit.greme.R.drawable.drawable_challenge_summary, null))
+                } else {
+                    setGlideImageInIV(urlString, imageView)
+                }
+            }
+
+        }
+
+        fun setGlideImageInIV(urlString: String, imageView: ImageView) {
             Glide.with(itemView)
-                .load(Uri.parse("https://exchange-data-s3-bucket.s3.ap-northeast-2.amazonaws.com/profile/image.png"))
-                //.load(Uri.parse("https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F230F184857C8F8D50E"))
-                .placeholder(resources.getDrawable(com.shootit.greme.R.drawable.ic_challenge_earth2))
-                .error(resources.getDrawable(com.shootit.greme.R.drawable.ic_recycle))
-                .override(binding.imgView1.width, binding.imgView1.height)
-                .into(binding.imgView1)
-
-
-
-            if(challengeInfoImg.secondImgUrl == null){
-                binding.imgView2.setImageDrawable(ResourcesCompat.getDrawable(resources,
-                    com.shootit.greme.R.drawable.drawable_challenge_summary, null))
-            }
-            if(challengeInfoImg.thirdImgUrl == null) {
-                binding.imgView3.setImageDrawable(ResourcesCompat.getDrawable(resources,R.drawable.drawable_challenge_summary, null))
-            }
+                .load(Uri.parse(urlString))
+                .error(resources.getDrawable(com.shootit.greme.R.drawable.drawble_challenge_list_ongoing))
+                .override(imageView.width, imageView.height)
+                .into(imageView)
         }
     }
 }

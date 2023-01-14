@@ -61,6 +61,8 @@
     <string name="challenge_guide">지금 바로 챌린지에 참여할 수 있어요!\n“다이어리”에서 나의 챌린지를 기록할 수 있어요</string>
     <string name="challenge_ongoing"><b>참여중인 챌린지</b></string>
     <string name="challenge_available"><b>참여 가능 챌린지</b></string>
+    <string name="challenge_info_participate">등록하기</string>
+    <string name="challenge_info_exception">제외하기</string>
 
     <!--purpose-->
     <string-array name="signup_purpose">
