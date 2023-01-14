@@ -17,6 +17,9 @@ class ChallengeViewModel(private val challengeRepository: ChallengeRepository): 
     fun getMyChallengeList(completion: (ChallengeActivityModel?) -> Unit) = viewModelScope.launch {
         val data: ChallengeActivityModel? = challengeRepository.getMyChallengeList()
         completion(data)
+        if (data != null) {
+            convertServerDataToRecyclerTypeData(data)
+        }
     }
 
     fun convertServerDataToRecyclerTypeData(rawData: ChallengeActivityModel) {
