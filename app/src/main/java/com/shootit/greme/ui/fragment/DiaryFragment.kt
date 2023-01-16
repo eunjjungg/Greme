@@ -29,13 +29,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.shootit.greme.R
 import com.shootit.greme.databinding.FragmentDiaryBinding
-import com.shootit.greme.model.CalendarData
 import com.shootit.greme.ui.adapter.CalendarAdapter
 import com.jakewharton.threetenabp.AndroidThreeTen
-import com.shootit.greme.model.DiaryWriteData
-import com.shootit.greme.model.ResponseDiaryWriteData
-import com.shootit.greme.model.WriteData
+import com.shootit.greme.model.*
 import com.shootit.greme.network.ConnectionObject
+import com.shootit.greme.util.EncryptedSpfImpl
+import com.shootit.greme.util.EncryptedSpfObject
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -120,23 +119,7 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
             binding.btnSave.visibility = View.GONE
             binding.clEdit.visibility = View.VISIBLE
         }
-        /*
-        binding.btnDelete.setOnClickListener {
-            Log.d("TestLog", "Diary")
-            // 서버로 보낼 로그인 데이터 생성
-            val diaryWriteData = DiaryWriteData(WriteData(binding.etContent.text.toString(), binding.etHashtag.text.toString(), null, binding.cbDisclosure.isChecked),multipartFile = body)
-            Log.d("datavalue", "data값=> "+ diaryWriteData)
-            // 현재 사용자의 정보를 받아올 것을 명시// 서버 통신은I/O 작업이므로 비동기적으로 받아올Callback 내부 코드는 나중에 데이터를 받아오고 실행
-            val call: Call<ResponseDiaryWriteData> = ConnectionObject.getDiaryWriteRetrofitService.diaryWrite(diaryWriteData)
-            call.enqueue(object : Callback<ResponseDiaryWriteData>{override fun onResponse(call: Call<ResponseDiaryWriteData>,response: Response<ResponseDiaryWriteData>) {
-            // 네트워크 통신에 성공한 경우
-                if(response.isSuccessful){
-                    Log.d("NetworkTest", "success")
-                }
-                val data = response.body().toString()
-                    Log.d("responsevalue", "response값=> "+ diaryWriteData)}else{// 이곳은 에러 발생할 경우 실행됨Log.d("NetworkTest", "fail")}}override fun onFailure(call: Call<ResponseDiaryWriteData>, t: Throwable) {Log.d("NetworkTest", "error!")}})
-            }
-        }*/
+
         binding.ivCalendar.setOnClickListener {
             val diaryImgCalendarFragment = DiaryImgCalendarFragment()
             requireActivity().supportFragmentManager
@@ -144,6 +127,32 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
                 .replace(R.id.nav_fl, diaryImgCalendarFragment)
                 .commitNow()
         }
+        // 다이어리 전체 보기 서버 연동
+        binding.ivCalendar.setOnClickListener {
+            Log.d("Network_Entire", "entireDiary")
+
+            ConnectionObject.getDiaryWriteRetrofitService.entireDiaryLook().enqueue(object : Callback<List<ResponseEntireDiaryData>>{
+                override fun onResponse(
+                    call: Call<List<ResponseEntireDiaryData>>,
+                    response: Response<List<ResponseEntireDiaryData>>
+                ) {
+                    if (response.isSuccessful){
+                        val data = response.body().toString()
+                        Log.d("responsevalue", "entireDiary_response 값 => "+ data)
+                    }else{
+                        // 이곳은 에러 발생할 경우 실행됨
+
+                        Log.d("Network_Entire", "여긴가?")
+                    }
+                }
+
+                override fun onFailure(call: Call<List<ResponseEntireDiaryData>>, t: Throwable) {
+                    Log.d("Network_Entire", "entireDiary get error!")
+
+                }
+            })
+        }
+
         setupSpinner()
         setupSpinnerHandler()
         return root
@@ -159,7 +168,7 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
             // 오늘 요일 출력
             val forDay = LocalDate.now().dayOfWeek
             var weekday = ""
-            if(forDay.toString() == "SUNDAY"){
+            if (forDay.toString() == "SUNDAY") {
                 weekday = "S"
             }
             val now = LocalDate.now().format(ofPattern("d"))
@@ -171,7 +180,7 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
 
                 calendarList.apply {
                     // 오늘을 기준으로 +-3일 값들 출력
-                    add(CalendarData((now.toInt()+i.toLong()-3).toString(),weekday))
+                    add(CalendarData((now.toInt() + i.toLong() - 3).toString(), weekday))
                 }
             }
         }
@@ -181,6 +190,7 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
         binding.ivMain.setOnClickListener {
             selectGallery()
         }
+
         // DiaryWrite 서버 연결 부분
         binding.btnSave.setOnClickListener {
             Log.d("TestLog", "Diary")
@@ -191,6 +201,8 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
             val diaryWriteData = DiaryWriteData(
                 WriteData(binding.etContent.text.toString(), binding.etHashtag.text.toString(), 1, binding.cbDisclosure.isChecked),multipartFile = body)
             Log.d("datavalue", "data값=> "+ diaryWriteData)
+            val tmp = EncryptedSpfImpl(EncryptedSpfObject.getEncryptedSpf(requireContext())).getAccessToken()
+            Log.d("login ccheck token", tmp.toString())
             // 현재 사용자의 정보를 받아올 것을 명시
             // 서버 통신은 I/O 작업이므로 비동기적으로 받아올 Callback 내부 코드는 나중에 데이터를 받아오고 실행
             val call: Call<ResponseDiaryWriteData> = ConnectionObject.getDiaryWriteRetrofitService.diaryWrite(diaryWriteData)
@@ -200,12 +212,45 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
                 ) {
                     // 네트워크 통신에 성공한 경우
                     if (response.isSuccessful) {
-                        Log.d("NetworkTest", "success")
+                        Log.d("Network_Diary", "success")
                         val data = response.body().toString()
                         Log.d("responsevalue", "response값=> " + diaryWriteData)
                     }
                     else
                     { // 이곳은 에러 발생할 경우 실행됨
+                        val data = response.code()
+                        Log.d("status code", data.toString())
+                        val data2 = response.headers()
+                        Log.d("header", data2.toString())
+                        Log.d("server err", response.errorBody()?.string().toString())
+                        Log.d("Network_Diary", "fail")
+                    }
+                }
+                override fun onFailure(call: Call<ResponseDiaryWriteData>, t: Throwable) {
+                    Log.d("Network_Diary", "error!")
+                }
+            })
+        }
+
+        // 삭제하기 버튼 서버 연동
+        binding.btnDelete.setOnClickListener {
+            Log.d("TestLog", "Diary")
+            // 서버로 보낼 로그인 데이터 생성
+            val diaryDeleteData = DiaryDeleteData(id=0)
+            Log.d("datavalue", "data값=> "+ diaryDeleteData)
+            // 현재 사용자의 정보를 받아올 것을 명시
+            // 서버 통신은 I/O 작업이므로 비동기적으로 받아올 Callback 내부 코드는 나중에 데이터를 받아오고 실행
+            val call: Call<ResponseDiaryWriteData> = ConnectionObject.getDiaryWriteRetrofitService.diaryDelete(diaryDeleteData)
+            call.enqueue(object : Callback<ResponseDiaryWriteData>{
+                override fun onResponse(call: Call<ResponseDiaryWriteData>,response: Response<ResponseDiaryWriteData>) {
+                    // 네트워크 통신에 성공한 경우
+                    if(response.isSuccessful){
+                        Log.d("NetworkTest", "success")
+                        val data = response.body().toString()
+                        Log.d("responsevalue", "response값=> "+ data)
+                    } else
+                    {
+                        // 이곳은 에러 발생할 경우 실행됨
                         Log.d("NetworkTest", "fail")
                     }
                 }
@@ -214,7 +259,9 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
                 }
             })
         }
+
     }
+
     private fun setupSpinner() {
         val adapter = ArrayAdapter.createFromResource(requireContext(), R.array.spinner_challenge,R.layout.color_spinner_layout)
         adapter.setDropDownViewResource(R.layout.spinner_style)
