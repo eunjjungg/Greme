@@ -16,4 +16,8 @@ interface DiaryWriteInterface {
     // 전체 다이어리 조회
     @GET("/post/all")
     fun entireDiaryLook() : Call<List<ResponseEntireDiaryData>>
+
+    // 날짜로 다이어리 조회 => 아직
+    @GET("/post/date/{date}")
+    fun dateDiaryLook(@Path("date") date: String) : Call<ResponseDateDiaryData>
 }

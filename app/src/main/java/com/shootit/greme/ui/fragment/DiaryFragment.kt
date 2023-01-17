@@ -127,6 +127,8 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
                 .replace(R.id.nav_fl, diaryImgCalendarFragment)
                 .commitNow()
         }
+
+        /*
         // 다이어리 전체 보기 서버 연동
         binding.ivCalendar.setOnClickListener {
             Log.d("Network_Entire", "entireDiary")
@@ -151,7 +153,38 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
 
                 }
             })
+        }*/
+
+        // 날짜로 다이어리 조회 서버 연동
+        binding.ivCalendar.setOnClickListener {
+            Log.d("Network_Date", "dateDiary")
+
+            ConnectionObject.getDiaryWriteRetrofitService.dateDiaryLook("2023-01-14").enqueue(object : Callback<ResponseDateDiaryData>{
+                override fun onResponse(
+                    call: Call<ResponseDateDiaryData>,
+                    response: Response<ResponseDateDiaryData>
+                ) {
+                    if (response.isSuccessful){
+                        val data = response.body().toString()
+                        Log.d("responsevalue", "dateDiary_response 값 => "+ data)
+                    }else{
+                        // 이곳은 에러 발생할 경우 실행됨
+                        val data1 = response.code()
+                        Log.d("status code", data1.toString())
+                        val data2 = response.headers()
+                        Log.d("header", data2.toString())
+                        Log.d("server err", response.errorBody()?.string().toString())
+                        Log.d("Network_Date", "fail")
+                    }
+                }
+
+                override fun onFailure(call: Call<ResponseDateDiaryData>, t: Throwable) {
+                    Log.d("Network_Date", "error!")
+
+                }
+            })
         }
+
         // 삭제하기 버튼 서버 연동
         binding.btnDelete.setOnClickListener {
             Log.d("TestLog", "Diary")
