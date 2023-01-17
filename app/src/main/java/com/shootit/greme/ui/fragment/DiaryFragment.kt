@@ -152,6 +152,40 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
                 }
             })
         }
+        // 삭제하기 버튼 서버 연동
+        binding.btnDelete.setOnClickListener {
+            Log.d("TestLog", "Diary")
+            // 서버로 보낼 로그인 데이터 생성
+            val diaryDeleteData = DiaryDeleteData(id=14)
+            Log.d("datavalue", "data값=> "+ diaryDeleteData)
+            // 현재 사용자의 정보를 받아올 것을 명시
+            // 서버 통신은 I/O 작업이므로 비동기적으로 받아올 Callback 내부 코드는 나중에 데이터를 받아오고 실행
+            val call: Call<Void> = ConnectionObject.getDiaryWriteRetrofitService.diaryDelete(diaryDeleteData)
+            call.enqueue(object : Callback<Void>{
+                override fun onResponse(call: Call<Void>,response: Response<Void>) {
+                    val data = response.code()
+                    Log.d("status code", data.toString())
+                    // 네트워크 통신에 성공한 경우
+                    if(response.isSuccessful){
+                        Log.d("Network_Delete", "success")
+                        val data = response.body().toString()
+                        Log.d("responsevalue", "response값=> "+ data)
+                    } else
+                    {
+                        // 이곳은 에러 발생할 경우 실행됨
+                        val data = response.code()
+                        Log.d("status code", data.toString())
+                        val data2 = response.headers()
+                        Log.d("header", data2.toString())
+                        Log.d("server err", response.errorBody()?.string().toString())
+                        Log.d("Network_Delete", "fail")
+                    }
+                }
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    Log.d("Network_Delete", "error!")
+                }
+            })
+        }
 
         setupSpinner()
         setupSpinnerHandler()
@@ -189,75 +223,6 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
 
         binding.ivMain.setOnClickListener {
             selectGallery()
-        }
-
-        // DiaryWrite 서버 연결 부분
-        binding.btnSave.setOnClickListener {
-            Log.d("TestLog", "Diary")
-            // 서버로 보내기 위해 RequestBody객체로 변환
-            val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), imageFile)
-            val body = MultipartBody.Part.createFormData("file", imageFile.name, requestFile)
-            // 서버로 보낼 로그인 데이터 생성
-            val diaryWriteData = DiaryWriteData(
-                WriteData(binding.etContent.text.toString(), binding.etHashtag.text.toString(), 1, binding.cbDisclosure.isChecked),multipartFile = body)
-            Log.d("datavalue", "data값=> "+ diaryWriteData)
-            val tmp = EncryptedSpfImpl(EncryptedSpfObject.getEncryptedSpf(requireContext())).getAccessToken()
-            Log.d("login ccheck token", tmp.toString())
-            // 현재 사용자의 정보를 받아올 것을 명시
-            // 서버 통신은 I/O 작업이므로 비동기적으로 받아올 Callback 내부 코드는 나중에 데이터를 받아오고 실행
-            val call: Call<ResponseDiaryWriteData> = ConnectionObject.getDiaryWriteRetrofitService.diaryWrite(diaryWriteData)
-            call.enqueue(object : Callback<ResponseDiaryWriteData> {
-                override fun onResponse(
-                    call: Call<ResponseDiaryWriteData>, response: Response<ResponseDiaryWriteData>
-                ) {
-                    // 네트워크 통신에 성공한 경우
-                    if (response.isSuccessful) {
-                        Log.d("Network_Diary", "success")
-                        val data = response.body().toString()
-                        Log.d("responsevalue", "response값=> " + diaryWriteData)
-                    }
-                    else
-                    { // 이곳은 에러 발생할 경우 실행됨
-                        val data = response.code()
-                        Log.d("status code", data.toString())
-                        val data2 = response.headers()
-                        Log.d("header", data2.toString())
-                        Log.d("server err", response.errorBody()?.string().toString())
-                        Log.d("Network_Diary", "fail")
-                    }
-                }
-                override fun onFailure(call: Call<ResponseDiaryWriteData>, t: Throwable) {
-                    Log.d("Network_Diary", "error!")
-                }
-            })
-        }
-
-        // 삭제하기 버튼 서버 연동
-        binding.btnDelete.setOnClickListener {
-            Log.d("TestLog", "Diary")
-            // 서버로 보낼 로그인 데이터 생성
-            val diaryDeleteData = DiaryDeleteData(id=0)
-            Log.d("datavalue", "data값=> "+ diaryDeleteData)
-            // 현재 사용자의 정보를 받아올 것을 명시
-            // 서버 통신은 I/O 작업이므로 비동기적으로 받아올 Callback 내부 코드는 나중에 데이터를 받아오고 실행
-            val call: Call<ResponseDiaryWriteData> = ConnectionObject.getDiaryWriteRetrofitService.diaryDelete(diaryDeleteData)
-            call.enqueue(object : Callback<ResponseDiaryWriteData>{
-                override fun onResponse(call: Call<ResponseDiaryWriteData>,response: Response<ResponseDiaryWriteData>) {
-                    // 네트워크 통신에 성공한 경우
-                    if(response.isSuccessful){
-                        Log.d("NetworkTest", "success")
-                        val data = response.body().toString()
-                        Log.d("responsevalue", "response값=> "+ data)
-                    } else
-                    {
-                        // 이곳은 에러 발생할 경우 실행됨
-                        Log.d("NetworkTest", "fail")
-                    }
-                }
-                override fun onFailure(call: Call<ResponseDiaryWriteData>, t: Throwable) {
-                    Log.d("NetworkTest", "error!")
-                }
-            })
         }
 
     }
