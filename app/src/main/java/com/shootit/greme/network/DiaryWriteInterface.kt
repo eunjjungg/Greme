@@ -16,8 +16,4 @@ interface DiaryWriteInterface {
     // 전체 다이어리 조회
     @GET("/post/all")
     fun entireDiaryLook() : Call<List<ResponseEntireDiaryData>>
-
-    // 다른 유저의 다이어리 조회
-    @GET("/post/{postId}")
-    fun otherUserDiary(@Path("postId") postId: Int) : Call<List<ResponseOtherUserDiaryData>>
 }
