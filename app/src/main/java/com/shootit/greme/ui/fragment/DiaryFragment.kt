@@ -283,18 +283,6 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
             val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), imageFile!!)
             val body = MultipartBody.Part.createFormData("multipartFile", imageFile!!.name, requestFile)
             Log.d("datavalue", "multipart값=> " + body)
-            // 서버로 보낼 로그인 데이터 생성
-            /*
-            val diaryWriteData = DiaryWriteData(
-                WriteData(
-                    binding.etContent.text.toString(),
-                    binding.etHashtag.text.toString(),
-                    1,
-                    binding.cbDisclosure.isChecked
-                )
-            )*/
-            // Log.d("datavalue", "data값=> " + diaryWriteData)
-
 
             // 현재 사용자의 정보를 받아올 것을 명시
             // 서버 통신은 I/O 작업이므로 비동기적으로 받아올 Callback 내부 코드는 나중에 데이터를 받아오고 실행

@@ -55,4 +55,7 @@ object ConnectionObject {
     val getDiarySearchRetrofitService: SearchInterface by lazy {
         getRetrofit.create(SearchInterface::class.java)
     }
+    val getSignOutRetrofitService: SignOutInterface by lazy {
+        getRetrofit.create(SignOutInterface::class.java)
+    }
 }
