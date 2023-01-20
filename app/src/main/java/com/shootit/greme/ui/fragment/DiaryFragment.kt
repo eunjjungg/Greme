@@ -36,6 +36,7 @@ import com.shootit.greme.network.ConnectionObject
 import com.shootit.greme.util.EncryptedSpfImpl
 import com.shootit.greme.util.EncryptedSpfObject
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.parse
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -54,7 +55,8 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
     private var mBinding: FragmentDiaryBinding? = null
     // 매번 null 체크를 할 필요없이 편의성을 위해 바인딩 변수 재선언
     private val binding get() = mBinding!!
-    lateinit var imageFile : File
+    var imageFile : File? = null
+    var imageWideUri: Uri? = null
 
     lateinit var calendarAdapter: CalendarAdapter
     private var calendarList = ArrayList<CalendarData>()
@@ -76,9 +78,10 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
         if (result.resultCode == RESULT_OK){
             // 이미지를 받으면 ImageView에 적용
             val imageUri = result.data?.data
+            imageWideUri = imageUri
             imageUri?.let{
                 // 서버 업로드를 위해 파일 형태로 변환
-                imageFile = File(getRealPathFromURI(it))
+                // imageFile = File(getRealPathFromURI(it))
 
                 // 이미지를 불러온다
                 Glide.with(this)
@@ -111,6 +114,20 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
 
             override fun afterTextChanged(p0: Editable?) {
                 binding.etHashtag.setBackgroundResource(R.drawable.bg_diary_edittext_write)
+            }
+        })
+        // edittext 안에 값이 들어갈 경우 background 변경
+        binding.etContent.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                binding.etContent.setBackgroundResource(R.drawable.bg_diary_edittext)
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                binding.etContent.setBackgroundResource(R.drawable.bg_diary_edittext_write)
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                binding.etContent.setBackgroundResource(R.drawable.bg_diary_edittext_write)
             }
         })
         binding.btnSave.setOnClickListener {
@@ -257,67 +274,120 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
         binding.ivMain.setOnClickListener {
             selectGallery()
         }
+        // DiaryWrite 서버 연결 부분
+        binding.btnSave.setOnClickListener {
+            Log.d("TestLog", "Diary")
+            Log.d("datavalue", "multipart값=> " + imageWideUri)
+            imageFile = File(getRealPathFromURI(imageWideUri!!))
+            // 서버로 보내기 위해 RequestBody객체로 변환
+            val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), imageFile!!)
+            val body = MultipartBody.Part.createFormData("multipartFile", imageFile!!.name, requestFile)
+            Log.d("datavalue", "multipart값=> " + body)
+            // 서버로 보낼 로그인 데이터 생성
+            /*
+            val diaryWriteData = DiaryWriteData(
+                WriteData(
+                    binding.etContent.text.toString(),
+                    binding.etHashtag.text.toString(),
+                    1,
+                    binding.cbDisclosure.isChecked
+                )
+            )*/
+            // Log.d("datavalue", "data값=> " + diaryWriteData)
 
-    }
 
-    private fun setupSpinner() {
-        val adapter = ArrayAdapter.createFromResource(requireContext(), R.array.spinner_challenge,R.layout.color_spinner_layout)
-        adapter.setDropDownViewResource(R.layout.spinner_style)
-        binding.spinnerDiary.adapter = adapter
-    }
-    private fun setupSpinnerHandler() {
-        binding.spinnerDiary.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
+            // 현재 사용자의 정보를 받아올 것을 명시
+            // 서버 통신은 I/O 작업이므로 비동기적으로 받아올 Callback 내부 코드는 나중에 데이터를 받아오고 실행
+            val call: Call<Long> =
+                ConnectionObject.getDiaryWriteRetrofitService.diaryWrite(binding.etContent.text.toString(), binding.etHashtag.text.toString(), 1, binding.cbDisclosure.isChecked, body)
+            call.enqueue(object : Callback<Long> {
+                override fun onResponse(
+                    call: Call<Long>, response: Response<Long>
+                ) {
+                    val data = response.code()
+                    Log.d("status code", data.toString())
+                    // 네트워크 통신에 성공한 경우
+                    if (response.isSuccessful) {
+                        Log.d("Network_DiaryWrite", "success")
+                        val data = response.body().toString()
+                        Log.d("responsevalue", "response값=> " + data)
+                    } else { // 이곳은 에러 발생할 경우 실행됨
+                        val data1 = response.code()
+                        Log.d("status code", data1.toString())
+                        val data2 = response.headers()
+                        Log.d("header", data2.toString())
+                        Log.d("server err", response.errorBody()?.string().toString())
+                        Log.d("Network_DiaryWrite", "fail")
+                    }
+                }
 
-            }
-
-            override fun onNothingSelected(p0: AdapterView<*>?) {
-
-            }
+                override fun onFailure(call: Call<Long>, t: Throwable) {
+                    Log.d("Network_DiaryWrite", "error!")
+                }
+            })
         }
-    }
-    // 이미지 실제 경로 반환
-    fun getRealPathFromURI(uri: Uri): String {
-        val buildName = Build.MANUFACTURER
-        if(buildName.equals("Xiaomi")){
-            return uri.path!!
-        }
-        var columnIndex = 0
-        val proj = arrayOf(MediaStore.Images.Media.DATA)
-        val cursor = requireActivity().contentResolver.query(uri, proj, null,null,null)
-        if(cursor!!.moveToFirst()){
-            columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-        }
-        val result = cursor.getString(columnIndex)
-        cursor.close()
-        return result
-    }
-    // 갤러리를 부르는 메서드
-    private fun selectGallery(){
-        val writePermission = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        val readPermission = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
 
-        // 권한 확인
-        if(writePermission == PackageManager.PERMISSION_DENIED || readPermission == PackageManager.PERMISSION_DENIED){
-            // 권한 요청
-            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), REQ_GALLERY)
-        }else{
-            // 권한이 있는 경우 갤러리 실행
-            val intent = Intent(Intent.ACTION_PICK)
-            // intent의 data와 type을 동시에 설정하는 메서드
-            intent.setDataAndType(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*"
-            )
-            imageResult.launch(intent)
-        }
+
+}
+
+private fun setupSpinner() {
+val adapter = ArrayAdapter.createFromResource(requireContext(), R.array.spinner_challenge,R.layout.color_spinner_layout)
+adapter.setDropDownViewResource(R.layout.spinner_style)
+binding.spinnerDiary.adapter = adapter
+}
+private fun setupSpinnerHandler() {
+binding.spinnerDiary.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+    override fun onItemSelected(
+        parent: AdapterView<*>?,
+        view: View?,
+        position: Int,
+        id: Long
+    ) {
+
     }
-    override fun onDestroyView() {
-        super.onDestroyView()
-        mBinding = null
+
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+
     }
+}
+}
+// 이미지 실제 경로 반환
+fun getRealPathFromURI(uri: Uri): String {
+val buildName = Build.MANUFACTURER
+if(buildName.equals("Xiaomi")){
+    return uri.path!!
+}
+var columnIndex = 0
+val proj = arrayOf(MediaStore.Images.Media.DATA)
+val cursor = requireActivity().contentResolver.query(uri, proj, null,null,null)
+if(cursor!!.moveToFirst()){
+    columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+}
+val result = cursor.getString(columnIndex)
+cursor.close()
+return result
+}
+// 갤러리를 부르는 메서드
+private fun selectGallery(){
+val writePermission = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
+val readPermission = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+
+// 권한 확인
+if(writePermission == PackageManager.PERMISSION_DENIED || readPermission == PackageManager.PERMISSION_DENIED){
+    // 권한 요청
+    requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), REQ_GALLERY)
+}else{
+    // 권한이 있는 경우 갤러리 실행
+    val intent = Intent(Intent.ACTION_PICK)
+    // intent의 data와 type을 동시에 설정하는 메서드
+    intent.setDataAndType(
+        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*"
+    )
+    imageResult.launch(intent)
+}
+}
+override fun onDestroyView() {
+super.onDestroyView()
+mBinding = null
+}
 }

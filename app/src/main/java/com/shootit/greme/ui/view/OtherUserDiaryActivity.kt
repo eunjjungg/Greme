@@ -15,5 +15,8 @@ class OtherUserDiaryActivity : AppCompatActivity() {
         // 바인딩
         mBinding = ActivityOtherUserDiaryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.ivBack.setOnClickListener {
+            finish()
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.shootit.greme.ui.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.shootit.greme.R
 import com.shootit.greme.databinding.FragmentSearchBinding
@@ -17,6 +19,7 @@ import com.shootit.greme.model.ResponseSearchData
 import com.shootit.greme.model.SearchData
 import com.shootit.greme.network.ConnectionObject
 import com.shootit.greme.ui.adapter.SearchAdapter
+import com.shootit.greme.ui.view.OtherUserDiaryActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -31,7 +34,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     private lateinit var rvSearch: RecyclerView
     private lateinit var searchView: SearchView
     private var mList = ArrayList<SearchData>()
-    private lateinit var adapter: SearchAdapter
+    val adapter = SearchAdapter(mList)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,7 +57,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 rvSearch.layoutManager = GridLayoutManager(context, 3)
                 addDataToList()
-                adapter = SearchAdapter(mList)
+                // adapter = SearchAdapter(mList)
                 rvSearch.adapter = adapter
 
                 // 검색으로 다이어리 조회 서버 연동
@@ -118,7 +121,13 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 }
             })
         }
-
+        adapter.setItemClickListener(object: SearchAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int) {
+                // 클릭 시 이벤트 작성
+                val intent = Intent(getActivity(), OtherUserDiaryActivity::class.java)
+                startActivity(intent)
+            }
+        })
 
         return root
     }

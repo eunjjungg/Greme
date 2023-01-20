@@ -5,17 +5,15 @@ import okhttp3.MultipartBody
 
 data class DiaryWriteData(
     @SerializedName("creationReq")
-    val creationReq: WriteData?,
-    @SerializedName("multipartFile")
-    val multipartFile: MultipartBody.Part
+    val creationReq: WriteData?
 )
 data class WriteData(
     @SerializedName("content")
     val content: String,
     @SerializedName("hashtag")
     val hashtag: String,
-    @SerializedName("challenges")
-    val challenges: Long,
+    @SerializedName("challenge")
+    val challenge: Long,
     @SerializedName("status")
     val status: Boolean
 )
