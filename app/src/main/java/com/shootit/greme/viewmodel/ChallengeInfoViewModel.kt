@@ -26,8 +26,8 @@ class ChallengeInfoViewModel(private val challengeRepository: ChallengeRepositor
     private fun setDataToChallengeImgLiveData(data: List<ChallengeParticipation>) {
         val imgList = mutableListOf<ChallengeInfoImg>()
         val size = data.size
-        var q = size / 3
-        var r = size % 3
+        val q = size / 3
+        val r = size % 3
 
 
         for (i in 0 until q) {
