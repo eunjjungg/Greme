@@ -21,6 +21,12 @@ import com.shootit.greme.repository.ChallengeRepository
 import com.shootit.greme.ui.adapter.ChallengeInfoRecyclerAdapter
 import com.shootit.greme.viewmodel.ChallengeInfoViewModel
 
+/**
+ * 넘겨줘야되는 데이터
+ * format : Parcel
+ * data : ChallengeInfoParcelData(title, desc, dat, peopleAmount, isRegistered, id)
+ */
+
 class ChallengeInfoActivity :
     BaseActivity<ActivityChallengeInfoBinding>(R.layout.activity_challenge_info) {
 

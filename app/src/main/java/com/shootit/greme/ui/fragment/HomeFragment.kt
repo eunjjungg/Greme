@@ -7,20 +7,27 @@ import android.os.Build
 import android.view.View
 import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.viewModels
+import com.google.android.material.snackbar.Snackbar
 import com.shootit.greme.R
 import com.shootit.greme.base.BaseFragment
 import com.shootit.greme.databinding.FragmentHomeBinding
+import com.shootit.greme.model.FeedDetail
+import com.shootit.greme.repository.ChallengeRepository
 import com.shootit.greme.ui.`interface`.ChallengeMenuButtonClickInterface
+import com.shootit.greme.ui.`interface`.ChallengeSummaryClickInterface
 import com.shootit.greme.ui.custom.ChallengeSummary
 import com.shootit.greme.ui.view.ChallengeActivity
 import com.shootit.greme.ui.view.ChallengeGuideActivity
+import com.shootit.greme.ui.view.ChallengeInfoActivity
 import com.shootit.greme.ui.view.MainActivity
 import com.shootit.greme.viewmodel.ChallengeHomeViewModel
 
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     override val viewModel by viewModels<ChallengeHomeViewModel> {
-        ChallengeHomeViewModel.ChallengeHomeViewModelFactory("tmp")
+        ChallengeHomeViewModel.ChallengeHomeViewModelFactory(
+            ChallengeRepository.getInstance()!!
+        )
     }
 
     override fun initView() {
@@ -29,8 +36,57 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     }
 
     private fun FragmentHomeBinding.initSummaryButtons() {
-        btnSummaryTop.setContent(ChallengeSummary.ChallengeSummaryDescType.Review.also { it.content = "#투명페트병_생수_이용하기" })
-        btnSummaryBottom.setContent(ChallengeSummary.ChallengeSummaryDescType.Main.also { it.content = "#가까운_거리는_걸어다니기" })
+        val popularCompletion: (FeedDetail?) -> Unit = { feedDetail ->
+            if (feedDetail == null) {
+                btnSummaryBottom.setContent(ChallengeSummary.ChallengeSummaryDescType.Main.also { it.content = "network error" })
+                makeSnackBar("접속이 불안정합니다. 잠시 후 다시 시도해주세요.")
+            } else {
+                btnSummaryBottom.setContent(ChallengeSummary.ChallengeSummaryDescType.Main.also { it.content = feedDetail.title })
+
+                Listener@
+                btnSummaryBottom.setCustomListener(object : ChallengeSummaryClickInterface {
+                    override fun challengeSummaryOnClick() {
+                        viewModel.getParcelData(id = feedDetail.id) { parcel ->
+                            Intent(binding.root.context, ChallengeInfoActivity::class.java).also {
+                                it.putExtra("ChallengeInfo", parcel)
+                                startActivity(it)
+                            }
+                        }
+                    }
+                })
+            }
+        }
+        val participationCompletion: (FeedDetail?) -> Unit = { feedDetail ->
+            if (feedDetail == null) {
+                btnSummaryTop.setContent(ChallengeSummary.ChallengeSummaryDescType.My.also {
+                    it.content = "현재 참여 중인 챌린지가 없어요! 챌린지 참여하러 가기"
+                })
+
+                Listener@
+                btnSummaryTop.setCustomListener(object : ChallengeSummaryClickInterface {
+                    override fun challengeSummaryOnClick() {
+                        Intent(binding.root.context, ChallengeActivity::class.java).also { startActivity(it) }
+                    }
+                })
+            } else {
+                btnSummaryTop.setContent(ChallengeSummary.ChallengeSummaryDescType.My.also { it.content = feedDetail.title })
+
+                Listener@
+                btnSummaryTop.setCustomListener(object : ChallengeSummaryClickInterface {
+                    override fun challengeSummaryOnClick() {
+                        // TODO parcel data
+                        viewModel.getParcelData(id = feedDetail.id) { parcel ->
+                            Intent(binding.root.context, ChallengeInfoActivity::class.java).also {
+                                it.putExtra("ChallengeInfo", parcel)
+                                startActivity(it)
+                            }
+                        }
+                    }
+                })
+            }
+        }
+
+         viewModel.getHomeFeedData(participationCompletion = participationCompletion, popularCompletion = popularCompletion)
     }
 
     private fun FragmentHomeBinding.initMenuButtons() {
@@ -78,6 +134,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
             }
         }
+    }
+
+    private fun makeSnackBar(message: String) {
+        val snackbar = Snackbar.make(binding.root.rootView, message, Snackbar.LENGTH_LONG)
+        snackbar.setAction("확인", View.OnClickListener {
+            snackbar.dismiss()
+        })
+        snackbar.show()
     }
 
     enum class ChallengeMenu(val text: String) {
