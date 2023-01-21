@@ -43,7 +43,6 @@ class ChallengeInfoActivity :
 
     override fun onCreateAction() {
         initRecyclerView()
-        // TODO Status 변경 필요
         initFabByStatus(isParticipate)
         setListenerToFab()
         setObserver()
