@@ -1,7 +1,5 @@
 package com.shootit.greme.ui.view
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
@@ -9,12 +7,11 @@ import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.shootit.greme.R
 import com.shootit.greme.base.BaseActivity
 import com.shootit.greme.databinding.ActivityChallengeBinding
-import com.shootit.greme.model.*
+import com.shootit.greme.model.ChallengeActivityModel
 import com.shootit.greme.repository.ChallengeRepository
 import com.shootit.greme.ui.adapter.ChallengeActivityAdapter
 import com.shootit.greme.viewmodel.ChallengeViewModel
@@ -40,7 +37,6 @@ class ChallengeActivity : BaseActivity<ActivityChallengeBinding>(R.layout.activi
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         setObserver()
-
     }
 
     override fun onResume() {

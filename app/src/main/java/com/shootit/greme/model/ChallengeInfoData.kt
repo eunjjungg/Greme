@@ -10,7 +10,12 @@ class ChallengeInfo(
 ) : ChallengeInfoType()
 
 class ChallengeInfoImg(
-    var firstImgUrl : String,
-    var secondImgUrl : String?,
-    var thirdImgUrl : String?
+    var firstImgUrl : UrlAndId,
+    var secondImgUrl : UrlAndId?,
+    var thirdImgUrl : UrlAndId?
 ) : ChallengeInfoType()
+
+data class UrlAndId(
+    val urlString: String,
+    val id: Int
+)
