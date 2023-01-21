@@ -6,18 +6,19 @@ import com.shootit.greme.model.UserInterestAndGenderInfo
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 
 interface SettingInterface {
 
     // get current profile
     @GET("/user/profile")
-    fun getCurrentProfile() : Response<UserCurrentInfo>
+    suspend fun getCurrentProfile() : Response<UserCurrentInfo>
 
     // set interest, gender
-    @GET("/user/profile1")
-    fun setUserInterestAndGender(@Body data: UserInterestAndGenderInfo) : Response<Void>
+    @PATCH("/user/profile1")
+    suspend fun setUserInterestAndGender(@Body data: UserInterestAndGenderInfo) : Response<Void>
 
     // set area, purpose
-    @GET("/user/profile2")
-    fun setUserAreaAndPurpose(@Body data: UserAreaAndPurposeInfo) : Response<Void>
+    @PATCH("/user/profile2")
+    suspend fun setUserAreaAndPurpose(@Body data: UserAreaAndPurposeInfo) : Response<Void>
 }
