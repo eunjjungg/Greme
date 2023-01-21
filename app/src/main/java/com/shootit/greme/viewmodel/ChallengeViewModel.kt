@@ -62,7 +62,7 @@ class ChallengeViewModel(private val challengeRepository: ChallengeRepository): 
     }
 
     private fun String.serverTimeToDDay(): Int {
-        val dateInString = "2023-01-20T10:53:07.769Z"
+        val dateInString = this
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'")
         val deadLine = dateFormat.parse(dateInString)
         val diff = (deadLine.time - getCurrentDate().time) / (60 * 60 * 24 * 1000) + 1
