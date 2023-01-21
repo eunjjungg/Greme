@@ -1,8 +1,10 @@
 package com.shootit.greme.ui.fragment
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import com.shootit.greme.R
 import com.shootit.greme.databinding.FragmentSettingBinding
@@ -18,6 +21,7 @@ import com.shootit.greme.model.ChallengeData
 import com.shootit.greme.model.ResponseDateDiaryData
 import com.shootit.greme.network.ConnectionObject
 import com.shootit.greme.ui.adapter.ParticipatedChallengeAdapter
+import com.shootit.greme.ui.view.SettingUserInfoActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -47,11 +51,21 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
         val root: View = binding.root
         initRecycler()
         binding.btnProfileModify.setOnClickListener {
-            val profileeditFragment = ProfileEditFragment()
-            requireActivity().supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.nav_fl, profileeditFragment)
-                .commitNow()
+
+            // profile setting 화면 이동
+            // TODO transition animation 고민중...
+            Intent(binding.root.context, SettingUserInfoActivity::class.java).also {
+                //val pair: androidx.core.util.Pair<View, String> = androidx.core.util.Pair(binding.btnProfileModify, "pageName")
+                //val optionPair = ActivityOptionsCompat.makeSceneTransitionAnimation(this@SettingFragment.activity as Activity, pair)
+                //startActivity(it, optionPair.toBundle())
+                startActivity(it)
+            }
+
+//            val profileeditFragment = ProfileEditFragment()
+//            requireActivity().supportFragmentManager
+//                .beginTransaction()
+//                .replace(R.id.nav_fl, profileeditFragment)
+//                .commitNow()
         }
         binding.btnLogout.setOnClickListener {
             val builder = AlertDialog.Builder(requireContext())
