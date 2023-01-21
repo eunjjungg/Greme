@@ -27,7 +27,6 @@ interface ChallengeInterface {
     suspend fun getChallengeInfo(@Path("challengeId") challengeId: Int): Response<ChallengeInfoModel>
 
     // 홈 화면 챌린지 목록
-    // TODO 백엔드 미구현 이슈
     @GET("/challenge/home")
     suspend fun getChallengeHomeFeedList(): Response<ChallengeHomeFeedModel>
 }
