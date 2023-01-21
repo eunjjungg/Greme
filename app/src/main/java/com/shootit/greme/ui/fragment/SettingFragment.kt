@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.DialogInterface
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +15,12 @@ import androidx.core.content.ContextCompat
 import com.shootit.greme.R
 import com.shootit.greme.databinding.FragmentSettingBinding
 import com.shootit.greme.model.ChallengeData
+import com.shootit.greme.model.ResponseDateDiaryData
+import com.shootit.greme.network.ConnectionObject
 import com.shootit.greme.ui.adapter.ParticipatedChallengeAdapter
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SettingFragment : Fragment(R.layout.fragment_setting) {
     // 전역 변수로 바인딩 객체 선언
@@ -81,6 +87,38 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
             val button2 = alertDialog.getButton(DialogInterface.BUTTON_NEGATIVE)
             with(button2){
                 setTextColor(Color.BLUE)
+            }
+            button1.setOnClickListener {
+                Log.d("Network_SignOut", "signout")
+
+                ConnectionObject.getSignOutRetrofitService.signOut(0).enqueue(object :
+                    Callback<Void> {
+                    override fun onResponse(
+                        call: Call<Void>,
+                        response: Response<Void>
+                    ) {
+                        if (response.isSuccessful){
+                            Log.d("Network_DiaryWrite", "success")
+                            val data = response.body().toString()
+                            Log.d("responsevalue", "signout_response 값 => "+ data)
+                            val data1 = response.code()
+                            Log.d("status code", data1.toString())
+                        }else{
+                            // 이곳은 에러 발생할 경우 실행됨
+                            val data1 = response.code()
+                            Log.d("status code", data1.toString())
+                            val data2 = response.headers()
+                            Log.d("header", data2.toString())
+                            Log.d("server err", response.errorBody()?.string().toString())
+                            Log.d("Network_SignOut", "fail")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
+                        Log.d("Network_SignOut", "error!")
+
+                    }
+                })
             }
         }
         return root
