@@ -6,7 +6,7 @@ import com.shootit.greme.R
 import com.shootit.greme.base.BaseFragment
 import com.shootit.greme.databinding.FragmentSetInterestBinding
 import com.shootit.greme.ui.`interface`.InterestButtonClickInterface
-import com.shootit.greme.ui.view.InterestButton
+import com.shootit.greme.ui.custom.InterestButton
 import com.shootit.greme.viewmodel.SignUpViewModel
 
 class SetInterestFragment :

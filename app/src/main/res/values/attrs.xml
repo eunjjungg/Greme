@@ -6,4 +6,14 @@
         <attr name="interest_description" format="string"/>
     </declare-styleable>
 
+    <declare-styleable name="ChallengeButton">
+        <attr name="menu_icon" format="reference"/>
+        <attr name="menu_description" format="string"/>
+    </declare-styleable>
+
+    <declare-styleable name="ChallengeSummary">
+        <attr name="summary_icon" format="reference"/>
+        <attr name="summary_description" format="string"/>
+        <attr name="summary_name" format="string"/>
+    </declare-styleable>
 </resources>

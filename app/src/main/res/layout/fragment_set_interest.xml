@@ -54,7 +54,7 @@
             android:paddingTop="@dimen/margin24"
             app:layout_constraintTop_toBottomOf="@+id/tvGuide2">
 
-            <com.shootit.greme.ui.view.InterestButton
+            <com.shootit.greme.ui.custom.InterestButton
                 android:id="@+id/btnEnergy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
                 app:interest_description="@string/ic_energy"
                 />
 
-            <com.shootit.greme.ui.view.InterestButton
+            <com.shootit.greme.ui.custom.InterestButton
                 android:id="@+id/btnUpCycling"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -72,7 +72,7 @@
                 app:interest_description="@string/ic_upCycle"
                 />
 
-            <com.shootit.greme.ui.view.InterestButton
+            <com.shootit.greme.ui.custom.InterestButton
                 android:id="@+id/btnEcoProduct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
             app:layout_constraintTop_toBottomOf="@+id/linear_top"
             tools:layout_editor_absoluteX="24dp">
 
-            <com.shootit.greme.ui.view.InterestButton
+            <com.shootit.greme.ui.custom.InterestButton
                 android:id="@+id/btnVeganFood"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -99,7 +99,7 @@
                 app:interest_description="@string/ic_vegan"
                 app:interest_icon="@drawable/ic_vegan" />
 
-            <com.shootit.greme.ui.view.InterestButton
+            <com.shootit.greme.ui.custom.InterestButton
                 android:id="@+id/btnVeganCosmetic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

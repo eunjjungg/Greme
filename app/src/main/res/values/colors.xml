@@ -31,6 +31,14 @@
     <color name="signup_next">#78B449</color>
     <color name="signup_more_info">#D9E6CF</color>
 
+    <!--challenge-->
+    <color name="challenge_summary_main">#248B00</color>
+    <color name="challenge_summary_bg">#E3EEDA</color>
+    <color name="challenge_day_gray">#D9D9D9</color>
+    <color name="challenge_ongoing_bg">#F8F8F8</color>
+    <color name="challenge_info_participate">#B0C99D</color>
+    <color name="challenge_info_exception">#DEDEDE</color>
+
     <!--Diary-->
     <color name="diary_calendarbox">#6E8DD455</color>
     <color name="diary_day">#258F00</color>

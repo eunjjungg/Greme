@@ -66,4 +66,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main) {
     fun loadFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction().replace(fl.id, fragment).commit()
     }
+
+    // 다이어리 화면으로 이동 (Home Fragment에서 사용하는 함수)
+    fun moveToDiaryFragment() {
+        loadFragment(DiaryFragment())
+        bn.selectedItemId = R.id.menu_diary
+    }
 }

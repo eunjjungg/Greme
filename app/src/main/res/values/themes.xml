@@ -13,7 +13,11 @@
         <item name="android:statusBarColor">@color/status_bar</item>
         <!-- Customize your theme here. -->
 
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="fontFamily">@font/pretendard_extralight_200</item>
+
+
+        <item name="android:alertDialogTheme">@style/AppTheme.AlertDialogTheme</item>
 
     </style>
     <style name="AppTheme.AlertDialogTheme" parent="ThemeOverlay.AppCompat.Dialog.Alert">
@@ -25,5 +29,14 @@
     </style>
     <style name="AppTheme.AlertDialogTheme.Positive" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
         <item name="android:textColor">@color/signup_et_error</item>
+    </style>
+
+    <style name="BoldText" parent="Theme.Greme">
+        <item name="fontFamily">@font/pretendard_regular_400</item>
+    </style>
+
+    <style name="AppTitleText" parent="Theme.Greme">
+        <item name="fontFamily">@font/dosis_otf_only_engnum</item>
+        <item name="android:textSize">@dimen/text18</item>
     </style>
 </resources>
