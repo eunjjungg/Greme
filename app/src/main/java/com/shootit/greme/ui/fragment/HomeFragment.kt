@@ -14,6 +14,7 @@ import com.shootit.greme.ui.`interface`.ChallengeMenuButtonClickInterface
 import com.shootit.greme.ui.custom.ChallengeSummary
 import com.shootit.greme.ui.view.ChallengeActivity
 import com.shootit.greme.ui.view.ChallengeGuideActivity
+import com.shootit.greme.ui.view.MainActivity
 import com.shootit.greme.viewmodel.ChallengeHomeViewModel
 
 
@@ -63,7 +64,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                 }
             }
             ChallengeMenu.DiaryMenu -> {
-
+                val activity = activity as MainActivity
+                activity.moveToDiaryFragment()
             }
             ChallengeMenu.GuideMenu -> {
                 Intent(binding.root.context, ChallengeGuideActivity::class.java).also {
