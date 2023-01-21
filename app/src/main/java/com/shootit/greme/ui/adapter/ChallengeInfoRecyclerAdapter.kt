@@ -122,7 +122,11 @@ class ChallengeInfoRecyclerAdapter(private val resources: Resources)
                 })
 
             // set image in each imageView
-            val item = listOf<String?>(challengeInfoImg.firstImgUrl, challengeInfoImg.secondImgUrl, challengeInfoImg.thirdImgUrl)
+            val item = listOf<String?>(
+                challengeInfoImg.firstImgUrl.urlString,
+                challengeInfoImg.secondImgUrl?.urlString,
+                challengeInfoImg.thirdImgUrl?.urlString)
+
             item.forEachIndexed { index, urlString ->
                 val imageView = innerLayoutList[index]
                 if (urlString == null) {
@@ -139,6 +143,7 @@ class ChallengeInfoRecyclerAdapter(private val resources: Resources)
             Glide.with(itemView)
                 .load(Uri.parse(urlString))
                 .error(resources.getDrawable(com.shootit.greme.R.drawable.drawble_challenge_list_ongoing))
+                .centerCrop()
                 .override(imageView.width, imageView.height)
                 .into(imageView)
         }
