@@ -96,8 +96,17 @@ class ChallengeInfoActivity :
         binding.fabStatus.setOnClickListener {
             // TODO 서버로 status 변환하는 코드
             // TODO 현재 status의 반대로 change하도록 코드 변경
-            isParticipate = !isParticipate
-            changeFabStatus(isParticipate)
+            if (isParticipate) {
+                viewModel.exceptChallenge(id) {
+                    isParticipate = !isParticipate
+                    changeFabStatus(isParticipate)
+                }
+            } else {
+                viewModel.participateChallenge(id) {
+                    isParticipate = !isParticipate
+                    changeFabStatus(isParticipate)
+                }
+            }
         }
     }
 

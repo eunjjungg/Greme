@@ -31,13 +31,17 @@ class ChallengeRepository {
     }
 
     // 챌린지 등록
-    suspend fun participateChallenge(challengeId: Int) {
-
+    suspend fun participateChallenge(challengeId: Int): Boolean {
+        val response = ConnectionObject
+            .getChallengeRetrofitService.participateChallenge(challengeId)
+        return response.isSuccessful
     }
 
     // 챌린지 제외
-    suspend fun exceptChallenge(challengeId: Int) {
-
+    suspend fun exceptChallenge(challengeId: Int): Boolean {
+        val response = ConnectionObject
+            .getChallengeRetrofitService.exceptChallenge(challengeId)
+        return response.isSuccessful
     }
 
 

@@ -48,6 +48,16 @@ class ChallengeInfoViewModel(private val challengeRepository: ChallengeRepositor
         challengeInfoImg.value = imgList
     }
 
+    fun participateChallenge(id: Int, completion: (Boolean) -> Unit) = viewModelScope.launch {
+        val response = challengeRepository.participateChallenge(id)
+        completion(response)
+    }
+
+    fun exceptChallenge(id: Int, completion: (Boolean) -> Unit) = viewModelScope.launch {
+        val response = challengeRepository.exceptChallenge(id)
+        completion(response)
+    }
+
     class ChallengeInfoViewModelFactory(private val challengeRepository: ChallengeRepository)
         : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
