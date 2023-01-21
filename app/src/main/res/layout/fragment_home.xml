@@ -95,28 +95,41 @@
                         app:menu_description="사용안내"/>
                 </GridLayout>
 
-                <ProgressBar
-                    android:id="@+id/progressBar"
-                    android:layout_marginTop="@dimen/margin60"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:visibility="gone"
-                    android:layout_height="50dp"/>
+                    android:layout_height="wrap_content">
 
-                <com.shootit.greme.ui.custom.ChallengeSummary
-                    android:id="@+id/btnSummaryTop"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:summary_description="description"
-                    app:summary_name="#Challenge_Name"/>
+                    <com.shootit.greme.ui.custom.ChallengeSummary
+                        android:id="@+id/btnSummaryTop"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:summary_description=""
+                        app:summary_name="" />
 
-                <com.shootit.greme.ui.custom.ChallengeSummary
-                    android:id="@+id/btnSummaryBottom"
-                    android:layout_marginTop="@dimen/margin24"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:summary_icon="@drawable/ic_challenge_main"
-                    app:summary_description="description"
-                    app:summary_name="#Challenge_Name"/>
+                    <com.shootit.greme.ui.custom.ChallengeSummary
+                        android:id="@+id/btnSummaryBottom"
+                        android:layout_marginTop="@dimen/margin24"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:summary_icon="@drawable/ic_challenge_main"
+                        app:summary_description=""
+                        app:summary_name=""
+                        app:layout_constraintTop_toBottomOf="@id/btnSummaryTop"/>
+
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
             </LinearLayout>
 

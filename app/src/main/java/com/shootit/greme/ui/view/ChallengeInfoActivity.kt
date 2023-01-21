@@ -92,7 +92,7 @@ class ChallengeInfoActivity :
                         resources.getColor(R.color.challenge_info_participate)
                     )
                     text = resources.getString(R.string.challenge_info_participate)
-                    icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_plus, null)
+                    icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_challenge_plus, null)
                 }
             }
         }
@@ -100,8 +100,6 @@ class ChallengeInfoActivity :
 
     private fun setListenerToFab() {
         binding.fabStatus.setOnClickListener {
-            // TODO 서버로 status 변환하는 코드
-            // TODO 현재 status의 반대로 change하도록 코드 변경
             if (isParticipate) {
                 viewModel.exceptChallenge(id) {
                     isParticipate = !isParticipate
@@ -132,7 +130,7 @@ class ChallengeInfoActivity :
                 binding.fabStatus.apply {
                     colorTransitionAnim(from = colorException, to = colorParticipate)
                     text = resources.getString(R.string.challenge_info_participate)
-                    icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_plus, null)
+                    icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_challenge_plus, null)
                 }
             }
         }
