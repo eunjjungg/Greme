@@ -66,4 +66,7 @@ object ConnectionObject {
     val getSignOutRetrofitService: SignOutInterface by lazy {
         getRetrofit.create(SignOutInterface::class.java)
     }
+    val getSettingRetrofitService: SettingInterface by lazy {
+        getRetrofit.create(SettingInterface::class.java)
+    }
 }
