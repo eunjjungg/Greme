@@ -109,4 +109,42 @@
     <string name="setting_secession">회원 탈퇴</string>
     <string name="setting_profile_plus">프로필 사진 추가</string>
 
+    <!-- Diary -->
+    <string name="diary_month">January</string>
+    <string name="diary_year">2023</string>
+    <string name="diary_day">TUE</string>
+    <string name="diary_date">3</string>
+    <string name="diary_disclosure_title">공개 여부</string>
+    <string name="diary_disclosure_content">공개 시, 챌린지에 나의 다이어리가 공개됩니다.</string>
+    <string name="diary_save">저장하기</string>
+    <string name="diary_today">오늘의 일기!</string>
+    <string name="diary_edit">수정하기</string>
+    <string name="diary_delete">삭제하기</string>
+    <string name="diary_challenge_plus">챌린지 추가하기</string>
+
+    <!-- DiaryImg -->
+    <string name="diaryimg_month">2022.10</string>
+    <!-- DiaryDetail -->
+    <string name="diarydetail_title">자세히 보기</string>
+    <string name="diarydetail_hashtag">#텀블러 #다회용기 #비건식</string>
+    <string name="diarydetail_hashtag2">#텀블러 #다회용기</string>
+    <string name="diarydetail_challenge">#텀블러 사용하기</string>
+    <string name="diarydetail_content">오늘은 홍대에 있는 비건 식당에 방문해서 식사를 했다. 정말 맛있었고 또 먹으러 가고 싶다.</string>
+    <string name="diarydetail_content2">오늘도 음료를 마실 때마다 텀블러를 사용했다. 일회용 컵을 사용하지 않으니 친환경적인 삶을 제대로 살고 있는 것 같아 기분이 좋다.</string>
+    <string name="diarydetail_date">2022/11/18</string>
+
+    <!-- Search -->
+    <string name="search_describe">찾고 싶은 검색어를 입력해 주세요!</string>
+    <string name="search_result">검색 결과</string>
+    <string name="search_testID">yejinchoco</string>
+    <string name="search_testID2">sangin</string>
+
+
+    <!-- Spinner Challenge Array -->
+    <string-array name="spinner_challenge">
+        <item># 텀블러 사용하기</item>
+        <item># 가까운 거리는 걸어다니기</item>
+        <item># 따뜻하게 입고 다니기</item>
+    </string-array>
+
 </resources>

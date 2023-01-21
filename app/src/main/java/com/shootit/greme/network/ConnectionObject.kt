@@ -55,4 +55,15 @@ object ConnectionObject {
     val getChallengeRetrofitService: ChallengeInterface by lazy {
         getRetrofit.create(ChallengeInterface::class.java)
     }
+
+    val getDiaryWriteRetrofitService: DiaryWriteInterface by lazy {
+        getRetrofit.create(DiaryWriteInterface::class.java)
+    }
+
+    val getDiarySearchRetrofitService: SearchInterface by lazy {
+        getRetrofit.create(SearchInterface::class.java)
+    }
+    val getSignOutRetrofitService: SignOutInterface by lazy {
+        getRetrofit.create(SignOutInterface::class.java)
+    }
 }
