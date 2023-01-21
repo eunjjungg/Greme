@@ -2,6 +2,7 @@ package com.shootit.greme.ui.fragment
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Binder
 import android.os.Build
 import android.view.View
 import androidx.core.app.ActivityOptionsCompat
@@ -12,6 +13,7 @@ import com.shootit.greme.databinding.FragmentHomeBinding
 import com.shootit.greme.ui.`interface`.ChallengeMenuButtonClickInterface
 import com.shootit.greme.ui.custom.ChallengeSummary
 import com.shootit.greme.ui.view.ChallengeActivity
+import com.shootit.greme.ui.view.ChallengeGuideActivity
 import com.shootit.greme.viewmodel.ChallengeHomeViewModel
 
 
@@ -31,11 +33,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     }
 
     private fun FragmentHomeBinding.initMenuButtons() {
-        btnMain.setCustomListener(object : ChallengeMenuButtonClickInterface {
-            override fun challengeMenuOnClick(title: String) {
-                onMenuClick(title)
-            }
-        })
+        val btnList = listOf(btnGuide, btnMain, btnPopular, btnMy)
+        btnList.forEach {
+            it.setCustomListener(object : ChallengeMenuButtonClickInterface {
+                override fun challengeMenuOnClick(title: String) {
+                    onMenuClick(title)
+                }
+            })
+        }
     }
 
     private fun onMenuClick(title: String) {
@@ -44,6 +49,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                 ChallengeMenu.PopularChallengeMenu.text -> ChallengeMenu.PopularChallengeMenu
                 ChallengeMenu.MyChallengeMenu.text -> ChallengeMenu.MyChallengeMenu
                 ChallengeMenu.DiaryMenu.text -> ChallengeMenu.DiaryMenu
+                ChallengeMenu.GuideMenu.text -> ChallengeMenu.GuideMenu
                 else -> ChallengeMenu.GuideMenu
             }
         }
@@ -60,7 +66,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
             }
             ChallengeMenu.GuideMenu -> {
-
+                Intent(binding.root.context, ChallengeGuideActivity::class.java).also {
+                    val pair: androidx.core.util.Pair<View, String> = androidx.core.util.Pair(binding.btnGuide.getMenuIconView() as View, "icon")
+                    val optionPair = ActivityOptionsCompat.makeSceneTransitionAnimation(this@HomeFragment.activity as Activity, pair)
+                    startActivity(it, optionPair.toBundle())
+                }
             }
             ChallengeMenu.PopularChallengeMenu -> {
 
