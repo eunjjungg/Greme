@@ -44,15 +44,12 @@ class ChallengeActivity : BaseActivity<ActivityChallengeBinding>(R.layout.activi
         binding.progressBar.visibility = View.VISIBLE
         binding.recyclerView.visibility = View.GONE
         viewModel.getMyChallengeList {
-            val serverData: ChallengeActivityModel
-
             if (it == null) {
                 binding.recyclerView.visibility = View.GONE
                 binding.progressBar.visibility = View.GONE
                 makeSnackBar("접속이 불안정합니다. 잠시 후 다시 시도해주세요.")
                 return@getMyChallengeList
             } else {
-                serverData = it
                 binding.recyclerView.visibility = View.VISIBLE
                 binding.progressBar.visibility = View.GONE
             }
