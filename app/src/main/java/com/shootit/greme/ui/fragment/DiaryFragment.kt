@@ -57,19 +57,14 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
     private val binding get() = mBinding!!
     var imageFile : File? = null
     var imageWideUri: Uri? = null
+    var postId : Long = 0
 
     lateinit var calendarAdapter: CalendarAdapter
     private var calendarList = ArrayList<CalendarData>()
 
     companion object {
-        const val REVIEW_MIN_LENGTH = 10
         // 갤러리 권한 요청
         const val REQ_GALLERY = 1
-        // API 호출시 Parameter Key 값
-        const val PARAM_KEY_IMAGE = "image"
-        const val PARAM_KEY_PRODUCT_ID = "product_id"
-        const val PARAM_KEY_REVIEW = "review_content"
-        const val PARAM_KEY_RATING = "rating"
     }
     // 이미지를 결과값으로 받는 변수
     private val imageResult = registerForActivityResult(
@@ -114,6 +109,7 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
 
             override fun afterTextChanged(p0: Editable?) {
                 binding.etHashtag.setBackgroundResource(R.drawable.bg_diary_edittext_write)
+                binding.etHashtag.isCursorVisible = false
             }
         })
         // edittext 안에 값이 들어갈 경우 background 변경
@@ -128,14 +124,9 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
 
             override fun afterTextChanged(p0: Editable?) {
                 binding.etContent.setBackgroundResource(R.drawable.bg_diary_edittext_write)
+                binding.etContent.isCursorVisible = false
             }
         })
-        binding.btnSave.setOnClickListener {
-            binding.clToday.visibility = View.VISIBLE
-            binding.clDisclosure.visibility = View.GONE
-            binding.btnSave.visibility = View.GONE
-            binding.clEdit.visibility = View.VISIBLE
-        }
 
         binding.ivCalendar.setOnClickListener {
             val diaryImgCalendarFragment = DiaryImgCalendarFragment()
@@ -206,8 +197,9 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
         binding.btnDelete.setOnClickListener {
             Log.d("TestLog", "Diary")
             // 서버로 보낼 로그인 데이터 생성
-            val diaryDeleteData = DiaryDeleteData(id=14)
+            val diaryDeleteData = DiaryDeleteData(postId.toInt())
             Log.d("datavalue", "data값=> "+ diaryDeleteData)
+            Log.d("datavalue", "postId Int값=> "+ postId.toInt())
             // 현재 사용자의 정보를 받아올 것을 명시
             // 서버 통신은 I/O 작업이므로 비동기적으로 받아올 Callback 내부 코드는 나중에 데이터를 받아오고 실행
             val call: Call<Void> = ConnectionObject.getDiaryWriteRetrofitService.diaryDelete(diaryDeleteData)
@@ -217,6 +209,18 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
                     Log.d("status code", data.toString())
                     // 네트워크 통신에 성공한 경우
                     if(response.isSuccessful){
+                        // 다이어리 작성한 것들 초기화하기
+                        binding.ivMain.setImageResource(R.drawable.ic_plus)
+                        binding.etHashtag.text = null
+                        binding.etHashtag.setBackgroundResource(R.drawable.bg_diary_edittext)
+                        binding.etContent.text = null
+                        binding.etContent.setBackgroundResource(R.drawable.bg_diary_edittext)
+                        // 저장하기 버튼 다시 생성
+                        binding.clToday.visibility = View.GONE
+                        binding.clDisclosure.visibility = View.VISIBLE
+                        binding.btnSave.visibility = View.VISIBLE
+                        binding.clEdit.visibility = View.GONE
+
                         Log.d("Network_Delete", "success")
                         val data = response.body().toString()
                         Log.d("responsevalue", "response값=> "+ data)
@@ -236,7 +240,6 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
                 }
             })
         }
-
         setupSpinner()
         setupSpinnerHandler()
         return root
@@ -296,9 +299,16 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
                     Log.d("status code", data.toString())
                     // 네트워크 통신에 성공한 경우
                     if (response.isSuccessful) {
+                        binding.clToday.visibility = View.VISIBLE
+                        binding.clDisclosure.visibility = View.GONE
+                        binding.btnSave.visibility = View.GONE
+                        binding.clEdit.visibility = View.VISIBLE
+
                         Log.d("Network_DiaryWrite", "success")
-                        val data = response.body().toString()
+                        val data = response.body()
                         Log.d("responsevalue", "response값=> " + data)
+                        postId = data!!
+                        Log.d("responsevalue", "postId값=> " + postId)
                     } else { // 이곳은 에러 발생할 경우 실행됨
                         val data1 = response.code()
                         Log.d("status code", data1.toString())
