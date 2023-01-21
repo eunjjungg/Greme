@@ -68,5 +68,17 @@ class ChallengeRepository {
         } else {
             Log.d("challenge server err", response.errorBody()?.string().toString())
             null
-        }    }
+        }
+    }
+
+    suspend fun getPopularChallenge(): ChallengeInfoModel? {
+        val response = ConnectionObject
+            .getChallengeRetrofitService.getPopularChallenge()
+        return if (response.isSuccessful) {
+            response.body() as ChallengeInfoModel
+        } else {
+            Log.d("challenge server err", response.errorBody()?.string().toString())
+            null
+        }
+    }
 }

@@ -31,7 +31,16 @@ class ChallengeHomeViewModel(private val challengeRepository: ChallengeRepositor
         }
     }
 
-
+    fun getPopularChallenge(completion: (ChallengeInfoParcelData) -> Unit) = viewModelScope.launch {
+        val info = challengeRepository.getPopularChallenge()
+        info?.let {
+            val parcel = ChallengeInfoParcelData(
+                it.summaryRes.title, it.summaryRes.info, it.summaryRes.deadline.serverTimeToDDay(),
+                it.summaryRes.num, it.status, it.summaryRes.id
+            )
+            completion(parcel)
+        }
+    }
 
     class ChallengeHomeViewModelFactory(private val challengeRepository: ChallengeRepository)
         : ViewModelProvider.Factory {

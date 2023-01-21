@@ -74,7 +74,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                 Listener@
                 btnSummaryTop.setCustomListener(object : ChallengeSummaryClickInterface {
                     override fun challengeSummaryOnClick() {
-                        // TODO parcel data
                         viewModel.getParcelData(id = feedDetail.id) { parcel ->
                             Intent(binding.root.context, ChallengeInfoActivity::class.java).also {
                                 it.putExtra("ChallengeInfo", parcel)
@@ -131,7 +130,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                 }
             }
             ChallengeMenu.PopularChallengeMenu -> {
-
+                viewModel.getPopularChallenge { parcel ->
+                    Intent(binding.root.context, ChallengeInfoActivity::class.java).also {
+                        it.putExtra("ChallengeInfo", parcel)
+                        startActivity(it)
+                    }
+                }
             }
         }
     }
