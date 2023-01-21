@@ -2,6 +2,7 @@ package com.shootit.greme.repository
 
 import android.util.Log
 import com.shootit.greme.model.ChallengeActivityModel
+import com.shootit.greme.model.ChallengeHomeFeedModel
 import com.shootit.greme.model.ChallengeInfoImg
 import com.shootit.greme.model.ChallengeInfoModel
 import com.shootit.greme.network.ConnectionObject
@@ -59,5 +60,13 @@ class ChallengeRepository {
 
 
     // 홈 화면 챌린지 목록
-
+    suspend fun getChallengeHomeFeedList(): ChallengeHomeFeedModel? {
+        val response = ConnectionObject
+            .getChallengeRetrofitService.getChallengeHomeFeedList()
+        return if (response.isSuccessful) {
+            response.body() as ChallengeHomeFeedModel
+        } else {
+            Log.d("challenge server err", response.errorBody()?.string().toString())
+            null
+        }    }
 }

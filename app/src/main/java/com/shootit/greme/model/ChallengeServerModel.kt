@@ -48,3 +48,19 @@ data class ChallengeDetail(
     @SerializedName("id")
     val id: Int
 )
+
+data class ChallengeHomeFeedModel(
+    @SerializedName("exist")
+    val exist: Boolean,
+    @SerializedName("participatingChallenge")
+    val participatingChallenge: FeedDetail?,
+    @SerializedName("popularityChallenge")
+    val popularityChallenge: FeedDetail
+)
+
+data class FeedDetail(
+    @SerializedName("id")
+    val id: Int,
+    @SerializedName("title")
+    val title: String
+)

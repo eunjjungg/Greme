@@ -1,6 +1,7 @@
 package com.shootit.greme.network
 
 import com.shootit.greme.model.ChallengeActivityModel
+import com.shootit.greme.model.ChallengeHomeFeedModel
 import com.shootit.greme.model.ChallengeInfoModel
 import retrofit2.Response
 import retrofit2.http.GET
@@ -27,6 +28,6 @@ interface ChallengeInterface {
 
     // 홈 화면 챌린지 목록
     // TODO 백엔드 미구현 이슈
-    @GET("")
-    suspend fun getChallengeHomeFeedList()
+    @GET("/challenge/home")
+    suspend fun getChallengeHomeFeedList(): Response<ChallengeHomeFeedModel>
 }
