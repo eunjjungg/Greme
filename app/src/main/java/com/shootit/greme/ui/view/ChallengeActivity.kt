@@ -41,6 +41,7 @@ class ChallengeActivity : BaseActivity<ActivityChallengeBinding>(R.layout.activi
 
     override fun onResume() {
         super.onResume()
+        binding.progressBar.visibility = View.VISIBLE
         binding.recyclerView.visibility = View.GONE
         viewModel.getMyChallengeList {
             val serverData: ChallengeActivityModel
@@ -56,8 +57,6 @@ class ChallengeActivity : BaseActivity<ActivityChallengeBinding>(R.layout.activi
                 binding.progressBar.visibility = View.GONE
             }
 
-            // TODO 데이터 세팅
-            Log.d("ccheck challenge", it.toString())
         }
     }
 
