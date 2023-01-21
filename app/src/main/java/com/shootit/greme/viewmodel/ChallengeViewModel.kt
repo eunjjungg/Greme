@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.shootit.greme.model.*
 import com.shootit.greme.repository.ChallengeRepository
+import com.shootit.greme.util.RemainingDateCalculator.serverTimeToDDay
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -59,18 +60,6 @@ class ChallengeViewModel(private val challengeRepository: ChallengeRepository): 
             peopleAmount = this.num,
             id = this.id
         )
-    }
-
-    private fun String.serverTimeToDDay(): Int {
-        val dateInString = this
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'")
-        val deadLine = dateFormat.parse(dateInString)
-        val diff = (deadLine.time - getCurrentDate().time) / (60 * 60 * 24 * 1000) + 1
-        return diff.toInt()
-    }
-
-    private fun getCurrentDate() : Date {
-        return Calendar.getInstance().time
     }
 
     class ChallengeViewModelFactory(private val challengeRepository: ChallengeRepository)
