@@ -29,4 +29,8 @@ interface ChallengeInterface {
     // 홈 화면 챌린지 목록
     @GET("/challenge/home")
     suspend fun getChallengeHomeFeedList(): Response<ChallengeHomeFeedModel>
+
+    // 인기 챌린지
+    @GET("/challenge/popularity")
+    suspend fun getPopularChallenge(): Response<ChallengeInfoModel>
 }

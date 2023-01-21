@@ -29,8 +29,9 @@ class ChallengeHomeViewModel(private val challengeRepository: ChallengeRepositor
             )
             completion(parcel)
         }
-
     }
+
+
 
     class ChallengeHomeViewModelFactory(private val challengeRepository: ChallengeRepository)
         : ViewModelProvider.Factory {
