@@ -32,11 +32,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     override fun initView() {
         binding.initMenuButtons()
-        binding.initSummaryButtons()
     }
 
+    override fun onResume() {
+        super.onResume()
+        binding.progressBar.visibility = View.VISIBLE
+        binding.initSummaryButtons()
+    }
     private fun FragmentHomeBinding.initSummaryButtons() {
         val popularCompletion: (FeedDetail?) -> Unit = { feedDetail ->
+            binding.progressBar.visibility = View.GONE
             if (feedDetail == null) {
                 btnSummaryBottom.setContent(ChallengeSummary.ChallengeSummaryDescType.Main.also { it.content = "network error" })
                 makeSnackBar("접속이 불안정합니다. 잠시 후 다시 시도해주세요.")
