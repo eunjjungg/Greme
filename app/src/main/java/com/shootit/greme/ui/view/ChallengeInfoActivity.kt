@@ -1,5 +1,6 @@
 package com.shootit.greme.ui.view
 
+import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -51,7 +52,8 @@ class ChallengeInfoActivity :
     private fun initRecyclerView() {
         val transportedData: ChallengeInfoParcelData? = intent.getParcelableExtra<ChallengeInfoParcelData?>("ChallengeInfo")
         transportedData?.let {
-            adapter.challengeInfo = ChallengeInfo(transportedData.title, transportedData.desc, transportedData.day, transportedData.isRegistered)
+            adapter.challengeInfo = ChallengeInfo(it.title, it.desc, it.day, it.isRegistered)
+            isParticipate = it.isRegistered
             id = it.id
         }
 
@@ -76,7 +78,7 @@ class ChallengeInfoActivity :
                         resources.getColor(R.color.challenge_info_exception)
                     )
                     text = resources.getString(R.string.challenge_info_exception)
-                    icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_plus, null)
+                    icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_minus, null)
                 }
             }
             false -> {
@@ -109,7 +111,7 @@ class ChallengeInfoActivity :
                 binding.fabStatus.apply {
                     colorTransitionAnim(from = colorParticipate, to = colorException)
                     text = resources.getString(R.string.challenge_info_exception)
-                    icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_plus, null)
+                    icon = ResourcesCompat.getDrawable(resources, R.drawable.ic_minus, null)
                 }
             }
             false -> {
@@ -124,7 +126,7 @@ class ChallengeInfoActivity :
 
     private fun colorTransitionAnim(from: Int, to: Int) {
         val anim = ValueAnimator.ofArgb(from, to).apply {
-            duration = 500
+            duration = 300
             addUpdateListener {
                 binding.fabStatus.setBackgroundColor(it.animatedValue as Int)
             }
