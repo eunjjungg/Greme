@@ -9,30 +9,17 @@
     android:layout_marginBottom="4dp">
 
     <TextView
-        android:id="@+id/tvHashtag"
+        android:id="@+id/tvChallengeTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
-        android:text="@string/setting_hashtag"
-        android:textColor="@color/black"
-        android:textSize="13dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvChallengeTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
         android:text="@string/setting_challenge_title"
         android:textColor="@color/black"
         android:textSize="13dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/tvHashtag"
-        app:layout_constraintStart_toEndOf="@id/tvHashtag"
-        app:layout_constraintTop_toTopOf="@id/tvHashtag" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/tvChallengeContent"
@@ -42,8 +29,8 @@
         android:text="@string/setting_challenge_content"
         android:textColor="#CBCBCB"
         android:textSize="13dp"
-        app:layout_constraintStart_toStartOf="@id/tvHashtag"
-        app:layout_constraintTop_toBottomOf="@id/tvHashtag" />
+        app:layout_constraintStart_toStartOf="@id/tvChallengeTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvChallengeTitle" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivProfile"

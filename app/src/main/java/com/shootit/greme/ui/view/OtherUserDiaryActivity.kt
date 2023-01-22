@@ -2,7 +2,14 @@ package com.shootit.greme.ui.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import com.bumptech.glide.Glide
 import com.shootit.greme.databinding.ActivityOtherUserDiaryBinding
+import com.shootit.greme.model.ResponseOtherUserDiaryData
+import com.shootit.greme.network.ConnectionObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class OtherUserDiaryActivity : AppCompatActivity() {
     // 전역 변수로 바인딩 객체 선언
@@ -18,5 +25,43 @@ class OtherUserDiaryActivity : AppCompatActivity() {
         binding.ivBack.setOnClickListener {
             finish()
         }
+        // 다른 유저의 다이어리 조회 서버 연동
+        Log.d("Network_OtherUser", "otherUserDiary")
+        val otherUserPostId = intent.getIntExtra("otherUserId", 0)
+        ConnectionObject.getDiarySearchRetrofitService.otherUserDiary(otherUserPostId)
+            .enqueue(object : Callback<ResponseOtherUserDiaryData> {
+                override fun onResponse(
+                    call: Call<ResponseOtherUserDiaryData>,
+                    response: Response<ResponseOtherUserDiaryData>
+                ) {
+                    val data = response.code()
+                    Log.d("status code", data.toString())
+                    if (response.isSuccessful) {
+                        Log.d("Network_OtherUser", "success")
+                        val data = response.body().toString()
+                        Log.d("responsevalue", "otherUserDiary_response 값 => " + data)
+                        val itemdata1 = response.body()
+                        var date = itemdata1!!.createdDate.substring(0 until 10)
+                        date = date.replace("-", "/")
+                        binding.tvOtherUserID.text = itemdata1!!.username
+                        Glide.with(this@OtherUserDiaryActivity).load(itemdata1!!.image).into(binding.ivMain)
+                        binding.tvHashtag.text = itemdata1!!.hashtag
+                        binding.tvContent.text = itemdata1!!.content
+                        binding.tvDate.text = date
+                    } else {
+                        // 이곳은 에러 발생할 경우 실행됨
+                        val data1 = response.code()
+                        Log.d("status code", data1.toString())
+                        val data2 = response.headers()
+                        Log.d("header", data2.toString())
+                        Log.d("server err", response.errorBody()?.string().toString())
+                        Log.d("Network_OtherUser", "fail")
+                    }
+                }
+                override fun onFailure(call: Call<ResponseOtherUserDiaryData>, t: Throwable) {
+                    Log.d("Network_OtherUser", "error!")
+
+                }
+            })
     }
 }

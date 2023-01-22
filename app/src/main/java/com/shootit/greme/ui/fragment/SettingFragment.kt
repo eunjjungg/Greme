@@ -185,8 +185,6 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
                         participatedChallengeAdapter.datas=datas
                         participatedChallengeAdapter.notifyDataSetChanged()
                     }
-
-
                 }else{
                     // 이곳은 에러 발생할 경우 실행됨
                     Log.d("Network_setting", "fail")

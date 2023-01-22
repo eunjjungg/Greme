@@ -36,6 +36,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     private lateinit var searchView: SearchView
     private var mList = ArrayList<SearchData>()
     val adapter = SearchAdapter(mList)
+    var otheruserId: Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,7 +58,6 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
             // 검색창에 작성후 submitbutton을 누르면 검색어에 해당하는 다이어리 recyclerview 보여줌
             override fun onQueryTextSubmit(query: String?): Boolean {
                 // 검색으로 다이어리 조회 서버 연동
-                Log.d("Network_Search", "searchDiary")
                 ConnectionObject.getDiarySearchRetrofitService.searchDiary(searchView.query.toString())
                     .enqueue(object : Callback<List<ResponseSearchData>> {
                         override fun onResponse(
@@ -65,21 +65,17 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                             response: Response<List<ResponseSearchData>>
                         ) {
                             if (response.isSuccessful) {
-                                val data = response.body().toString()
-                                Log.d("responsevalue", "data_response 값 => " + data)
                                 val itemdata1 = response.body()?.get(5)
                                 val itemdata2 = response.body()?.get(6)
-                                Log.d("responsevalue", "itemdata1_response 값 => " + itemdata1)
-                                Log.d("responsevalue", "itemdata2_response 값 => " + itemdata2)
+                                otheruserId = itemdata1!!.id
+                                Log.d("responsevalue", "otherUserDiary_response 값 => " + otheruserId)
                                 fun addDataToList(){
                                     mList.add(SearchData(itemdata1!!.image))
                                     mList.add(SearchData(itemdata2!!.image))
                                 }
                                 rvSearch.layoutManager = GridLayoutManager(context, 3)
                                 addDataToList()
-                                // adapter = SearchAdapter(mList)
                                 rvSearch.adapter = adapter
-                                Log.d("Network_Search", searchView.query.toString())
 
                             } else {
                                 // 이곳은 에러 발생할 경우 실행됨
@@ -96,44 +92,11 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 return false
             }
         })
-
-        // 다른 유저의 다이어리 조회 서버 연동(recyclerview 클릭시 실행되도록 수정해야함)
-        binding.tvDescribe.setOnClickListener {
-            Log.d("Network_OtherUser", "otherUserDiary")
-
-            ConnectionObject.getDiarySearchRetrofitService.otherUserDiary(12)
-                .enqueue(object : Callback<ResponseOtherUserDiaryData> {
-                    override fun onResponse(
-                        call: Call<ResponseOtherUserDiaryData>,
-                        response: Response<ResponseOtherUserDiaryData>
-                    ) {
-                        val data = response.code()
-                        Log.d("status code", data.toString())
-                        if (response.isSuccessful) {
-                            Log.d("Network_OtherUser", "success")
-                            val data = response.body().toString()
-                            Log.d("responsevalue", "otherUserDiary_response 값 => " + data)
-                        } else {
-                            // 이곳은 에러 발생할 경우 실행됨
-                            val data1 = response.code()
-                            Log.d("status code", data1.toString())
-                            val data2 = response.headers()
-                            Log.d("header", data2.toString())
-                            Log.d("server err", response.errorBody()?.string().toString())
-                            Log.d("Network_OtherUser", "fail")
-                        }
-                    }
-
-                    override fun onFailure(call: Call<ResponseOtherUserDiaryData>, t: Throwable) {
-                        Log.d("Network_OtherUser", "error!")
-
-                    }
-                })
-        }
         adapter.setItemClickListener(object : SearchAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
                 // 클릭 시 이벤트 작성
                 val intent = Intent(getActivity(), OtherUserDiaryActivity::class.java)
+                intent.putExtra("otherUserId", otheruserId)
                 startActivity(intent)
             }
         })
