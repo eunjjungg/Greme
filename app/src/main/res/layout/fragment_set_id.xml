@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.shootit.greme.viewmodel.SignUpViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.fragment.signup.SetIdFragment">
+
+        <TextView
+            android:id="@+id/tvWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/signup_welcome"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="@dimen/signup_welcome_text"
+            android:layout_margin="@dimen/signup_margin_large"/>
+
+        <TextView
+            android:id="@+id/tvGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/tvWelcome"
+            app:layout_constraintTop_toBottomOf="@id/tvWelcome"
+            android:text="@string/signup_guide"
+            android:textSize="@dimen/signup_guide_text"
+            android:layout_marginTop="@dimen/signup_margin_large"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/etId"
+            style="?attr/textInputFilledStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/signup_hint"
+            app:layout_constraintStart_toStartOf="@+id/tvWelcome"
+            app:layout_constraintEnd_toEndOf="@id/tvWelcome"
+            app:layout_constraintTop_toBottomOf="@id/tvGuide"
+            android:layout_marginTop="@dimen/signup_margin_mid"
+
+            app:boxBackgroundColor="@color/signup_et_color"
+            app:boxStrokeColor="@color/signup_et_color"
+
+            app:helperTextTextColor="@color/signup_et_no_error"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:maxLength="15"
+                android:textSize="@dimen/signup_et_text"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            style="?attr/textInputFilledStyle"
+            android:id="@+id/btnNext"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/signup_button"
+            android:layout_marginTop="@dimen/signup_margin_mid"
+            android:backgroundTintMode="add"
+            android:text="NEXT"
+            android:textColor="@color/icon_on_dark"
+            android:textSize="@dimen/signup_et_text"
+            app:layout_constraintEnd_toEndOf="@id/etId"
+            app:layout_constraintStart_toStartOf="@id/etId"
+            app:layout_constraintTop_toBottomOf="@id/etId"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
