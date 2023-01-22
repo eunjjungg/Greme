@@ -1,8 +1,7 @@
 package com.shootit.greme.network
 
-import com.shootit.greme.model.UserAreaAndPurposeInfo
-import com.shootit.greme.model.UserCurrentInfo
-import com.shootit.greme.model.UserInterestAndGenderInfo
+import com.shootit.greme.model.*
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -21,4 +20,8 @@ interface SettingInterface {
     // set area, purpose
     @PATCH("/user/profile2")
     suspend fun setUserAreaAndPurpose(@Body data: UserAreaAndPurposeInfo) : Response<Void>
+
+    // 환경 설정 첫 화면
+    @GET("/user")
+    fun getSettigInfo() : Call<ResponseSettingInfoData>
 }
