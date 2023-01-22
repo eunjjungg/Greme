@@ -46,6 +46,11 @@ class ChallengeInfoViewModel(private val challengeRepository: ChallengeRepositor
             for (i in 1 .. r) {
                 tmp.add(UrlAndId(data[size - i].image, data[size - i].id))
             }
+            when(tmp.size) {
+                1 -> imgList.add(ChallengeInfoImg(tmp[0], null, null))
+                2 -> imgList.add(ChallengeInfoImg(tmp[0], tmp[1], null))
+                3 -> imgList.add(ChallengeInfoImg(tmp[0], tmp[1], tmp[2]))
+            }
         }
 
         challengeInfoImg.value = imgList
