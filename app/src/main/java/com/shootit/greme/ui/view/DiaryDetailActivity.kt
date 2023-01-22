@@ -5,10 +5,16 @@ import android.content.DialogInterface
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.shootit.greme.databinding.ActivityDiaryDetailBinding
 import com.shootit.greme.model.DiaryImgData
+import com.shootit.greme.model.ResponseDateDiaryData
+import com.shootit.greme.network.ConnectionObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class DiaryDetailActivity : AppCompatActivity() {
     // 전역 변수로 바인딩 객체 선언
@@ -50,6 +56,39 @@ class DiaryDetailActivity : AppCompatActivity() {
                 setTextColor(Color.BLUE)
             }
         }
+        // 날짜로 다이어리 조회 서버 연동
+        Log.d("Network_Date", "dateDiary")
+
+        ConnectionObject.getDiaryWriteRetrofitService.dateDiaryLook("2023-01-21").enqueue(object :
+            Callback<ResponseDateDiaryData> {
+            override fun onResponse(
+                call: Call<ResponseDateDiaryData>,
+                response: Response<ResponseDateDiaryData>
+            ) {
+                if (response.isSuccessful){
+                    val data = response.body()
+                    Log.d("responsevalue", "dateDiary_response 값 => "+ data)
+                    Glide.with(this@DiaryDetailActivity).load(data!!.image).into(binding.ivMain)
+                    binding.tvHashtag.text = data!!.hashtag
+                    binding.tvContent.text = data!!.content
+                    binding.tvDate.text = "2023/01/21"
+
+                }else{
+                    // 이곳은 에러 발생할 경우 실행됨
+                    val data1 = response.code()
+                    Log.d("status code", data1.toString())
+                    val data2 = response.headers()
+                    Log.d("header", data2.toString())
+                    Log.d("server err", response.errorBody()?.string().toString())
+                    Log.d("Network_Date", "fail")
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseDateDiaryData>, t: Throwable) {
+                Log.d("Network_Date", "error!")
+
+            }
+        })
 
         // datas = intent.getSerializableExtra("data") as DiaryImgData
 

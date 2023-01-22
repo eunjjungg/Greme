@@ -190,69 +190,6 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
                 .commitNow()
         }
 
-        // 다이어리 전체 보기 서버 연동
-        binding.ivCalendar.setOnClickListener {
-            Log.d("Network_Entire", "entireDiary")
-
-            ConnectionObject.getDiaryWriteRetrofitService.entireDiaryLook().enqueue(object : Callback<List<ResponseEntireDiaryData>>{
-                override fun onResponse(
-                    call: Call<List<ResponseEntireDiaryData>>,
-                    response: Response<List<ResponseEntireDiaryData>>
-                ) {
-                    if (response.isSuccessful){
-                        // val data = response.body().toString()
-                        val itemdata1 = response.body()?.get(0)
-                        val itemdata2 = response.body()?.get(1)
-                        val itemdata3 = response.body()?.get(2)
-
-                        Log.d("responsevalue", "itemdata1_response 값 => "+ itemdata1)
-                        Log.d("responsevalue", "itemdata2_response 값 => "+ itemdata2)
-                        Log.d("responsevalue", "itemdata3_response 값 => "+ itemdata3)
-                    }else{
-                        // 이곳은 에러 발생할 경우 실행됨
-
-                        Log.d("Network_Entire", "여긴가?")
-                    }
-                }
-
-                override fun onFailure(call: Call<List<ResponseEntireDiaryData>>, t: Throwable) {
-                    Log.d("Network_Entire", "entireDiary get error!")
-
-                }
-            })
-        }
-
-        /*
-        // 날짜로 다이어리 조회 서버 연동
-        binding.ivCalendar.setOnClickListener {
-            Log.d("Network_Date", "dateDiary")
-
-            ConnectionObject.getDiaryWriteRetrofitService.dateDiaryLook("2023-01-14").enqueue(object : Callback<ResponseDateDiaryData>{
-                override fun onResponse(
-                    call: Call<ResponseDateDiaryData>,
-                    response: Response<ResponseDateDiaryData>
-                ) {
-                    if (response.isSuccessful){
-                        val data = response.body().toString()
-                        Log.d("responsevalue", "dateDiary_response 값 => "+ data)
-                    }else{
-                        // 이곳은 에러 발생할 경우 실행됨
-                        val data1 = response.code()
-                        Log.d("status code", data1.toString())
-                        val data2 = response.headers()
-                        Log.d("header", data2.toString())
-                        Log.d("server err", response.errorBody()?.string().toString())
-                        Log.d("Network_Date", "fail")
-                    }
-                }
-
-                override fun onFailure(call: Call<ResponseDateDiaryData>, t: Throwable) {
-                    Log.d("Network_Date", "error!")
-
-                }
-            })
-        }*/
-
         // 삭제하기 버튼 다이얼로그 창 띄우기
         binding.btnDelete.setOnClickListener {
             val builder = AlertDialog.Builder(requireContext())
