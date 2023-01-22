@@ -1,7 +1,7 @@
 package com.shootit.greme.ui.fragment
 
 import android.Manifest
-import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
@@ -29,6 +29,9 @@ import com.shootit.greme.network.ConnectionObject
 import com.shootit.greme.ui.adapter.DiaryImgCalendarAdapter
 import com.shootit.greme.ui.adapter.ParticipatedChallengeAdapter
 import com.shootit.greme.ui.view.SettingUserInfoActivity
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,12 +43,12 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
     // 매번 null 체크를 할 필요없이 편의성을 위해 바인딩 변수 재선언
     private val binding get() = mBinding!!
     var imageFile : File? = null
+    var imageWideUri: Uri? = null
 
     lateinit var participatedChallengeAdapter: ParticipatedChallengeAdapter
     val datas = mutableListOf<ChallengeData>()
 
     companion object {
-        const val REVIEW_MIN_LENGTH = 10
         // 갤러리 권한 요청
         const val REQ_GALLERY = 1
     }
@@ -53,19 +56,55 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
     private val imageResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()){
             result ->
-        if (result.resultCode == Activity.RESULT_OK){
+        if (result.resultCode == RESULT_OK){
             // 이미지를 받으면 ImageView에 적용
             val imageUri = result.data?.data
+            imageWideUri = imageUri
             imageUri?.let{
-                // 서버 업로드를 위해 파일 형태로 변환
-                imageFile = File(getRealPathFromURI(it))
-
                 // 이미지를 불러온다
                 Glide.with(this)
                     .load(imageUri)
                     .fitCenter()
                     .apply(RequestOptions().override(500,500))
                     .into(binding.ivProfile)
+
+                // 프로필 사진 변경 서버 연동
+                Log.d("TestLog", "ProfileEdit")
+                // Log.d("datavalue", "multipart값=> " + imageWideUri)
+                imageFile = File(getRealPathFromURI(it))
+                // 서버로 보내기 위해 RequestBody객체로 변환
+                val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), imageFile!!)
+                val body =
+                    MultipartBody.Part.createFormData("multipartFile", imageFile!!.name, requestFile)
+
+                // 현재 사용자의 정보를 받아올 것을 명시
+                // 서버 통신은 I/O 작업이므로 비동기적으로 받아올 Callback 내부 코드는 나중에 데이터를 받아오고 실행
+                val call: Call<String> =
+                    ConnectionObject.getSettingRetrofitService.setProfileImage(body)
+                call.enqueue(object : Callback<String> {
+                    override fun onResponse(
+                        call: Call<String>, response: Response<String>
+                    ) {
+                        val data = response.code()
+                        Log.d("status code", data.toString())
+                        // 네트워크 통신에 성공한 경우
+                        if (response.isSuccessful) {
+                            Log.d("Network_ProfileEdit", "success")
+                            val data = response.body()
+                            Log.d("responsevalue", "response값=> " + data)
+                        } else { // 이곳은 에러 발생할 경우 실행됨
+                            val data1 = response.code()
+                            Log.d("status code", data1.toString())
+                            val data2 = response.headers()
+                            Log.d("header", data2.toString())
+                            Log.d("server err", response.errorBody()?.string().toString())
+                            Log.d("Network_ProfileEdit", "fail")
+                        }
+                    }
+                    override fun onFailure(call: Call<String>, t: Throwable) {
+                        Log.d("Network_ProfileEdit", "error!")
+                    }
+                })
             }
         }
     }
@@ -134,16 +173,13 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
             ) {
                 if (response.isSuccessful){
                     Log.d("Network_setting", "success")
-                    val data = response.body().toString()
-                    Log.d("responsevalue", "response 값 => "+ data)
+                    // val data = response.body().toString()
+                    // Log.d("responsevalue", "response 값 => "+ data)
+                    val itemdata1 = response.body()
+                    binding.tvId.text = itemdata1!!.username
 
                 }else{
                     // 이곳은 에러 발생할 경우 실행됨
-                    val data1 = response.code()
-                    Log.d("status code", data1.toString())
-                    val data2 = response.headers()
-                    Log.d("header", data2.toString())
-                    Log.d("server err", response.errorBody()?.string().toString())
                     Log.d("Network_setting", "fail")
                 }
             }
@@ -216,13 +252,10 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
     private fun selectGallery(){
         val writePermission = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
         val readPermission = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
-
         // 권한 확인
         if(writePermission == PackageManager.PERMISSION_DENIED || readPermission == PackageManager.PERMISSION_DENIED){
             // 권한 요청
-            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE),
-                DiaryFragment.REQ_GALLERY
-            )
+            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), REQ_GALLERY)
         }else{
             // 권한이 있는 경우 갤러리 실행
             val intent = Intent(Intent.ACTION_PICK)

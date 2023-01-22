@@ -7,7 +7,7 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface DiaryWriteInterface {
-    // 다이어리 작성 => 아직
+    // 다이어리 작성
     @Multipart
     @POST("/post")
     fun diaryWrite(@Part("content") content: String, @Part("hashtag") hashtag: String, @Part("challenge") challenge: Long, @Part("status") status: Boolean, @Part multipartFile : MultipartBody.Part) : Call<Long>
