@@ -29,6 +29,7 @@ import com.shootit.greme.network.ConnectionObject
 import com.shootit.greme.ui.adapter.DiaryImgCalendarAdapter
 import com.shootit.greme.ui.adapter.ParticipatedChallengeAdapter
 import com.shootit.greme.ui.view.SettingUserInfoActivity
+import com.shootit.greme.util.RemainingDateCalculator.serverTimeToDDay
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -151,7 +152,6 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
         // 바인딩
         mBinding = FragmentSettingBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        initRecycler()
         binding.btnProfileModify.setOnClickListener {
 
             // profile setting 화면 이동
@@ -173,10 +173,19 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
             ) {
                 if (response.isSuccessful){
                     Log.d("Network_setting", "success")
-                    // val data = response.body().toString()
-                    // Log.d("responsevalue", "response 값 => "+ data)
                     val itemdata1 = response.body()
+                    Log.d("Network_setting", "response=>" + itemdata1)
                     binding.tvId.text = itemdata1!!.username
+                    Glide.with(this@SettingFragment).load(itemdata1!!.imageUrl).into(binding.ivProfile)
+                    participatedChallengeAdapter = ParticipatedChallengeAdapter(requireContext())
+                    binding.rvChallenge.adapter = participatedChallengeAdapter
+
+                    datas.apply{
+                        add(ChallengeData(title = itemdata1!!.challengeJoinSummary.get(0).title, content = itemdata1!!.challengeJoinSummary.get(0).info, img = R.drawable.ic_profile, participant = itemdata1!!.challengeJoinSummary.get(0).num.toString(), day = "D-" + itemdata1!!.challengeJoinSummary.get(0).deadline.serverTimeToDDay().toString()))
+                        participatedChallengeAdapter.datas=datas
+                        participatedChallengeAdapter.notifyDataSetChanged()
+                    }
+
 
                 }else{
                     // 이곳은 에러 발생할 경우 실행됨
@@ -264,18 +273,6 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,"image/*"
             )
             imageResult.launch(intent)
-        }
-    }
-    private fun initRecycler(){
-        participatedChallengeAdapter = ParticipatedChallengeAdapter(requireContext())
-        binding.rvChallenge.adapter = participatedChallengeAdapter
-
-        datas.apply{
-            add(ChallengeData(title = "가까운_거리는_걸어다니기", content = "도보로 15분 이내의 거리는 걸어다니기", img = R.drawable.ic_profile, participant = "9", day = "D-8"))
-            add(ChallengeData(title = "텀블러_이용하기", content = "카페가서 텀블러 이용하기", img = R.drawable.ic_profile, participant = "25", day = "D-10"))
-            add(ChallengeData(title = "따뜻하게_입고_다니기", content = "난방 대신 따뜻한 옷을 입어요", img = R.drawable.ic_profile, participant = "12", day = "D-17"))
-            participatedChallengeAdapter.datas=datas
-            participatedChallengeAdapter.notifyDataSetChanged()
         }
     }
     fun toast(message:String){
