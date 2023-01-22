@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.shootit.greme.viewmodel.SignUpViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding= "@dimen/margin24"
+            tools:context=".ui.fragment.signup.AdditionalInfoFragment">
+
+            <TextView
+                android:id="@+id/tvId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/drawable_signup_square"
+                android:paddingVertical="@dimen/margin8"
+                android:paddingHorizontal="@dimen/margin24"
+                android:backgroundTintMode="add"
+                android:backgroundTint="@color/signup_more_info"
+                android:text="@{vm.id + `님은`}"
+                android:textSize="@dimen/text18"
+                android:layout_marginTop="@dimen/margin32"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/linear_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/margin12"
+                android:paddingTop="@dimen/margin24"
+                app:layout_constraintTop_toBottomOf="@+id/tvId">
+
+                <com.shootit.greme.ui.custom.InterestButton
+                    android:id="@+id/btnMale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="@dimen/margin24"
+                    app:interest_icon="@drawable/ic_gender"
+                    app:interest_description="@string/info_gender_male"
+                    />
+
+                <com.shootit.greme.ui.custom.InterestButton
+                    android:id="@+id/btnFemale"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="@dimen/margin24"
+                    app:interest_icon="@drawable/ic_gender"
+                    app:interest_description="@string/info_gender_female"
+                    />
+
+                <com.shootit.greme.ui.custom.InterestButton
+                    android:id="@+id/btnWhatever"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:interest_icon="@drawable/ic_gender"
+                    app:interest_description="@string/info_gender_whatever"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvRegion1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/signup_info_guide_region1"
+                android:layout_marginTop="@dimen/margin40"
+                android:textSize="@dimen/text14"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linear_top" />
+
+            <TextView
+                android:id="@+id/tvRegion2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/signup_info_guide_region2"
+                android:textColor="@color/signup_et_no_error"
+                android:textSize="@dimen/text12"
+                android:layout_marginTop="4dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvRegion1" />
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin8"
+                android:padding="@dimen/margin8"
+                android:hint="시/도 선택">
+
+                <AutoCompleteTextView
+                    android:id="@+id/dropdownRegion"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/margin8"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:textSize="@dimen/text12"
+                    tools:text="시/도를 선택해주세요" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvPurpose1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/signup_info_guide_purpose1"
+                android:layout_marginTop="@dimen/margin40"
+                android:textSize="@dimen/text14" />
+
+            <TextView
+                android:id="@+id/tvPurpose2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/signup_info_guide_purpose2"
+                android:textColor="@color/signup_et_no_error"
+                android:textSize="@dimen/text12"
+                android:layout_marginTop="4dp"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin8"
+                android:padding="@dimen/margin8"
+                android:hint="활동 목적">
+
+                <AutoCompleteTextView
+                    android:id="@+id/dropdownPurpose"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/margin8"
+                    android:layout_weight="1"
+                    android:inputType="none"
+                    android:textSize="@dimen/text12"
+                    tools:text="활동 목적을 선택해주세요" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnNext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_next"
+                android:layout_marginHorizontal="@dimen/margin40"
+                android:backgroundTint="@color/signup_next"
+                android:layout_marginTop="@dimen/margin40" />
+        </LinearLayout>
+    </ScrollView>
+
+</layout>

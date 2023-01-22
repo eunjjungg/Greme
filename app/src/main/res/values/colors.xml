@@ -7,4 +7,46 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!--Greme project Custom Color-->
+    <color name="transparent">#00000000</color>
+    <color name="greme_main">#D9E5CF</color>
+    <color name="status_bar">#7D8B86</color>
+    <color name="icon_on_bright">#FF000000</color>
+    <color name="icon_on_dark">#FFFFFFFF</color>
+    <color name="icon_bg_unSelected">#EEEEEE</color>
+    <color name="icon_bg_selected">#DDECCA</color>
+    <color name="text">#FF000000</color>
+    <color name="text_on_opposite">#FFFFFF</color>
+
+    <!--Login-->
+    <color name="login_kakao">#F9E000</color>
+    <color name="login_naver">#1EC800</color>
+
+    <!--Signup-->
+    <color name="signup_et_color">#EEF2FB</color>
+    <color name="signup_et_error">#FF5656</color>
+    <color name="signup_et_no_error">#4F8EEC</color>
+    <color name="signup_button">#78B449</color>
+    <color name="signup_next">#78B449</color>
+    <color name="signup_more_info">#D9E6CF</color>
+
+    <!--challenge-->
+    <color name="challenge_summary_main">#248B00</color>
+    <color name="challenge_summary_bg">#E3EEDA</color>
+    <color name="challenge_day_gray">#D9D9D9</color>
+    <color name="challenge_ongoing_bg">#F8F8F8</color>
+    <color name="challenge_info_participate">#B0C99D</color>
+    <color name="challenge_info_exception">#DEDEDE</color>
+
+    <!--Diary-->
+    <color name="diary_calendarbox">#6E8DD455</color>
+    <color name="diary_day">#258F00</color>
+    <color name="diary_writeboxline">#88DD45</color>
+    <color name="diary_writeboxbackground">#F5F5F5</color>
+    <color name="diary_disclosurebox">#666DB9FF</color>
+    <color name="diary_disclosurebox_content">#B8B8B8</color>
+    <color name="diary_save">#8DD455</color>
+    <color name="diary_date">#7B7B7B</color>
+
 </resources>
