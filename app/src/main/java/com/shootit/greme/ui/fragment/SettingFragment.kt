@@ -19,13 +19,14 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.shootit.greme.R
 import com.shootit.greme.databinding.FragmentSettingBinding
-import com.shootit.greme.model.ChallengeData
-import com.shootit.greme.model.ResponseDateDiaryData
+import com.shootit.greme.model.*
 import com.shootit.greme.network.ConnectionObject
+import com.shootit.greme.ui.adapter.DiaryImgCalendarAdapter
 import com.shootit.greme.ui.adapter.ParticipatedChallengeAdapter
 import com.shootit.greme.ui.view.SettingUserInfoActivity
 import retrofit2.Call
@@ -122,13 +123,34 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
                 //startActivity(it, optionPair.toBundle())
                 startActivity(it)
             }
-
-//            val profileeditFragment = ProfileEditFragment()
-//            requireActivity().supportFragmentManager
-//                .beginTransaction()
-//                .replace(R.id.nav_fl, profileeditFragment)
-//                .commitNow()
         }
+        // setting 첫 화면 서버 연동
+        Log.d("Network_setting", "settingInfo")
+        ConnectionObject.getSettingRetrofitService.getSettigInfo().enqueue(object :
+            Callback<ResponseSettingInfoData> {
+            override fun onResponse(
+                call: Call<ResponseSettingInfoData>,
+                response: Response<ResponseSettingInfoData>
+            ) {
+                if (response.isSuccessful){
+                    Log.d("Network_setting", "success")
+                    val data = response.body().toString()
+                    Log.d("responsevalue", "response 값 => "+ data)
+
+                }else{
+                    // 이곳은 에러 발생할 경우 실행됨
+                    val data1 = response.code()
+                    Log.d("status code", data1.toString())
+                    val data2 = response.headers()
+                    Log.d("header", data2.toString())
+                    Log.d("server err", response.errorBody()?.string().toString())
+                    Log.d("Network_setting", "fail")
+                }
+            }
+            override fun onFailure(call: Call<ResponseSettingInfoData>, t: Throwable) {
+                Log.d("Network_setting", "error!")
+            }
+        })
         binding.btnLogout.setOnClickListener {
             val builder = AlertDialog.Builder(requireContext())
             builder.setTitle("로그아웃")
