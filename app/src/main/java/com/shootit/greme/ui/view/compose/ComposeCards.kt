@@ -54,7 +54,7 @@ fun MakeCard(
     cardData: ChallengeGuideViewModel.CardData,
     modifier: Modifier = Modifier
 ) {
-    val cardShape = remember { RoundedCornerShape(8.dp) }
+    val cardShape = remember { RoundedCornerShape(12.dp) }
     val mod = remember {
         modifier
             .animateContentSize(
@@ -77,7 +77,7 @@ fun MakeCard(
             defaultElevation = 0.dp
         ),
         colors = CardDefaults.cardColors(
-            containerColor = colorResource(id = R.color.greme_main)
+            containerColor = colorResource(id = R.color.challenge_summary_bg)
         )
     ) {
         Column {
@@ -105,7 +105,7 @@ private fun CardTitle(cardData: ChallengeGuideViewModel.CardData) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 8.dp),
+            .padding(vertical = 8.dp, horizontal = 4.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
