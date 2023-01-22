@@ -1,14 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.fragment.HomeFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
+    <data>
+        <variable
+            name="VM"
+            type="com.shootit.greme.viewmodel.ChallengeHomeViewModel" />
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/bottomnavigation_home" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:paddingVertical="@dimen/margin24"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".ui.fragment.HomeFragment">
+
+            <TextView
+                android:id="@+id/tvGuide"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="일상 속의 작은 미라클 챌린지"
+                android:textSize="@dimen/text14"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/imgBackground" />
+
+
+            <ImageView
+                android:id="@+id/imgBackground"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_challenge_background"
+                android:layout_marginTop="@dimen/margin24"
+                app:layout_constraintTop_toBottomOf="@+id/tvGuide"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin24"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="@+id/imgBackground"
+                app:layout_constraintStart_toStartOf="@+id/imgBackground"
+                app:layout_constraintTop_toBottomOf="@+id/imgBackground">
+
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/margin40"
+                    android:rowCount="1"
+                    android:columnCount="4">
+                    <com.shootit.greme.ui.custom.ChallengeButton
+                        android:id="@+id/btnPopular"
+                        android:layout_columnWeight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_height="wrap_content"
+                        app:menu_icon="@drawable/ic_challenge_popular"
+                        app:menu_description="인기 챌린지"/>
+
+                    <com.shootit.greme.ui.custom.ChallengeButton
+                        android:id="@+id/btnMain"
+                        android:layout_columnWeight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:menu_icon="@drawable/ic_challenge_basic"
+                        app:menu_description="챌린지"/>
+
+                    <com.shootit.greme.ui.custom.ChallengeButton
+                        android:id="@+id/btnMy"
+                        android:layout_columnWeight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:menu_icon="@drawable/ic_challenge_diary"
+                        app:menu_description="챌린지 도전"/>
+
+                    <com.shootit.greme.ui.custom.ChallengeButton
+                        android:id="@+id/btnGuide"
+                        android:layout_columnWeight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        app:menu_icon="@drawable/ic_challenge_guide"
+                        app:menu_description="사용안내"/>
+                </GridLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.shootit.greme.ui.custom.ChallengeSummary
+                        android:id="@+id/btnSummaryTop"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:summary_description=""
+                        app:summary_name="" />
+
+                    <com.shootit.greme.ui.custom.ChallengeSummary
+                        android:id="@+id/btnSummaryBottom"
+                        android:layout_marginTop="@dimen/margin24"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:summary_icon="@drawable/ic_challenge_main"
+                        app:summary_description=""
+                        app:summary_name=""
+                        app:layout_constraintTop_toBottomOf="@id/btnSummaryTop"/>
+
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+            </LinearLayout>
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>

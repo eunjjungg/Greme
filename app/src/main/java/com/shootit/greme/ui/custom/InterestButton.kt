@@ -1,4 +1,4 @@
-package com.shootit.greme.ui.view
+package com.shootit.greme.ui.custom
 
 import android.content.Context
 import android.util.AttributeSet
@@ -46,7 +46,9 @@ class InterestButton : ConstraintLayout {
                 true -> binding.iconBg.background.setTint(ContextCompat.getColor(context, R.color.icon_bg_selected))
                 else -> binding.iconBg.background.setTint(ContextCompat.getColor(context, R.color.icon_bg_unSelected))
             }
-            listener?.interestButtonOnClick(binding.description.text.toString(), interestIsSelected)
+            if (this::listener.isInitialized) {
+                listener.interestButtonOnClick(binding.description.text.toString(), interestIsSelected)
+            }
         }
     }
 

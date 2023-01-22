@@ -2,6 +2,10 @@ package com.shootit.greme.network
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.kakao.sdk.common.model.ApplicationContextInfo
+import com.shootit.greme.util.EncryptedSpfImpl
+import com.shootit.greme.util.EncryptedSpfObject
+import com.shootit.greme.util.GremeApplication
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -9,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ConnectionObject {
     private const val BASE_URL = "http://13.125.79.233:8081"
-    var token: String = ""
+    var token: String = EncryptedSpfImpl(EncryptedSpfObject.getEncryptedSpf(GremeApplication.instance.applicationContext)).getAccessToken().toString()
     //이후에 서버에서 내려주는 토큰 값으로 변경 필요
     var email: String = ""
 
@@ -48,6 +52,10 @@ object ConnectionObject {
         getRetrofit.create(SignUpInterface::class.java)
     }
 
+    val getChallengeRetrofitService: ChallengeInterface by lazy {
+        getRetrofit.create(ChallengeInterface::class.java)
+    }
+
     val getDiaryWriteRetrofitService: DiaryWriteInterface by lazy {
         getRetrofit.create(DiaryWriteInterface::class.java)
     }
@@ -57,5 +65,8 @@ object ConnectionObject {
     }
     val getSignOutRetrofitService: SignOutInterface by lazy {
         getRetrofit.create(SignOutInterface::class.java)
+    }
+    val getSettingRetrofitService: SettingInterface by lazy {
+        getRetrofit.create(SettingInterface::class.java)
     }
 }

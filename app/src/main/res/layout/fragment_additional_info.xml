@@ -43,7 +43,7 @@
                 android:paddingTop="@dimen/margin24"
                 app:layout_constraintTop_toBottomOf="@+id/tvId">
 
-                <com.shootit.greme.ui.view.InterestButton
+                <com.shootit.greme.ui.custom.InterestButton
                     android:id="@+id/btnMale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
                     app:interest_description="@string/info_gender_male"
                     />
 
-                <com.shootit.greme.ui.view.InterestButton
+                <com.shootit.greme.ui.custom.InterestButton
                     android:id="@+id/btnFemale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
                     app:interest_description="@string/info_gender_female"
                     />
 
-                <com.shootit.greme.ui.view.InterestButton
+                <com.shootit.greme.ui.custom.InterestButton
                     android:id="@+id/btnWhatever"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
