@@ -9,6 +9,7 @@ data class OtherUserProfileModel(
     val profileImg: String,
     @SerializedName("challengeSummary")
     val challengeSummary: List<ChallengeDetail?>,
-
+    @SerializedName("postRes")
+    val urlAndId: List<UrlAndId?>
 )
 
