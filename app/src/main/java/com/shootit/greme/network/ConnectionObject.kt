@@ -63,10 +63,16 @@ object ConnectionObject {
     val getDiarySearchRetrofitService: SearchInterface by lazy {
         getRetrofit.create(SearchInterface::class.java)
     }
+
     val getSignOutRetrofitService: SignOutInterface by lazy {
         getRetrofit.create(SignOutInterface::class.java)
     }
+
     val getSettingRetrofitService: SettingInterface by lazy {
         getRetrofit.create(SettingInterface::class.java)
+    }
+
+    val getOtherUserProfileRetrofitService: OtherUserProfileInterface by lazy {
+        getRetrofit.create(OtherUserProfileInterface::class.java)
     }
 }
