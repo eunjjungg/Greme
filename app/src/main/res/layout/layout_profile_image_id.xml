@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/margin32"
+        android:layout_marginBottom="@dimen/margin12"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -23,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text14"
-            android:layout_marginTop="@dimen/margin24"/>
+            android:layout_marginTop="@dimen/margin12"/>
 
     </LinearLayout>
 </layout>
