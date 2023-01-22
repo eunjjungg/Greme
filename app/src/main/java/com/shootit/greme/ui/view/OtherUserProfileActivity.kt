@@ -1,8 +1,12 @@
 package com.shootit.greme.ui.view
 
+import android.annotation.SuppressLint
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.shootit.greme.R
 import com.shootit.greme.base.BaseActivity
@@ -16,14 +20,15 @@ import com.shootit.greme.viewmodel.OtherUserProfileViewModel
  * format : Intent.putInt("userId")
  */
 
-class OtherUserProfileActivity : BaseActivity<ActivityOtherUserProfileBinding>(R.layout.activity_other_user_profile) {
+class OtherUserProfileActivity :
+    BaseActivity<ActivityOtherUserProfileBinding>(R.layout.activity_other_user_profile) {
     override val viewModel by viewModels<OtherUserProfileViewModel> {
         OtherUserProfileViewModel.OtherUserProfileViewModelFactory(
             OtherUserProfileRepository.getInstance()!!
         )
     }
 
-    private val adapter by lazy {
+    private val profileAdapter by lazy {
         OtherUserProfileAdapter(resources = resources)
     }
 
@@ -37,24 +42,43 @@ class OtherUserProfileActivity : BaseActivity<ActivityOtherUserProfileBinding>(R
     }
 
     override fun onCreateAction() {
+
         getDataFromServer()
+        setAdapterData()
+        userNameObserver()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun getDataFromServer() {
         viewModel.getUserInfoFromServer(
             userId = userId,
-            compUserName = { adapter.userName = it },
-            compUserImg = { adapter.userImageString = it },
-            compUserChallenge = { adapter.challengeList = it },
+            compUserImg = { profileAdapter.userImageString = it },
+            compUserChallenge = {
+                profileAdapter.challengeList = it
+                profileAdapter.notifyDataSetChanged()
+            },
             errorCase = { makeSnackBar("접속이 불안정합니다. 잠시 후 다시 시도해주세요.") }
         )
     }
 
+    private fun setAdapterData() {
+        binding.recyclerView.adapter = this.profileAdapter
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+    }
+
+    private fun userNameObserver() {
+        viewModel.userName.observe(this, Observer {
+            profileAdapter.userName = it
+            profileAdapter.notifyItemChanged(OtherUserProfileAdapter.OtherUserProfileRecyclerType.Profile.index)
+        })
+    }
+
     private fun makeSnackBar(message: String) {
-        val snackbar = Snackbar.make(binding.root.rootView, message, Snackbar.LENGTH_LONG)
+        val snackbar = Snackbar.make(binding.view, message, Snackbar.LENGTH_LONG)
         snackbar.setAction("확인", View.OnClickListener {
             snackbar.dismiss()
         })
         snackbar.show()
     }
+
 }
