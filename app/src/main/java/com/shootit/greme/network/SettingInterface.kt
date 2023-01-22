@@ -27,5 +27,5 @@ interface SettingInterface {
     // 프로필 이미지 변경
     @Multipart
     @PATCH("/user/profile-image")
-    fun setProfileImage(@Part multipartFile : MultipartBody.Part) : Call<String>
+    fun setProfileImage(@Part multipartFile : MultipartBody.Part) : Call<Void>
 }

@@ -80,11 +80,11 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
 
                 // 현재 사용자의 정보를 받아올 것을 명시
                 // 서버 통신은 I/O 작업이므로 비동기적으로 받아올 Callback 내부 코드는 나중에 데이터를 받아오고 실행
-                val call: Call<String> =
+                val call: Call<Void> =
                     ConnectionObject.getSettingRetrofitService.setProfileImage(body)
-                call.enqueue(object : Callback<String> {
+                call.enqueue(object : Callback<Void> {
                     override fun onResponse(
-                        call: Call<String>, response: Response<String>
+                        call: Call<Void>, response: Response<Void>
                     ) {
                         val data = response.code()
                         Log.d("status code", data.toString())
@@ -102,7 +102,7 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
                             Log.d("Network_ProfileEdit", "fail")
                         }
                     }
-                    override fun onFailure(call: Call<String>, t: Throwable) {
+                    override fun onFailure(call: Call<Void>, t: Throwable) {
                         Log.d("Network_ProfileEdit", "error!")
                     }
                 })
