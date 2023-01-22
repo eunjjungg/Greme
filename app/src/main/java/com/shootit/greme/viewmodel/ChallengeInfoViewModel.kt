@@ -16,10 +16,13 @@ class ChallengeInfoViewModel(private val challengeRepository: ChallengeRepositor
 
     var challengeInfoImg = MutableLiveData<MutableList<ChallengeInfoImg>>()
 
-    fun getMyImageList(id: Int) = viewModelScope.launch {
+    fun getMyImageList(id: Int, setIsRegistered: (Boolean) -> Unit, errorCase: () -> Unit) = viewModelScope.launch {
         val data: ChallengeInfoModel? = challengeRepository.getChallengeInfo(id)
         if (data != null) {
             setDataToChallengeImgLiveData(data.getChallengeLists)
+            setIsRegistered(data.status)
+        } else {
+            errorCase()
         }
     }
 
