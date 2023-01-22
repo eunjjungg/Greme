@@ -6,4 +6,4 @@ import kotlinx.android.parcel.Parcelize
 
 data class DiaryImgData (
     val date : String,
-    val img : ArrayList<Int>)
+    val img : ArrayList<String>)

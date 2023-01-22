@@ -107,13 +107,14 @@
     <string name="setting_challenge_participant">25</string>
     <string name="setting_logout">로그아웃</string>
     <string name="setting_secession">회원 탈퇴</string>
-    <string name="setting_profile_plus">프로필 사진 추가</string>
+    <string name="setting_profile_edit">프로필 수정</string>
+    <string name="setting_profile_plus">프로필 사진 변경</string>
 
     <!-- Diary -->
     <string name="diary_month">January</string>
     <string name="diary_year">2023</string>
     <string name="diary_day">TUE</string>
-    <string name="diary_date">3</string>
+    <string name="diary_date">23</string>
     <string name="diary_disclosure_title">공개 여부</string>
     <string name="diary_disclosure_content">공개 시, 챌린지에 나의 다이어리가 공개됩니다.</string>
     <string name="diary_save">저장하기</string>
