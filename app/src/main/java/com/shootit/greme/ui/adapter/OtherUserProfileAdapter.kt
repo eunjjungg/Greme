@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.content.res.Resources
 import android.net.Uri
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,11 +31,13 @@ class OtherUserProfileAdapter(private val resources: Resources) :
     var userImageString: String = ""
     var userName: String = ""
     var challengeList = mutableListOf<OnGoingChallenge>()
+    var imgDataList: MutableList<ChallengeInfoImg> = mutableListOf()
 
     enum class OtherUserProfileRecyclerType(val index: Int) {
         Profile(0),
         Guide(1),
-        Challenge(2)
+        Challenge(2),
+        Image(3)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -50,9 +53,13 @@ class OtherUserProfileAdapter(private val resources: Resources) :
                     LayoutChallengeDefaultGuideBinding.inflate(layoutInflater, parent, false)
                 GuideViewHolder(binding)
             }
-            else -> {
+            OtherUserProfileRecyclerType.Challenge.index -> {
                 val binding = LayoutChallengeListBinding.inflate(layoutInflater, parent, false)
                 ChallengeViewHolder(binding)
+            }
+            else -> {
+                val binding = LayoutChallengeGridImageBinding.inflate(layoutInflater, parent, false)
+                ImageViewHolder(binding)
             }
         }
     }
@@ -68,18 +75,24 @@ class OtherUserProfileAdapter(private val resources: Resources) :
             is ChallengeViewHolder -> {
                 holder.bind(challengeList[position - 2])
             }
+            is ImageViewHolder -> {
+                // 3 : profile + guide top + guide bottom
+                holder.bind(imgDataList[position - 3 - challengeList.size])
+            }
         }
     }
 
     override fun getItemCount(): Int {
-        return challengeList.size + 2
+        return challengeList.size + 2 + imgDataList.size + 1
     }
 
     override fun getItemViewType(position: Int): Int {
         return when (position) {
             OtherUserProfileRecyclerType.Profile.index -> OtherUserProfileRecyclerType.Profile.index
             OtherUserProfileRecyclerType.Guide.index -> OtherUserProfileRecyclerType.Guide.index
-            else -> OtherUserProfileRecyclerType.Challenge.index
+            in 2 until challengeList.size + 2 -> OtherUserProfileRecyclerType.Challenge.index
+            challengeList.size + 2 -> OtherUserProfileRecyclerType.Guide.index
+            else -> OtherUserProfileRecyclerType.Image.index
         }
     }
 
@@ -105,7 +118,12 @@ class OtherUserProfileAdapter(private val resources: Resources) :
     private inner class GuideViewHolder(private val binding: LayoutChallengeDefaultGuideBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Guide) {
-            binding.tv.text = item.text
+            if (adapterPosition == 1){
+                binding.tv.text = item.text
+            } else {
+                binding.tv.text = ""
+                binding.tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 1f)
+            }
         }
     }
 

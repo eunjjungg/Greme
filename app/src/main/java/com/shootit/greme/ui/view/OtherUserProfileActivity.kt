@@ -1,7 +1,6 @@
 package com.shootit.greme.ui.view
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
@@ -45,7 +44,7 @@ class OtherUserProfileActivity :
 
         getDataFromServer()
         setAdapterData()
-        userNameObserver()
+        setObserver()
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -66,10 +65,16 @@ class OtherUserProfileActivity :
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
     }
 
-    private fun userNameObserver() {
+    private fun setObserver() {
         viewModel.userName.observe(this, Observer {
             profileAdapter.userName = it
             profileAdapter.notifyItemChanged(OtherUserProfileAdapter.OtherUserProfileRecyclerType.Profile.index)
+        })
+
+        viewModel.challengeInfoImg.observe(this, Observer {
+            val beforeIndex = profileAdapter.itemCount
+            profileAdapter.imgDataList = it
+            profileAdapter.notifyItemRangeInserted(beforeIndex, beforeIndex + it.size)
         })
     }
 
