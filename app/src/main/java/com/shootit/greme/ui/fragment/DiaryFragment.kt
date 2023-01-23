@@ -87,6 +87,7 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
                     binding.etHashtag.setBackgroundResource(R.drawable.bg_diary_edittext)
                     binding.etContent.text = null
                     binding.etContent.setBackgroundResource(R.drawable.bg_diary_edittext)
+                    binding.cbDisclosure.isChecked = false
                     // 저장하기 버튼 다시 생성
                     binding.clToday.visibility = View.GONE
                     binding.clDisclosure.visibility = View.VISIBLE
@@ -217,16 +218,18 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var week_day: Array<String> = resources.getStringArray(R.array.calendar_day)
         calendarAdapter = CalendarAdapter(calendarList)
 
         calendarList.apply {
 
+            /*
             // 오늘 요일 출력
             val forDay = LocalDate.now().dayOfWeek
             var weekday = ""
-            if (forDay.toString() == "SUNDAY") {
-                weekday = "S"
-            }
+            if (forDay.toString() == "MONDAY") {
+                weekday = "MON"
+            }*/
             val now = LocalDate.now().format(ofPattern("d"))
             binding.tvMonth.text = LocalDate.now().month.toString()
             binding.tvYear.text = LocalDate.now().year.toString()
@@ -236,7 +239,7 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
 
                 calendarList.apply {
                     // 오늘을 기준으로 +-3일 값들 출력
-                    add(CalendarData((now.toInt() + i.toLong() - 3).toString(), weekday))
+                    add(CalendarData((now.toInt() + i.toLong() - 3).toString(), week_day[i]))
                 }
             }
         }

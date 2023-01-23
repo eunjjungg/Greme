@@ -1,5 +1,6 @@
 package com.shootit.greme.ui.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -16,6 +17,7 @@ class OtherUserDiaryActivity : AppCompatActivity() {
     private var mBinding: ActivityOtherUserDiaryBinding? = null
     // 매번 null 체크를 할 필요없이 편의성을 위해 바인딩 변수 재선언
     private val binding get() = mBinding!!
+    var userId : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,6 +27,7 @@ class OtherUserDiaryActivity : AppCompatActivity() {
         binding.ivBack.setOnClickListener {
             finish()
         }
+
         // 다른 유저의 다이어리 조회 서버 연동
         Log.d("Network_OtherUser", "otherUserDiary")
         val otherUserPostId = intent.getIntExtra("otherUserId", 0)
@@ -43,6 +46,7 @@ class OtherUserDiaryActivity : AppCompatActivity() {
                         val itemdata1 = response.body()
                         var date = itemdata1!!.createdDate.substring(0 until 10)
                         date = date.replace("-", "/")
+                        userId = itemdata1!!.userId
                         binding.tvOtherUserID.text = itemdata1!!.username
                         Glide.with(this@OtherUserDiaryActivity).load(itemdata1!!.image).into(binding.ivMain)
                         binding.tvHashtag.text = itemdata1!!.hashtag
@@ -63,5 +67,12 @@ class OtherUserDiaryActivity : AppCompatActivity() {
 
                 }
             })
+
+        binding.tvOtherUserID.setOnClickListener {
+            Intent(binding.root.context, OtherUserProfileActivity::class.java).also {
+                it.putExtra("userId", userId)
+                startActivity(it)
+            }
+        }
     }
 }
