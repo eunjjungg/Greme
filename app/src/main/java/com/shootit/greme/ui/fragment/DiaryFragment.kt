@@ -26,6 +26,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.requestPermissions
 import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
@@ -61,6 +62,7 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
     var imageFile : File? = null
     var imageWideUri: Uri? = null
     var postId : Long = 0
+    var challengeId: Long = 0
 
     lateinit var calendarAdapter: CalendarAdapter
     private var calendarList = ArrayList<CalendarData>()
@@ -265,10 +267,11 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
                 ConnectionObject.getDiaryWriteRetrofitService.diaryWrite(
                     binding.etContent.text.toString(),
                     binding.etHashtag.text.toString(),
-                    1,
+                    challengeId,
                     binding.cbDisclosure.isChecked,
                     body
                 )
+            Log.d("datavalue", "data값=> "+ challengeId)
             call.enqueue(object : Callback<Long> {
                 override fun onResponse(
                     call: Call<Long>, response: Response<Long>
@@ -316,7 +319,15 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
                 position: Int,
                 id: Long
             ) {
-
+                if (position == 0){
+                    challengeId = 1
+                }
+                else if(position == 1){
+                    challengeId = 2
+                }
+                else if(position == 2){
+                    challengeId = 3
+                }
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
