@@ -39,12 +39,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding>(R.layout.activity_login
 
     override fun onCreateAction() {
         setBtnListener()
-
-        //TODO 삭제해줘야 할 내용
-        binding.tvAppName.setOnClickListener {
-            val tmp = EncryptedSpfImpl(EncryptedSpfObject.getEncryptedSpf(this)).getAccessToken()
-            Log.d("login ccheck token", tmp.toString())
-        }
     }
 
 

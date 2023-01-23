@@ -40,12 +40,12 @@ class SignUpViewModel(private val signUpRepository: SignUpRepository) : ViewMode
     }
 
     enum class SIGNUP_FRAGMENT(val index: Int) {
-        INTEREST(0), MORE_INFO(1), ID(2), FINISH(3)
+        INTEREST(0), MORE_INFO(1), ID(2), FINISH(3), TERM(4)
     }
 
     val interestList = mutableListOf<Boolean>(false, false, false, false, false)
 
-    val fragmentTransition = MutableLiveData<SIGNUP_FRAGMENT>(SIGNUP_FRAGMENT.ID)
+    val fragmentTransition = MutableLiveData<SIGNUP_FRAGMENT>(SIGNUP_FRAGMENT.TERM)
 
     fun interestSelected(title: String, isClicked: Boolean) {
         when (title) {
