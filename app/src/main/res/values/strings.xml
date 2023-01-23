@@ -140,12 +140,22 @@
     <string name="search_testID">yejinchoco</string>
     <string name="search_testID2">sangin</string>
 
-
     <!-- Spinner Challenge Array -->
     <string-array name="spinner_challenge">
         <item># 텀블러 사용하기</item>
         <item># 가까운 거리는 걸어다니기</item>
         <item># 따뜻하게 입고 다니기</item>
+    </string-array>
+
+    <!-- Calendar Array -->
+    <string-array name="calendar_day">
+        <item>FRI</item>
+        <item>SAT</item>
+        <item>SUN</item>
+        <item>MON</item>
+        <item>TUE</item>
+        <item>WED</item>
+        <item>THU</item>
     </string-array>
 
 </resources>
