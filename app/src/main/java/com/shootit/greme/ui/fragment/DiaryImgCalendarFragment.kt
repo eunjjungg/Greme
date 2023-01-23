@@ -39,21 +39,31 @@ class DiaryImgCalendarFragment : Fragment() {
                 response: Response<List<ResponseEntireDiaryData>>
             ) {
                 if (response.isSuccessful){
-                    // val data = response.body().toString()
+                    val data = response.body()
+                    val num = data!!.count()
+                    Log.d("responsevalue", "response 값 => "+ data)
+                    Log.d("responsevalue", "num 값 => "+ num)
+                    val datas = ArrayList<DiaryImgData>()
+                    val imgs = ArrayList<String>()
+                    for(i in 0..num-1){
+                        val itemdata = response.body()?.get(i)
+                        Log.d("responsevalue", "itemdata1_response 값 => "+ itemdata)
+                        val num2 = itemdata!!.postInfos.count()
+                        Log.d("responsevalue", "num2 값 => "+ num2)
+                        for(j in 0..num2-1){
+                            imgs.add(itemdata!!.postInfos!!.get(j).image)
+                        }
+                        datas.add(DiaryImgData(itemdata!!.date,imgs))
+                    }
                     val itemdata1 = response.body()?.get(0)
-                    // val itemdata2 = response.body()?.get(1)
-                    // val itemdata3 = response.body()?.get(2)
 
-                    Log.d("responsevalue", "itemdata1_response 값 => "+ itemdata1)
-                    // Log.d("responsevalue", "itemdata2_response 값 => "+ itemdata2)
-                    // Log.d("responsevalue", "itemdata3_response 값 => "+ itemdata3)
-
+                    /*
                     val datas = arrayListOf<DiaryImgData>(
                         DiaryImgData(itemdata1!!.date, arrayListOf(itemdata1!!.postInfos!!.get(0).image, itemdata1!!.postInfos!!.get(1).image))
                         // DiaryImgData(itemdata1!!.date, arrayListOf(itemdata1!!.postInfos!!.get(4).image, itemdata1!!.postInfos!!.get(5).image, itemdata1!!.postInfos!!.get(7).image, itemdata1!!.postInfos!!.get(0).image)),
                         // DiaryImgData(itemdata2!!.date, arrayListOf(itemdata2!!.postInfos!!.get(0).image, itemdata2!!.postInfos!!.get(1).image)),
                         // DiaryImgData(itemdata3!!.date, arrayListOf(itemdata3!!.postInfos!!.get(0).image, itemdata3!!.postInfos!!.get(1).image, itemdata3!!.postInfos!!.get(2).image))
-                    )
+                    )*/
                     binding.rvDiaryImgCalendar.apply {
                         adapter = DiaryImgCalendarAdapter().build(datas)
                         layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)

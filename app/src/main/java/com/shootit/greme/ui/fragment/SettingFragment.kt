@@ -174,7 +174,6 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
             }
         }
         // setting 첫 화면 서버 연동
-        Log.d("Network_setting", "settingInfo")
         ConnectionObject.getSettingRetrofitService.getSettigInfo().enqueue(object :
             Callback<ResponseSettingInfoData> {
             override fun onResponse(
@@ -190,11 +189,22 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
                     participatedChallengeAdapter = ParticipatedChallengeAdapter(requireContext())
                     binding.rvChallenge.adapter = participatedChallengeAdapter
 
-                    datas.apply{
-                        add(ChallengeData(title = itemdata1!!.challengeJoinSummary.get(0).title, content = itemdata1!!.challengeJoinSummary.get(0).info, img = R.drawable.ic_profile, participant = itemdata1!!.challengeJoinSummary.get(0).num.toString(), day = "D-" + itemdata1!!.challengeJoinSummary.get(0).deadline.serverTimeToDDay().toString()))
+                    if (itemdata1!!.challengeJoinSummary.count() == 0){
+                        datas.apply{
+                            add(ChallengeData("참여하는 챌린지가 없습니다", content = "챌린지를 추가해주세요!", img = R.drawable.ic_profile, participant = "0", day = "D-0"))
+                            participatedChallengeAdapter.datas=datas
+                            participatedChallengeAdapter.notifyDataSetChanged()
+                        }
+                    } else{
+                        for(i in 0..itemdata1!!.challengeJoinSummary.count()-1){
+                            datas.apply{
+                                add(ChallengeData(title = itemdata1!!.challengeJoinSummary.get(i).title, content = itemdata1!!.challengeJoinSummary.get(i).info, img = R.drawable.ic_profile, participant = itemdata1!!.challengeJoinSummary.get(i).num.toString(), day = "D-" + itemdata1!!.challengeJoinSummary.get(i).deadline.serverTimeToDDay().toString()))
+                            }
+                        }
                         participatedChallengeAdapter.datas=datas
                         participatedChallengeAdapter.notifyDataSetChanged()
                     }
+
                 }else{
                     // 이곳은 에러 발생할 경우 실행됨
                     Log.d("Network_setting", "fail")
