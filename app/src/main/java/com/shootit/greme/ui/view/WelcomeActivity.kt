@@ -1,5 +1,6 @@
 package com.shootit.greme.ui.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
@@ -21,8 +22,13 @@ class WelcomeActivity : BaseActivity<ActivityWelcomeBinding>(R.layout.activity_w
     }
 
     override fun onCreateAction() {
-        // TODO("Not yet implemented")
+        binding.btnNext.setOnClickListener {
+            Intent(this, MainActivity::class.java).also { startActivity(it) }
+        }
     }
 
-
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
 }

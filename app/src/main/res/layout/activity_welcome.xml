@@ -14,5 +14,40 @@
         android:layout_height="match_parent"
         tools:context=".ui.view.WelcomeActivity">
 
+        <TextView
+            android:id="@+id/tvWelcome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/signup_finish_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="@dimen/signup_welcome_text"
+            android:layout_margin="@dimen/signup_margin_large"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin60"
+            android:src="@drawable/ic_introduce"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvWelcome" />
+
+        <Button
+            android:id="@+id/btnNext"
+            style="?attr/textInputFilledStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#B3D3FF"
+            android:backgroundTintMode="add"
+            android:text="시작하기"
+            android:layout_marginHorizontal="@dimen/margin40"
+            android:layout_marginBottom="@dimen/margin40"
+            android:textColor="@color/icon_on_dark"
+            android:textSize="@dimen/signup_et_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
