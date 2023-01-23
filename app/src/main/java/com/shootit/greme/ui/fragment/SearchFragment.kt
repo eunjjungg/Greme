@@ -13,11 +13,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.shootit.greme.R
 import com.shootit.greme.databinding.FragmentSearchBinding
-import com.shootit.greme.model.ResponseEntireDiaryData
-import com.shootit.greme.model.ResponseOtherUserDiaryData
-import com.shootit.greme.model.ResponseSearchData
-import com.shootit.greme.model.SearchData
+import com.shootit.greme.model.*
 import com.shootit.greme.network.ConnectionObject
+import com.shootit.greme.ui.adapter.DiaryImgCalendarAdapter
 import com.shootit.greme.ui.adapter.SearchAdapter
 import com.shootit.greme.ui.view.OtherUserDiaryActivity
 import retrofit2.Call
@@ -65,42 +63,29 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                             response: Response<List<ResponseSearchData>>
                         ) {
                             if (response.isSuccessful) {
-                                val itemdata1 = response.body()?.get(5)
-                                val itemdata2 = response.body()?.get(6)
-                                otheruserId = itemdata1!!.id
-                                Log.d("responsevalue", "otherUserDiary_response 값 => " + otheruserId)
-                                fun addDataToList(){
-                                    mList.add(SearchData(itemdata1!!.image))
-                                    mList.add(SearchData(itemdata2!!.image))
+                                val data = response.body()
+                                val num = data!!.count()
+                                for(i in 0..num-1){
+                                    val itemdata = response.body()?.get(i)
+                                    mList.add(SearchData(itemdata!!.image, itemdata!!.id))
+                                    otheruserId = itemdata!!.id
+                                    Log.d("responsevalue", "otherUserDiary_response 값 => " + otheruserId)
+                                    rvSearch.layoutManager = GridLayoutManager(context, 3)
+                                    rvSearch.adapter = adapter
                                 }
-                                rvSearch.layoutManager = GridLayoutManager(context, 3)
-                                addDataToList()
-                                rvSearch.adapter = adapter
-
                             } else {
                                 // 이곳은 에러 발생할 경우 실행됨
                                 Log.d("server err", response.errorBody()?.string().toString())
                                 Log.d("Network_Search", "fail")
                             }
                         }
-
                         override fun onFailure(call: Call<List<ResponseSearchData>>, t: Throwable) {
                             Log.d("Network_Search", "error!")
-
                         }
                     })
                 return false
             }
         })
-        adapter.setItemClickListener(object : SearchAdapter.OnItemClickListener {
-            override fun onClick(v: View, position: Int) {
-                // 클릭 시 이벤트 작성
-                val intent = Intent(getActivity(), OtherUserDiaryActivity::class.java)
-                intent.putExtra("otherUserId", otheruserId)
-                startActivity(intent)
-            }
-        })
-
         return root
     }
 }

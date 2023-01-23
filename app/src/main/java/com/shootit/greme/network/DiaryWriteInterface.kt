@@ -10,7 +10,7 @@ interface DiaryWriteInterface {
     // 다이어리 작성
     @Multipart
     @POST("/post")
-    fun diaryWrite(@Part("content") content: String, @Part("hashtag") hashtag: String, @Part("challenge") challenge: Long, @Part("status") status: Boolean, @Part multipartFile : MultipartBody.Part) : Call<Long>
+    fun diaryWrite(@Part("creationReq") DiaryWriteData: RequestBody, @Part multipartFile : MultipartBody.Part) : Call<Long>
 
     // 다이어리 삭제
     @HTTP(method = "DELETE", path = "/post", hasBody = true)

@@ -31,6 +31,8 @@ import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import com.shootit.greme.R
 import com.shootit.greme.databinding.FragmentDiaryBinding
 import com.shootit.greme.ui.adapter.CalendarAdapter
@@ -45,6 +47,7 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONObject
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter.ofPattern
 import org.w3c.dom.Text
@@ -69,7 +72,6 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
 
     val positiveButtonClick = { dialogInterface: DialogInterface, i: Int ->
         // 삭제하기 버튼 서버 연동
-        Log.d("TestLog", "Diary")
         // 서버로 보낼 로그인 데이터 생성
         val diaryDeleteData = DiaryDeleteData(postId.toInt())
         Log.d("datavalue", "data값=> "+ diaryDeleteData)
@@ -253,7 +255,6 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
         }
         // DiaryWrite 서버 연결 부분
         binding.btnSave.setOnClickListener {
-            Log.d("TestLog", "Diary")
             Log.d("datavalue", "multipart값=> " + imageWideUri)
             imageFile = File(getRealPathFromURI(imageWideUri!!))
             // 서버로 보내기 위해 RequestBody객체로 변환
@@ -261,16 +262,17 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
             val body =
                 MultipartBody.Part.createFormData("multipartFile", imageFile!!.name, requestFile)
 
+            // String 값에 "" 없애기
+            val jsonObj = JSONObject()
+            jsonObj.put("content", binding.etContent.text)
+            jsonObj.put("hashtag", binding.etHashtag.text)
+            jsonObj.put("challenge", challengeId)
+            jsonObj.put("status", binding.cbDisclosure.isChecked)
+            val body2 = RequestBody.create("application/json".toMediaTypeOrNull(), jsonObj.toString())
             // 현재 사용자의 정보를 받아올 것을 명시
             // 서버 통신은 I/O 작업이므로 비동기적으로 받아올 Callback 내부 코드는 나중에 데이터를 받아오고 실행
             val call: Call<Long> =
-                ConnectionObject.getDiaryWriteRetrofitService.diaryWrite(
-                    binding.etContent.text.toString(),
-                    binding.etHashtag.text.toString(),
-                    challengeId,
-                    binding.cbDisclosure.isChecked,
-                    body
-                )
+                ConnectionObject.getDiaryWriteRetrofitService.diaryWrite(body2, body)
             Log.d("datavalue", "data값=> "+ challengeId)
             call.enqueue(object : Callback<Long> {
                 override fun onResponse(
@@ -299,7 +301,6 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
                         Log.d("Network_DiaryWrite", "fail")
                     }
                 }
-
                 override fun onFailure(call: Call<Long>, t: Throwable) {
                     Log.d("Network_DiaryWrite", "error!")
                 }
