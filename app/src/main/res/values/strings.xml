@@ -36,7 +36,7 @@
     <string name="signup_info_guide_region2">해당 지역에 따라 추천 게시물이 달라져요</string>
     <string name="signup_info_guide_purpose1">활동 목적을 선택해주세요!</string>
     <string name="signup_info_guide_purpose2">활동 목적에 따라 추천 게시물이 달라져요</string>
-    <string name="signup_finish_title">%s님!\n이제 회원가입이 완료되었어요!</string>
+    <string name="signup_finish_title">이제 회원가입이 완료되었어요!</string>
     <string name="signup_finish_guide1">그리미에서는</string>
     <string name="signup_finish_guide2">다이어리처럼 나의 eco 삶을 기록할 수 있고</string>
     <string name="signup_finish_guide3">챌린지를 활용해 목표를 달성하고</string>

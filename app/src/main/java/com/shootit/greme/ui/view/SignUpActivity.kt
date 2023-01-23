@@ -11,6 +11,7 @@ import com.shootit.greme.base.BaseActivity
 import com.shootit.greme.databinding.ActivitySignUpBinding
 import com.shootit.greme.repository.SignUpRepository
 import com.shootit.greme.ui.fragment.signup.AdditionalInfoFragment
+import com.shootit.greme.ui.fragment.signup.CheckTermsFragment
 import com.shootit.greme.ui.fragment.signup.SetIdFragment
 import com.shootit.greme.ui.fragment.signup.SetInterestFragment
 import com.shootit.greme.viewmodel.SignUpViewModel
@@ -30,7 +31,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
 
     override fun onCreateAction() {
         supportFragmentManager.commit {
-            replace(R.id.fragmentSignUp, SetIdFragment())
+            replace(R.id.fragmentSignUp, CheckTermsFragment())
         }
         setObserver()
     }
@@ -42,6 +43,12 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(R.layout.activity_sig
                     .beginTransaction()
                     .replace(R.id.fragmentSignUp, AdditionalInfoFragment())
                     .addToBackStack(null)
+                    .commit()
+            }
+            else if(it.index == SignUpViewModel.SIGNUP_FRAGMENT.TERM.index){
+                supportFragmentManager
+                    .beginTransaction()
+                    .replace(R.id.fragmentSignUp, CheckTermsFragment())
                     .commit()
             }
             else if(it.index == SignUpViewModel.SIGNUP_FRAGMENT.ID.index){
