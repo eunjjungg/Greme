@@ -224,8 +224,8 @@ class DiaryFragment : Fragment(R.layout.fragment_diary) {
             // 오늘 요일 출력
             val forDay = LocalDate.now().dayOfWeek
             var weekday = ""
-            if (forDay.toString() == "TUESDAY") {
-                weekday = "TUE"
+            if (forDay.toString() == "MONDAY") {
+                weekday = "MON"
             }
             val now = LocalDate.now().format(ofPattern("d"))
             binding.tvMonth.text = LocalDate.now().month.toString()

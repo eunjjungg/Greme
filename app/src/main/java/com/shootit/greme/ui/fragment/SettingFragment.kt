@@ -28,6 +28,8 @@ import com.shootit.greme.model.*
 import com.shootit.greme.network.ConnectionObject
 import com.shootit.greme.ui.adapter.DiaryImgCalendarAdapter
 import com.shootit.greme.ui.adapter.ParticipatedChallengeAdapter
+import com.shootit.greme.ui.view.LoginActivity
+import com.shootit.greme.ui.view.OtherUserDiaryActivity
 import com.shootit.greme.ui.view.SettingUserInfoActivity
 import com.shootit.greme.util.RemainingDateCalculator.serverTimeToDDay
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -124,6 +126,9 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
                     Log.d("responsevalue", "signout_response 값 => "+ data)
                     val data1 = response.code()
                     Log.d("status code", data1.toString())
+                    // 확인 버튼 누를 시 로그인 화면으로 이동
+                    val intent = Intent(getActivity(), LoginActivity::class.java)
+                    startActivity(intent)
                 }else{
                     // 이곳은 에러 발생할 경우 실행됨
                     val data1 = response.code()
@@ -143,6 +148,11 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
     }
     val negativeButtonClick = { dialogInterface: DialogInterface, i: Int ->
         toast("취소")
+    }
+    val logoutPositiveButtonClick = { dialogInterface: DialogInterface, i: Int ->
+        // 확인 버튼 누를 시 로그인 화면으로 이동
+        val intent = Intent(getActivity(), LoginActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onCreateView(
@@ -198,7 +208,7 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
             val builder = AlertDialog.Builder(requireContext())
             builder.setTitle("로그아웃")
                 .setMessage("로그아웃하시겠습니까?")
-                .setPositiveButton("확인",positiveButtonClick)
+                .setPositiveButton("확인",logoutPositiveButtonClick)
                 .setNegativeButton("취소", negativeButtonClick)
 
             val alertDialog = builder.create()
