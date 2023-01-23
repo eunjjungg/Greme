@@ -5,12 +5,14 @@ import android.animation.ValueAnimator
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.shootit.greme.R
 import com.shootit.greme.base.BaseActivity
 import com.shootit.greme.databinding.ActivityChallengeInfoBinding
@@ -49,7 +51,7 @@ class ChallengeInfoActivity :
 
     override fun onCreateAction() {
         initRecyclerView()
-        initFabByStatus(isParticipate)
+        //initFabByStatus(isParticipate)
         setListenerToFab()
         setObserver()
     }
@@ -58,11 +60,18 @@ class ChallengeInfoActivity :
         val transportedData: ChallengeInfoParcelData? = intent.getParcelableExtra<ChallengeInfoParcelData?>("ChallengeInfo")
         transportedData?.let {
             adapter.challengeInfo = ChallengeInfo(it.title, it.desc, it.day, it.isRegistered)
-            isParticipate = it.isRegistered
+            // isParticipate = it.isRegistered
             id = it.id
         }
 
-        viewModel.getMyImageList(id)
+        viewModel.getMyImageList(
+            id,
+            {
+                isParticipate = it
+                initFabByStatus(it)
+            },
+            { makeSnackBar("접속이 불안정합니다. 잠시 후 다시 시도해주세요.") }
+        )
         // adapter.imgDataList = imgData
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -143,6 +152,14 @@ class ChallengeInfoActivity :
                 binding.fabStatus.setBackgroundColor(it.animatedValue as Int)
             }
         }.start()
+    }
+
+    private fun makeSnackBar(message: String) {
+        val snackbar = Snackbar.make(binding.recyclerView.parent as View, message, Snackbar.LENGTH_LONG)
+        snackbar.setAction("확인", View.OnClickListener {
+            snackbar.dismiss()
+        })
+        snackbar.show()
     }
 
 }

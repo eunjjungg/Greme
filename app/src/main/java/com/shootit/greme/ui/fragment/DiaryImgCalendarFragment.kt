@@ -1,6 +1,7 @@
 package com.shootit.greme.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.shootit.greme.R
 import com.shootit.greme.databinding.FragmentDiaryImgCalendarBinding
 import com.shootit.greme.model.DiaryImgData
+import com.shootit.greme.model.ResponseEntireDiaryData
+import com.shootit.greme.network.ConnectionObject
 import com.shootit.greme.ui.adapter.DiaryImgCalendarAdapter
+import okio.utf8Size
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class DiaryImgCalendarFragment : Fragment() {
     lateinit var binding: FragmentDiaryImgCalendarBinding
@@ -22,15 +29,45 @@ class DiaryImgCalendarFragment : Fragment() {
         // 바인딩
         binding = FragmentDiaryImgCalendarBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        binding.rvDiaryImgCalendar.apply {
-            adapter = DiaryImgCalendarAdapter().build(datas)
-            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        }
+
+        // 다이어리 전체 보기 서버 연동
+        Log.d("Network_Entire", "entireDiary")
+        ConnectionObject.getDiaryWriteRetrofitService.entireDiaryLook().enqueue(object :
+            Callback<List<ResponseEntireDiaryData>> {
+            override fun onResponse(
+                call: Call<List<ResponseEntireDiaryData>>,
+                response: Response<List<ResponseEntireDiaryData>>
+            ) {
+                if (response.isSuccessful){
+                    // val data = response.body().toString()
+                    val itemdata1 = response.body()?.get(0)
+                    val itemdata2 = response.body()?.get(1)
+                    val itemdata3 = response.body()?.get(2)
+
+                    Log.d("responsevalue", "itemdata1_response 값 => "+ itemdata1)
+                    Log.d("responsevalue", "itemdata2_response 값 => "+ itemdata2)
+                    Log.d("responsevalue", "itemdata3_response 값 => "+ itemdata3)
+
+                    val datas = arrayListOf<DiaryImgData>(
+                        DiaryImgData(itemdata1!!.date, arrayListOf(itemdata1!!.postInfos!!.get(4).image, itemdata1!!.postInfos!!.get(5).image, itemdata1!!.postInfos!!.get(7).image, itemdata1!!.postInfos!!.get(0).image)),
+                        DiaryImgData(itemdata2!!.date, arrayListOf(itemdata2!!.postInfos!!.get(0).image, itemdata2!!.postInfos!!.get(1).image)),
+                        DiaryImgData(itemdata3!!.date, arrayListOf(itemdata3!!.postInfos!!.get(0).image, itemdata3!!.postInfos!!.get(1).image, itemdata3!!.postInfos!!.get(2).image))
+                    )
+                    binding.rvDiaryImgCalendar.apply {
+                        adapter = DiaryImgCalendarAdapter().build(datas)
+                        layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    }
+                }else{
+                    // 이곳은 에러 발생할 경우 실행됨
+                    Log.d("Network_Entire", "여긴가?")
+                }
+            }
+
+            override fun onFailure(call: Call<List<ResponseEntireDiaryData>>, t: Throwable) {
+                Log.d("Network_Entire", "entireDiary get error!")
+
+            }
+        })
         return root
     }
-    val datas = arrayListOf<DiaryImgData>(
-        DiaryImgData("2022.11", arrayListOf(R.drawable.ex_img, R.drawable.ex_img2, R.drawable.ex_img, R.drawable.ex_img2,R.drawable.ex_img, R.drawable.ex_img2)),
-        DiaryImgData("2022.10", arrayListOf(R.drawable.ex_img, R.drawable.ex_img2, R.drawable.ex_img, R.drawable.ex_img2,R.drawable.ex_img, R.drawable.ex_img2)),
-        DiaryImgData("2022.09", arrayListOf(R.drawable.ex_img, R.drawable.ex_img2, R.drawable.ex_img, R.drawable.ex_img2,R.drawable.ex_img, R.drawable.ex_img2))
-    )
 }

@@ -10,15 +10,15 @@ import com.shootit.greme.databinding.ItemDiaryimgBinding
 import com.shootit.greme.ui.view.DiaryDetailActivity
 
 class DiaryImgAdapter : RecyclerView.Adapter<DiaryImgAdapter.ViewHolder>() {
-    lateinit var items: ArrayList<Int>
+    lateinit var items: ArrayList<String>
 
-    fun build(i: ArrayList<Int>): DiaryImgAdapter{
+    fun build(i: ArrayList<String>): DiaryImgAdapter{
         items = i
         return this
     }
     inner class ViewHolder(val binding: ItemDiaryimgBinding) : RecyclerView.ViewHolder(binding.root){
         private val context = binding.root.context
-        fun bind(item: Int){
+        fun bind(item: String){
             Glide.with(itemView).load(item).into(binding.ivDiaryImg)
 
             itemView.setOnClickListener {

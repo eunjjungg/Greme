@@ -2,6 +2,7 @@ package com.shootit.greme.model
 
 import com.google.gson.annotations.SerializedName
 import okhttp3.MultipartBody
+import java.sql.Timestamp
 
 data class ResponseOtherUserDiaryData(
     @SerializedName("username")
