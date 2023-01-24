@@ -11,6 +11,8 @@ import com.bumptech.glide.Glide
 import com.shootit.greme.databinding.ActivityDiaryDetailBinding
 import com.shootit.greme.model.DiaryImgData
 import com.shootit.greme.model.ResponseDateDiaryData
+import com.shootit.greme.model.ResponseOtherUserDiaryData
+import com.shootit.greme.model.SearchData
 import com.shootit.greme.network.ConnectionObject
 import okhttp3.MediaType
 import okhttp3.RequestBody
@@ -58,6 +60,7 @@ class DiaryDetailActivity : AppCompatActivity() {
                 setTextColor(Color.BLUE)
             }
         }
+        /*
         // 날짜로 다이어리 조회 서버 연동
         Log.d("Network_Date", "dateDiary")
 
@@ -91,11 +94,7 @@ class DiaryDetailActivity : AppCompatActivity() {
 
             }
         })
-
-        // datas = intent.getSerializableExtra("data") as DiaryImgData
-
-        // Glide.with(this).load(datas.img).into(binding.ivMain)
-        // binding.tvDate.text = datas.date
+         */
     }
     fun toast(message:String){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()

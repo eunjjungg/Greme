@@ -72,8 +72,6 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
                     .into(binding.ivProfile)
 
                 // 프로필 사진 변경 서버 연동
-                Log.d("TestLog", "ProfileEdit")
-                // Log.d("datavalue", "multipart값=> " + imageWideUri)
                 imageFile = File(getRealPathFromURI(it))
                 // 서버로 보내기 위해 RequestBody객체로 변환
                 val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), imageFile!!)
@@ -93,8 +91,6 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
                         // 네트워크 통신에 성공한 경우
                         if (response.isSuccessful) {
                             Log.d("Network_ProfileEdit", "success")
-                            val data = response.body()
-                            Log.d("responsevalue", "response값=> " + data)
                         } else { // 이곳은 에러 발생할 경우 실행됨
                             val data1 = response.code()
                             Log.d("status code", data1.toString())
@@ -139,10 +135,8 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
                     Log.d("Network_SignOut", "fail")
                 }
             }
-
             override fun onFailure(call: Call<Void>, t: Throwable) {
                 Log.d("Network_SignOut", "error!")
-
             }
         })
     }
@@ -174,7 +168,6 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
             }
         }
         // setting 첫 화면 서버 연동
-        Log.d("Network_setting", "settingInfo")
         ConnectionObject.getSettingRetrofitService.getSettigInfo().enqueue(object :
             Callback<ResponseSettingInfoData> {
             override fun onResponse(
@@ -182,19 +175,30 @@ class SettingFragment : Fragment(R.layout.fragment_setting) {
                 response: Response<ResponseSettingInfoData>
             ) {
                 if (response.isSuccessful){
-                    Log.d("Network_setting", "success")
                     val itemdata1 = response.body()
-                    Log.d("Network_setting", "response=>" + itemdata1)
                     binding.tvId.text = itemdata1!!.username
                     Glide.with(this@SettingFragment).load(itemdata1!!.imageUrl).into(binding.ivProfile)
                     participatedChallengeAdapter = ParticipatedChallengeAdapter(requireContext())
                     binding.rvChallenge.adapter = participatedChallengeAdapter
 
-                    datas.apply{
-                        add(ChallengeData(title = itemdata1!!.challengeJoinSummary.get(0).title, content = itemdata1!!.challengeJoinSummary.get(0).info, img = R.drawable.ic_profile, participant = itemdata1!!.challengeJoinSummary.get(0).num.toString(), day = "D-" + itemdata1!!.challengeJoinSummary.get(0).deadline.serverTimeToDDay().toString()))
+                    // 참여하는 챌린지가 없는 경우
+                    if (itemdata1!!.challengeJoinSummary.count() == 0){
+                        datas.apply{
+                            add(ChallengeData("참여하는 챌린지가 없습니다", content = "챌린지를 추가해주세요!", img = R.drawable.ic_profile, participant = "0", day = "D-0"))
+                            participatedChallengeAdapter.datas=datas
+                            participatedChallengeAdapter.notifyDataSetChanged()
+                        }
+                    } else{
+                        // 참여하는 챌린지가 있는 경우
+                        for(i in 0..itemdata1!!.challengeJoinSummary.count()-1){
+                            datas.apply{
+                                add(ChallengeData(title = itemdata1!!.challengeJoinSummary.get(i).title, content = itemdata1!!.challengeJoinSummary.get(i).info, img = R.drawable.ic_profile, participant = itemdata1!!.challengeJoinSummary.get(i).num.toString(), day = "D-" + itemdata1!!.challengeJoinSummary.get(i).deadline.serverTimeToDDay().toString()))
+                            }
+                        }
                         participatedChallengeAdapter.datas=datas
                         participatedChallengeAdapter.notifyDataSetChanged()
                     }
+
                 }else{
                     // 이곳은 에러 발생할 경우 실행됨
                     Log.d("Network_setting", "fail")

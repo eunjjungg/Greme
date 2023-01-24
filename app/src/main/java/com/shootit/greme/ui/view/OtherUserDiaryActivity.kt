@@ -7,6 +7,7 @@ import android.util.Log
 import com.bumptech.glide.Glide
 import com.shootit.greme.databinding.ActivityOtherUserDiaryBinding
 import com.shootit.greme.model.ResponseOtherUserDiaryData
+import com.shootit.greme.model.SearchData
 import com.shootit.greme.network.ConnectionObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -29,9 +30,9 @@ class OtherUserDiaryActivity : AppCompatActivity() {
         }
 
         // 다른 유저의 다이어리 조회 서버 연동
-        Log.d("Network_OtherUser", "otherUserDiary")
-        val otherUserPostId = intent.getIntExtra("otherUserId", 0)
-        ConnectionObject.getDiarySearchRetrofitService.otherUserDiary(otherUserPostId)
+        val otherUserPostId = intent.getParcelableExtra<SearchData>("otheruserpostId")
+        Log.d("SearchValue", "Search_postId 값 => " + otherUserPostId)
+        ConnectionObject.getDiarySearchRetrofitService.otherUserDiary(otherUserPostId!!.postId)
             .enqueue(object : Callback<ResponseOtherUserDiaryData> {
                 override fun onResponse(
                     call: Call<ResponseOtherUserDiaryData>,
