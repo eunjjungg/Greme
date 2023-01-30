@@ -5,12 +5,15 @@
     android:layout_width="100dp"
     android:layout_height="100dp"
     android:orientation="vertical"
-    android:paddingVertical="4dp">
+    android:paddingVertical="4dp"
+    android:clickable="true"
+    android:focusable="true">
 
     <ImageView
         android:id="@+id/ivDiaryImg"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/ex_img"/>
 
 </LinearLayout>

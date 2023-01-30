@@ -2,8 +2,11 @@ package com.shootit.greme.model
 
 import com.google.gson.annotations.SerializedName
 import okhttp3.MultipartBody
+import java.sql.Timestamp
 
 data class ResponseOtherUserDiaryData(
+    @SerializedName("userId")
+    val userId: Int,
     @SerializedName("username")
     val username: String,
     @SerializedName("image")

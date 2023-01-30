@@ -1,5 +1,7 @@
 package com.shootit.greme.model
 
+import com.google.gson.annotations.SerializedName
+
 sealed class ChallengeInfoType()
 
 class ChallengeInfo(
@@ -16,6 +18,8 @@ class ChallengeInfoImg(
 ) : ChallengeInfoType()
 
 data class UrlAndId(
+    @SerializedName("image")
     val urlString: String,
+    @SerializedName("id")
     val id: Int
 )
