@@ -24,6 +24,7 @@
 - Retrofit
 - Material Design 3
 - Custom View
+- Glide
 - 소셜 로그인 - Kakao, Naver API
 - 이슈 관리 - Jira, Github Issue
 - 형상 관리 전략 - Gitflow
